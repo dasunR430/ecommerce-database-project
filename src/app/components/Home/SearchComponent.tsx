@@ -41,7 +41,7 @@ const SearchComponent = () => {
                     </svg>
                 </button>
                 {/* Display matching names */}
-                <div className='absolute top-full max-h-40 w-full overflow-y-auto bg-white text-black z-10'> {/* Set a height here */}
+                <div className='absolute top-full max-h-40 w-64 overflow-y-auto bg-white text-black z-10'> {/* Set a height here */}
                     <ul className="">
                         {filteredNames.map((name, index) => (
                             <li key={index} className="p-2 border-b border-gray-200">
