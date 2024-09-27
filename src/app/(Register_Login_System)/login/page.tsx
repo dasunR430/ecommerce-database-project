@@ -4,6 +4,7 @@ import { faEye, faEyeSlash } from '@fortawesome/free-solid-svg-icons';
 import Link from "next/link";
 import { useState } from "react";
 import styles from "./login.module.css";
+import './styles.css';
 
 function Login() {
     const [showPassword, setShowPassword] = useState(false);
