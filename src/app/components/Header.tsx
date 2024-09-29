@@ -3,11 +3,16 @@ import React from 'react';
 import SearchComponent from './Home/SearchComponent';
 import CategoryFilter from './Home/CategoryFilter';
 
+interface SearchKey {
+    ProductID: number;
+    ProductTitle: string;
+}
 interface HeaderProps {
     isLoggedIn: boolean; // Determine if the user is logged in
+    available_products: SearchKey[]; // 
 }
 
-const Header: React.FC<HeaderProps> = ({ isLoggedIn }) => {
+const Header: React.FC<HeaderProps> = ({ isLoggedIn, available_products }) => {
     return (
         <header className="flex sticky top-0 z-50 items-center bg-black text-white p-3">
             <div className="flex items-center">
@@ -22,7 +27,7 @@ const Header: React.FC<HeaderProps> = ({ isLoggedIn }) => {
                 <CategoryFilter />
             </div>
 
-                <SearchComponent />
+                <SearchComponent available_products = {available_products}/>
 
 
             <div className="flex items-center space-x-4">

@@ -11,17 +11,23 @@ interface Product {
   BasePrice: number;
   PrimaryImage: string; // URL to the product image
 }
+
+interface SearchKey {
+  ProductID: number;
+  ProductTitle: string;
+}
 interface response {
   status: number;
   message?: string;
-  recommened_products : Product[];
-  trending_products : Product[];
+  recommened_products: Product[];
+  trending_products: Product[];
+  available_products: SearchKey[];
 }
 
 const fetchProcducts = async () => {
   try {
     const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/home/getproducts`);
-    if (!response.ok)
+    if (response.status !== 200)
       throw error("response not ok!!")
     else {
       const data = await response.json();
@@ -34,14 +40,15 @@ const fetchProcducts = async () => {
 }
 
 export default async function Home() {
-  const data : response = await fetchProcducts();
-  if(!data) console.log("data not recived")
+  const data: response = await fetchProcducts();
+  if (!data) console.log("data not recived")
   let trending_products: Product[] = data.trending_products;
   let recommened_products: Product[] = data.recommened_products;
+  let available_products: SearchKey[] = data.available_products;
 
   return (
     <>
-      <Header isLoggedIn={true} />
+      <Header isLoggedIn={true} available_products={available_products} />
       <Nav />
       <Hero />
       <CategorySection />

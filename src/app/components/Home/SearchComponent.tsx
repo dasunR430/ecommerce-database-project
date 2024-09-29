@@ -1,13 +1,18 @@
 'use client'
 import React, { ReactEventHandler, useState } from 'react';
 
-const SearchComponent = () => {
-    // Sample list of names
-    const namesList = ['Alice', 'Bob', 'Charlie', 'David', 'Eve', 'Frank', 'Grace'];
+interface SearchKey {
+    ProductID: number;
+    ProductTitle: string;
+}
+interface SearchProps {
+    available_products: SearchKey[];
+}
 
-    // State for search input and filtered names
+const SearchComponent: React.FC<SearchProps> = ({ available_products }) => {
+    // State for search input and filteredProduct
     const [searchInput, setSearchInput] = useState('');
-    const [filteredNames, setFilteredNames] = useState<string[]>([]);
+    const [filteredProduct, setFilteredProduct] = useState<SearchKey[]>([]);
 
     // Handle input change
     const handleSearch: React.ChangeEventHandler<HTMLInputElement> = (e) => {
@@ -15,13 +20,13 @@ const SearchComponent = () => {
         setSearchInput(query);
 
         // Filter the names based on the query
-        if (query === '') {
-            setFilteredNames([]); // Show nothing names if input is empty
+        if (query.trim() === '') {
+            setFilteredProduct([]); // Show nothing names if input is empty
         } else {
-            const matchingNames = namesList.filter((name) =>
-                name.toLowerCase().includes(query.toLowerCase())
+            const matchingProducts = available_products.filter((available_product) =>
+                available_product.ProductTitle.toLowerCase().includes(query.trim().toLowerCase())
             );
-            setFilteredNames(matchingNames);
+            setFilteredProduct(matchingProducts);
         }
     };
 
@@ -30,7 +35,7 @@ const SearchComponent = () => {
             <div className="flex flex-grow w-9 relative items-center mx-2">
                 <input
                     type="text"
-                    placeholder="Search names..."
+                    placeholder="Search Products..."
                     value={searchInput}
                     onChange={handleSearch}
                     className="flex-grow p-2 rounded-l focus:outline-none text-black"
@@ -43,12 +48,12 @@ const SearchComponent = () => {
                 {/* Display matching names */}
                 <div className='absolute top-full max-h-40 w-64 overflow-y-auto bg-white text-black z-10'> {/* Set a height here */}
                     <ul className="">
-                        {filteredNames.map((name, index) => (
-                            <li key={index} className="p-2 border-b border-gray-200">
-                                {name}
+                        {filteredProduct.map((product) => (
+                            <li key={product.ProductID} className="p-2 border-b border-gray-200">
+                                {product.ProductTitle}
                             </li>
                         ))}
-                        {filteredNames.length === 0 && searchInput !== '' && (
+                        {filteredProduct.length === 0 && searchInput.trim() !== '' && (
                             <li className="p-2 text-black">No matches found</li>
                         )}
                     </ul>
