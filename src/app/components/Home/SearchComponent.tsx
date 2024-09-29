@@ -27,7 +27,7 @@ const SearchComponent = () => {
 
     return (
         <>
-            <div className="flex flex-grow relative items-center mx-6">
+            <div className="flex flex-grow w-9 relative items-center mx-2">
                 <input
                     type="text"
                     placeholder="Search names..."
@@ -49,7 +49,7 @@ const SearchComponent = () => {
                             </li>
                         ))}
                         {filteredNames.length === 0 && searchInput !== '' && (
-                            <li className="p-2 text-white">No matches found</li>
+                            <li className="p-2 text-black">No matches found</li>
                         )}
                     </ul>
                 </div>

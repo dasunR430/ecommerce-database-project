@@ -12,16 +12,17 @@ const Header: React.FC<HeaderProps> = ({ isLoggedIn }) => {
         <header className="flex sticky top-0 z-50 items-center bg-black text-white p-3">
             <div className="flex items-center">
                 <div className="w-full max-w-[200px]">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="50" height="50" viewBox="0 0 100 50">
-                        <text x="50%" y="55%" text-anchor="middle" dominant-baseline="middle" font-family="Arial, sans-serif" font-size="70" fill="White">C</text>
+                    <svg xmlns="http://www.w3.org/2000/svg" width="50" height="50" viewBox="0 0 100 100">
+                        <text x="50%" y="55%" textAnchor="middle" dominantBaseline="middle" fontFamily="Futura Extra Bold" fontSize="70" fill="White">C</text>
                     </svg>
                 </div>
             </div>
 
-            <CategoryFilter/>
+            <div className='hidden md:block'>
+                <CategoryFilter />
+            </div>
 
-            <SearchComponent/>
-
+                <SearchComponent />
 
 
             <div className="flex items-center space-x-4">
@@ -31,7 +32,7 @@ const Header: React.FC<HeaderProps> = ({ isLoggedIn }) => {
                     </svg>
                     <span className="absolute -top-1 -right-1 bg-red-500 text-white rounded-full px-1 text-xs">0</span>
                 </a>
-                {false ? (
+                {true ? (
                     <a href="/profile">
                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="size-6">
                             <path strokeLinecap="round" strokeLinejoin="round" d="M17.982 18.725A7.488 7.488 0 0 0 12 15.75a7.488 7.488 0 0 0-5.982 2.975m11.963 0a9 9 0 1 0-11.963 0m11.963 0A8.966 8.966 0 0 1 12 21a8.966 8.966 0 0 1-5.982-2.275M15 9.75a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z" />
