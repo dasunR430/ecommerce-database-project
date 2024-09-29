@@ -1,18 +1,23 @@
 'use client'
+
 import React, { ReactEventHandler, useState } from 'react';
 
 interface SearchKey {
     ProductID: number;
     ProductTitle: string;
 }
-interface SearchProps {
+
+interface response {
+    status: number;
+    message?: string;
     available_products: SearchKey[];
 }
 
-const SearchComponent: React.FC<SearchProps> = ({ available_products }) => {
+const SearchComponent: React.FC = () => {
     // State for search input and filteredProduct
     const [searchInput, setSearchInput] = useState('');
     const [filteredProduct, setFilteredProduct] = useState<SearchKey[]>([]);
+    const [availableProducts, setAvailableProducts] = useState<SearchKey[] | undefined>(undefined);
 
     // Handle input change
     const handleSearch: React.ChangeEventHandler<HTMLInputElement> = (e) => {
@@ -23,12 +28,34 @@ const SearchComponent: React.FC<SearchProps> = ({ available_products }) => {
         if (query.trim() === '') {
             setFilteredProduct([]); // Show nothing names if input is empty
         } else {
-            const matchingProducts = available_products.filter((available_product) =>
+            const matchingProducts = availableProducts?.filter((available_product) =>
                 available_product.ProductTitle.toLowerCase().includes(query.trim().toLowerCase())
             );
-            setFilteredProduct(matchingProducts);
+            setFilteredProduct(matchingProducts as SearchKey[]);
         }
     };
+
+    const fetchProcducts = async () => {
+        try {
+            const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/home/searchproducts`);
+            if (response.status !== 200)
+                throw Error("response not ok!!")
+            else {
+                const data : response = await response.json();
+                setAvailableProducts(data.available_products);
+            }
+        }
+        catch (error) {
+            console.log(error)
+        }
+    }
+
+    const handleOnFocus: React.ChangeEventHandler<HTMLInputElement> = (e) => {
+        if (availableProducts === undefined) {
+            fetchProcducts();
+        }
+    };
+
 
     return (
         <>
@@ -38,6 +65,7 @@ const SearchComponent: React.FC<SearchProps> = ({ available_products }) => {
                     placeholder="Search Products..."
                     value={searchInput}
                     onChange={handleSearch}
+                    onFocus={handleOnFocus}
                     className="flex-grow p-2 rounded-l focus:outline-none text-black"
                 />
                 <button className="p-2 bg-white rounded-r border-gray-300">

@@ -3,7 +3,6 @@ import Header from "../components/Header";
 import Hero from "../components/Home/Hero";
 import Products from "../components/Home/Products";
 import CategorySection from "../components/Home/CategorySection";
-import { error } from "console";
 
 interface Product {
   ProductID: number;
@@ -28,7 +27,7 @@ const fetchProcducts = async () => {
   try {
     const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/home/getproducts`);
     if (response.status !== 200)
-      throw error("response not ok!!")
+      throw Error("response not ok!!")
     else {
       const data = await response.json();
       return data;
@@ -48,7 +47,6 @@ export default async function Home() {
 
   return (
     <>
-      <Header isLoggedIn={true} available_products={available_products} />
       <Nav />
       <Hero />
       <CategorySection />
