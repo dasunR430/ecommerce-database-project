@@ -11,7 +11,7 @@ export function Nav() {
         <div className="flex-row">
           <ul className="hidden md:flex space-x-6 p-3">
             <li>
-              <a href="#" className="text-white">Home</a>
+              <a href="/home" className="text-white">Home</a>
             </li>
             <li>
               <a href="#" className="text-white">Top Deals</a>
