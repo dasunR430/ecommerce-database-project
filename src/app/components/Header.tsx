@@ -2,6 +2,7 @@
 import React from 'react';
 import SearchComponent from './Home/SearchComponent';
 import CategoryFilter from './Home/CategoryFilter';
+import Link from 'next/link';
 
 interface SearchKey {
     ProductID: number;
@@ -14,13 +15,15 @@ interface HeaderProps {
 const Header: React.FC<HeaderProps> = ({ isLoggedIn }) => {
     return (
         <header className="flex sticky top-0 z-50 items-center bg-black text-white p-3">
-            <div className="flex items-center">
-                <div className="w-full max-w-[200px]">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="50" height="50" viewBox="0 0 100 100">
-                        <text x="50%" y="55%" textAnchor="middle" dominantBaseline="middle" fontFamily="Futura Extra Bold" fontSize="70" fill="White">C</text>
-                    </svg>
+            <Link href={'/home'}>
+                <div className="flex items-center">
+                    <div className="w-full max-w-[200px]">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="50" height="50" viewBox="0 0 100 100">
+                            <text x="50%" y="55%" textAnchor="middle" dominantBaseline="middle" fontFamily="Futura Extra Bold" fontSize="70" fill="White">C</text>
+                        </svg>
+                    </div>
                 </div>
-            </div>
+            </Link>
 
             <div className='hidden md:block'>
                 <CategoryFilter />
