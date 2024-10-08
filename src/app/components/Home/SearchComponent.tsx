@@ -1,5 +1,5 @@
 'use client'
-
+import { useRouter } from 'next/navigation';
 import React, { ReactEventHandler, useState } from 'react';
 
 interface SearchKey {
@@ -15,12 +15,14 @@ interface response {
 
 const SearchComponent: React.FC = () => {
     // State for search input and filteredProduct
+    const router = useRouter();
     const [searchInput, setSearchInput] = useState('');
     const [filteredProduct, setFilteredProduct] = useState<SearchKey[]>([]);
     const [availableProducts, setAvailableProducts] = useState<SearchKey[] | undefined>(undefined);
+    const [message, setMessage] = useState<string | undefined>();
 
     // Handle input change
-    const handleSearch: React.ChangeEventHandler<HTMLInputElement> = (e) => {
+    const handleOnChange: React.ChangeEventHandler<HTMLInputElement> = (e) => {
         const query = e.target.value;
         setSearchInput(query);
 
@@ -35,18 +37,37 @@ const SearchComponent: React.FC = () => {
         }
     };
 
+    const handleSearch = () => {
+        // Filter the names based on the query
+        if (searchInput === '') {
+            // do nothing
+        } else {
+            router.push(`/filter?search=${searchInput}`);
+            setSearchInput('');
+        }
+    };
+
     const fetchProcducts = async () => {
+        let data : response | null = null;
         try {
             const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/home/searchproducts`);
-            if (response.status !== 200)
-                throw Error("response not ok!!")
+            data = await response.json();
+            console.log("Data : ",data);
+            if (data?.status === 500){
+                // setMessage(data?.message);
+                console.log("Erorr in if 500 : ", data?.message)  
+            }
+            else if (data?.status === 503){
+                // setMessage(data?.message);
+                console.log("Erorr in if 503 : ", data?.message) 
+            }
             else {
-                const data : response = await response.json();
-                setAvailableProducts(data.available_products);
+                setAvailableProducts(data?.available_products);
             }
         }
         catch (error) {
-            console.log(error)
+            setMessage(data?.message as string);
+            console.log("Error in catch ", message)  
         }
     }
 
@@ -56,39 +77,47 @@ const SearchComponent: React.FC = () => {
         }
     };
 
-
-    return (
-        <>
-            <div className="flex flex-grow w-9 relative items-center mx-2">
-                <input
-                    type="text"
-                    placeholder="Search Products..."
-                    value={searchInput}
-                    onChange={handleSearch}
-                    onFocus={handleOnFocus}
-                    className="flex-grow p-2 rounded-l focus:outline-none text-black"
-                />
-                <button className="p-2 bg-white rounded-r border-gray-300">
-                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="black" className="w-6 h-6">
-                        <path strokeLinecap="round" strokeLinejoin="round" d="m21 21-5.197-5.197m0 0A7.5 7.5 0 1 0 5.196 5.196a7.5 7.5 0 0 0 10.607 10.607Z" />
-                    </svg>
-                </button>
-                {/* Display matching names */}
-                <div className='absolute top-full max-h-40 w-64 overflow-y-auto bg-white text-black z-10'> {/* Set a height here */}
-                    <ul className="">
-                        {filteredProduct.map((product) => (
-                            <li key={product.ProductID} className="p-2 border-b border-gray-200">
-                                {product.ProductTitle}
-                            </li>
-                        ))}
-                        {filteredProduct.length === 0 && searchInput.trim() !== '' && (
-                            <li className="p-2 text-black">No matches found</li>
-                        )}
-                    </ul>
+    if(message) {
+        return(
+            <>{message}</>
+        );
+    }
+    else {
+        return (
+            <>
+                <div className="flex flex-grow w-9 relative items-center mx-2">
+                    <input
+                        type="text"
+                        placeholder="Search Products..."
+                        value={searchInput}
+                        onChange={handleOnChange}
+                        onFocus={handleOnFocus}
+                        className="flex-grow p-2 rounded-l focus:outline-none text-black"
+                    />
+                    <button onClick={handleSearch} className="p-2 bg-white rounded-r border-gray-300">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="black" className="w-6 h-6">
+                            <path strokeLinecap="round" strokeLinejoin="round" d="m21 21-5.197-5.197m0 0A7.5 7.5 0 1 0 5.196 5.196a7.5 7.5 0 0 0 10.607 10.607Z" />
+                        </svg>
+                    </button>
+                    {/* Display matching names */}
+                    <div className='absolute top-full max-h-40 w-64 overflow-y-auto bg-white text-black z-10'> {/* Set a height here */}
+                        { searchInput !== '' && 
+                            <ul className="">
+                                {filteredProduct?.map((product) => (
+                                    <li key={product.ProductID} className="p-2 border-b border-gray-200">
+                                        {product.ProductTitle}
+                                    </li>
+                                ))}
+                                {filteredProduct?.length === 0 && searchInput.trim() !== '' && (
+                                    <li className="p-2 text-black">No matches found</li>
+                                )}
+                            </ul>
+                        }
+                    </div>
                 </div>
-            </div>
-        </>
-    );
+            </>
+        );
+    }
 };
 
 export default SearchComponent;
