@@ -37,7 +37,7 @@ export const authOptions: NextAuthOptions = {
             [credentials.email]
           );
 
-          console.log('Rows fetched from DB:', rows);
+          // console.log('Rows fetched from DB:', rows);
 
           const users = rows as User[];
           const user = users[0];
@@ -51,7 +51,7 @@ export const authOptions: NextAuthOptions = {
           // Check if the provided password matches the hashed password in the database
           const isPasswordValid = await bcrypt.compare(credentials.password, user.Password);
           if (isPasswordValid) {
-            console.log('User authenticated successfully:', user.Email);
+            // console.log('User authenticated successfully:', user.Email);
             // Return user object without password
             return { email: user.Email };
           } else {

@@ -15,7 +15,7 @@ const Login: React.FC = () => {
     setLoading(true);
     setError(null);
 
-    console.log('*', email, password);
+    // console.log('*', email, password);
 
     try {
       const result = await signIn('credentials', {

@@ -29,10 +29,10 @@ export async function POST(req: NextRequest) {
         const retriveQuery = 'SELECT * FROM customer WHERE email = ?';
         const [rows] = await connection.execute<mysql.ResultSetHeader>(retriveQuery, [email]);
 
-        console.log(rows);
+        // console.log(rows);
 
         if (rows.length > 0) {
-            console.log('Email already in use');
+            // console.log('Email already in use');
             return new Response(JSON.stringify({ message: 'Email already in use' }), {
                 status: 400,
                 headers: { 'Content-Type': 'application/json' },

@@ -1,6 +1,7 @@
+ // Start of Selection
 'use client';
 
-import { useState, useEffect} from 'react';
+import { useState, useEffect } from 'react';
 import React from 'react';
 
 export default function Register() {
@@ -31,17 +32,43 @@ export default function Register() {
             }
         } catch (error) {
             console.log('Error adding user:', error);
+        } finally {
+            setLoading(false);
+            setName('');
+            setEmail('');
+            setPassword('');
         }
-    }
-    return (<>
-    <div>
-        <h1>Register</h1>
-    </div>
-    <form onSubmit={handleSubmit}>
-        <input type="email" placeholder="Email" onChange={(e) => setEmail(e.target.value)}/>
-        <input type="password" placeholder="Password" onChange={(e) => setPassword(e.target.value)}/>
-        <input type="text" placeholder="Name" onChange={(e) => setName(e.target.value)}/>
-        <button type="submit">Register</button>
-    </form>
-    </>)
+    };
+
+    return (
+        <>
+            <div>
+                <h1>Register</h1>
+            </div>
+            <form onSubmit={handleSubmit}>
+                <input
+                    type="email"
+                    placeholder="Email"
+                    value={email}
+                    onChange={(e) => setEmail(e.target.value)}
+                />
+                <input
+                    type="password"
+                    placeholder="Password"
+                    value={password}
+                    onChange={(e) => setPassword(e.target.value)}
+                />
+                <input
+                    type="text"
+                    placeholder="Name"
+                    value={name}
+                    onChange={(e) => setName(e.target.value)}
+                />
+                <button type="submit" disabled={loading}>
+                    {loading ? 'Registering...' : 'Register'}
+                </button>
+                {error && <p className="error">{error}</p>}
+            </form>
+        </>
+    );
 }
