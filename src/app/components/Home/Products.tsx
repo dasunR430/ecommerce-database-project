@@ -24,7 +24,7 @@ const Products: React.FC<ProductsProps>= ({products, heading}) => {
               <h3 className="text-xl font-semibold mt-2">{product.ProductTitle}</h3>
               <p className="text-lg text-gray-700">${product.BasePrice}</p>
               <div className="mt-auto align-baseline"> {/* This pushes the button to the bottom */}
-                <button className="mt-4 bg-blue-600 text-white py-2 px-4 rounded hover:bg-blue-500 transition duration-300">
+                <button className="bg-white text-red-800 border border-red-800 py-2 px-4 rounded w-full justify-between items-center hover:bg-red-800 hover:text-white transition-colors duration-300">
                   View Details
                 </button>
               </div>
