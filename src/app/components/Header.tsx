@@ -29,8 +29,11 @@ const Header: React.FC<HeaderProps> = ({ isLoggedIn }) => {
                 <CategoryFilter />
             </div>
 
-                <SearchComponent />
-
+            <div className="flex-grow flex justify-center">
+                <div className="md:w-1/2 lg:w-1/2">
+                    <SearchComponent />
+                </div>
+            </div>
 
             <div className="flex items-center space-x-4">
                 <a href="/cart" className="relative">

@@ -1,4 +1,5 @@
 'use client'
+import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import React, { ReactEventHandler, useState } from 'react';
 
@@ -17,6 +18,7 @@ const SearchComponent: React.FC = () => {
     // State for search input and filteredProduct
     const router = useRouter();
     const [searchInput, setSearchInput] = useState('');
+    const [properQuery, setProperQuery] = useState('');
     const [filteredProduct, setFilteredProduct] = useState<SearchKey[]>([]);
     const [availableProducts, setAvailableProducts] = useState<SearchKey[] | undefined>(undefined);
     const [message, setMessage] = useState<string | undefined>();
@@ -26,8 +28,12 @@ const SearchComponent: React.FC = () => {
         const query = e.target.value;
         setSearchInput(query);
 
+        // Normalize the query by trimming and replacing multiple spaces with a single space
+        const trimmedQuery = query.trim().replace(/\s+/g, ' ')
+        setProperQuery(trimmedQuery);
+
         // Filter the names based on the query
-        if (query.trim() === '') {
+        if (trimmedQuery === '') {
             setFilteredProduct([]); // Show nothing names if input is empty
         } else {
             const matchingProducts = availableProducts?.filter((available_product) =>
@@ -39,7 +45,7 @@ const SearchComponent: React.FC = () => {
 
     const handleSearch = () => {
         // Filter the names based on the query
-        if (searchInput === '') {
+        if (properQuery === '') {
             // do nothing
         } else {
             router.push(`/filter?search=${searchInput}`);
@@ -48,18 +54,18 @@ const SearchComponent: React.FC = () => {
     };
 
     const fetchProcducts = async () => {
-        let data : response | null = null;
+        let data: response | null = null;
         try {
             const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/home/searchproducts`);
             data = await response.json();
-            console.log("Data : ",data);
-            if (data?.status === 500){
+            console.log("Data : ", data);
+            if (data?.status === 500) {
                 // setMessage(data?.message);
-                console.log("Erorr in if 500 : ", data?.message)  
+                console.log("Erorr in if 500 : ", data?.message)
             }
-            else if (data?.status === 503){
+            else if (data?.status === 503) {
                 // setMessage(data?.message);
-                console.log("Erorr in if 503 : ", data?.message) 
+                console.log("Erorr in if 503 : ", data?.message)
             }
             else {
                 setAvailableProducts(data?.available_products);
@@ -67,7 +73,7 @@ const SearchComponent: React.FC = () => {
         }
         catch (error) {
             setMessage(data?.message as string);
-            console.log("Error in catch ", message)  
+            console.log("Error in catch ", message)
         }
     }
 
@@ -77,15 +83,15 @@ const SearchComponent: React.FC = () => {
         }
     };
 
-    if(message) {
-        return(
+    if (message) {
+        return (
             <>{message}</>
         );
     }
     else {
         return (
             <>
-                <div className="flex flex-grow w-9 relative items-center mx-2">
+                <div className="flex flex-grow relative items-center mx-2">
                     <input
                         type="text"
                         placeholder="Search Products..."
@@ -101,11 +107,16 @@ const SearchComponent: React.FC = () => {
                     </button>
                     {/* Display matching names */}
                     <div className='absolute top-full max-h-40 w-64 overflow-y-auto bg-white text-black z-10'> {/* Set a height here */}
-                        { searchInput !== '' && 
+                        {searchInput !== '' &&
                             <ul className="">
                                 {filteredProduct?.map((product) => (
                                     <li key={product.ProductID} className="p-2 border-b border-gray-200">
-                                        {product.ProductTitle}
+                                        {/* TODO: change link to productdetails page */}
+                                        <Link href={`/filter?search=${product.ProductTitle}`}>
+                                            <div>
+                                                {product.ProductTitle}
+                                            </div>
+                                        </Link>
                                     </li>
                                 ))}
                                 {filteredProduct?.length === 0 && searchInput.trim() !== '' && (
