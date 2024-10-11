@@ -1,7 +1,7 @@
 import Nav from "../components/Nav";
+import AttributeFilter from "../components/Search/AttributeFilter";
 import FilterSideBar from "../components/Search/FilterSideBar";
 import ProductCard from "../components/Search/ProductCard";
-// import { useRouter, useSearchParams } from "next/navigation";
 
 interface Product {
   ProductID: number;
@@ -63,20 +63,26 @@ export default async function FilterPage(props: { searchParams: { search?: strin
   return (
     <>
       <Nav />
-      <h3>Matching Products for {search}</h3>
-      <div className="flex">
-        <FilterSideBar />
-        {data?.matching_products?.map(
-          (product: Product) => {
-            return (
-              <div key={product.ProductID} className="w-1/2 m-10">
-                <ProductCard product={product} />
-              </div>
-            )
-          })
-        }
+      <div className="flex flex-col md:flex-row h-screen"> {/* Stack on mobile and row on medium and larger screens */}
+        <div className="flex flex-col border-r border-gray-300 w-full md:w-1/4"> {/* Full width on mobile, quarter on larger screens */}
+          <FilterSideBar selectedSubCategoryIds={subCategoryIds} />
+          <AttributeFilter selectedSubCategoryIds={subCategoryIds} />
+        </div>
+        <div className="flex-grow w-full md:w-full h-full bg-gray-100 p-4"> {/* Full width on mobile, three-quarters on larger screens */}
+          <div className="flex flex-col space-y-4"> {/* Stack product cards vertically */}
+            <h3 className="text-2xl font-bold text-gray-800 mb-4">
+              Matching Products for <span className="text-red-600"> "{search}"</span>
+            </h3>
+            {data?.matching_products?.map((product: Product) => {
+              return (
+                <div key={product.ProductID} className="w-full md:w-full mx-auto"> {/* Full width on mobile */}
+                  <ProductCard product={product} />
+                </div>
+              );
+            })}
+          </div>
+        </div>
       </div>
-
     </>
   );
 }

@@ -11,8 +11,8 @@ interface ProductCardProps {
 
 const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
     return (
-        <div className="bg-white shadow-md rounded-lg overflow-hidden transition-transform transform hover:scale-105 hover:shadow-lg">
-        <div className="relative pb-2/3">
+        <div className="bg-white shadow-md rounded-lg overflow-hidden transition-transform hover:shadow-lg">
+        <div className="relative">
           {/* Image */}
           {/* <img
             src={product.PrimaryImage}
@@ -30,7 +30,7 @@ const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
             ${product.BasePrice}
           </p>
           {/* CTA Button */}
-          <button className="bg-blue-500 text-white py-2 px-4 rounded-lg w-full hover:bg-blue-600 transition-colors">
+          <button className="bg-white text-red-800 border border-red-800 py-2 px-4 rounded w-full justify-between items-center hover:bg-red-800 hover:text-white transition-colors duration-300">
             View Product
           </button>
         </div>
