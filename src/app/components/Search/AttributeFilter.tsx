@@ -25,7 +25,7 @@ interface AttributeFilterProps {
 }
 
 const AttributeFilter: React.FC<AttributeFilterProps> = (props) => {
-    const [showCategoryFilter, setShowCategoryFilter] = useState(true);
+    const [showCategoryFilter, setShowCategoryFilter] = useState(false);
 
     const { selectedSubCategoryIds } = props;
     const subCategoryRecord: Record<number, boolean> = selectedSubCategoryIds.reduce((acc, id) => {
@@ -166,7 +166,7 @@ const AttributeFilter: React.FC<AttributeFilterProps> = (props) => {
                     onClick={() => setShowCategoryFilter(!showCategoryFilter)}
                     className="bg-white text-red-800 border border-red-800 py-2 px-4 rounded w-full flex justify-between items-center hover:bg-red-800 hover:text-white transition-colors duration-300"
                 >
-                    Attribute Filter
+                    Attributes
                     {showCategoryFilter ? (
                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className="w-5 h-5">
                             <path strokeLinecap="round" strokeLinejoin="round" d="M4.5 15.75l7.5-7.5 7.5 7.5" />

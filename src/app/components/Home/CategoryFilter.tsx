@@ -29,7 +29,7 @@ const CategoryFilter: React.FC = () => {
             if (response.status !== 200)
                 throw Error("response not ok!!")
             else {
-                const data : response = await response.json();
+                const data: response = await response.json();
                 setCategories(data.categories);
             }
         }
@@ -60,11 +60,11 @@ const CategoryFilter: React.FC = () => {
                                     <h3 className="text-xl font-semibold">{category.name}</h3>
                                     <ul className="mt-2">
                                         {category.subCategories.map((subCategory) => (
-                                            <li key={subCategory.SubCategoryID} className="text-gray-700 hover:text-blue-600 cursor-pointer">
-                                                <Link href={`/category/${category.name.toLowerCase()}/${subCategory.SubCategoryName.toLowerCase()}`}>
+                                            <Link href={`/filter?subcategory=${subCategory.SubCategoryID}`}>
+                                                <li key={subCategory.SubCategoryID} className="text-gray-700 hover:text-blue-600 cursor-pointer">
                                                     {subCategory.SubCategoryName}
-                                                </Link>
-                                            </li>
+                                                </li>
+                                            </Link>
                                         ))}
                                     </ul>
                                 </div>

@@ -1,5 +1,4 @@
 'use client'
-import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import React, { useState } from 'react';
 
@@ -114,8 +113,6 @@ const FilterSideBar: React.FC<FilterSideBarProps> = (props) => {
         currentUrl.searchParams.delete('subcategory');
         selectedSubCategoryIds.forEach((id) => currentUrl.searchParams.append('subcategory', `${id}`));
         router.push(currentUrl.toString());
-
-
     };
 
     // Handle selecting/deselecting a subcategory
@@ -166,7 +163,7 @@ const FilterSideBar: React.FC<FilterSideBarProps> = (props) => {
                     onClick={() => setShowCategoryFilter(!showCategoryFilter)}
                     className="bg-white text-red-800 border border-red-800 py-2 px-4 rounded w-full flex justify-between items-center hover:bg-red-800 hover:text-white transition-colors duration-300"
                 >
-                    Category Filter
+                    Categories
                     {showCategoryFilter ? (
                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className="w-5 h-5">
                             <path strokeLinecap="round" strokeLinejoin="round" d="M4.5 15.75l7.5-7.5 7.5 7.5" />

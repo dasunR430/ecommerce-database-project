@@ -43,7 +43,7 @@ const CategorySection: React.FC = async () => {
                 <ul className="mt-2">
                     {categories?.map((category) => (
                         category.subCategories.map((subCategory) => (
-                            <Link href={`/category/${category.name.toLowerCase()}/${subCategory.SubCategoryName.toLowerCase()}`}>
+                            <Link href={`/filter?subcategory=${subCategory.SubCategoryID}`}>
                                 <li key={subCategory.SubCategoryID} className="p-4 m-2 hover:bg-gray-100 text-gray-700 inline-block shadow-md rounded-md border border-gray-200 hover:text-blue-600 cursor-pointer">
                                     {subCategory.SubCategoryName}
                                 </li>
