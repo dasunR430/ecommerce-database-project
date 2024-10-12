@@ -1,27 +1,8 @@
-body {
-    display: flex;
-    justify-content: center;
-    /* align-items: center; */
-    height: 50vh; /* Full viewport height */
-    margin: 0; /* Remove default margin */
-}
-h1{
-    color: hsl(0, 0%, 12%);
-    font-family: 'Roboto', sans-serif;
-    margin-bottom: 50px;
-    margin-top: -50px;
-}
-label{
-    color: hsl(0, 0%, 47%);
-    font-family: 'Roboto', sans-serif;
-}
-input{
-    color: hsl(0, 0%, 12%);
-    font-family: 'Roboto', sans-serif;
-    padding: 10px;
-    width: 400px;
-    height: 10px;
-    border: 2px solid hsl(0, 0%, 57%);
-    border-radius: 5px;
-    padding: 10px;
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+@layer base {
+  :root {
+    --radius: 0.5rem
+  }
 }
