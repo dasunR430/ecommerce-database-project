@@ -3,15 +3,14 @@ import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import React, { ReactEventHandler, useState } from 'react';
 
-interface SearchKey {
-    ProductID: number;
-    ProductTitle: string;
+interface suggestion {
+    ProductTitle: string[]
 }
 
 interface response {
     status: number;
     message?: string;
-    available_products: SearchKey[];
+    suggestions: suggestion[];
 }
 
 const SearchComponent: React.FC = () => {
@@ -19,12 +18,13 @@ const SearchComponent: React.FC = () => {
     const router = useRouter();
     const [searchInput, setSearchInput] = useState('');
     const [properQuery, setProperQuery] = useState('');
-    const [filteredProduct, setFilteredProduct] = useState<SearchKey[]>([]);
-    const [availableProducts, setAvailableProducts] = useState<SearchKey[] | undefined>(undefined);
+    const [filteredProduct, setFilteredProduct] = useState<suggestion[]>([]);
+    const [showDropdown, setShowDropdown] = useState(false);
     const [message, setMessage] = useState<string | undefined>();
 
     // Handle input change
-    const handleOnChange: React.ChangeEventHandler<HTMLInputElement> = (e) => {
+    const handleOnChange: React.ChangeEventHandler<HTMLInputElement> = async (e) => {
+
         const query = e.target.value;
         setSearchInput(query);
 
@@ -36,10 +36,7 @@ const SearchComponent: React.FC = () => {
         if (trimmedQuery === '') {
             setFilteredProduct([]); // Show nothing names if input is empty
         } else {
-            const matchingProducts = availableProducts?.filter((available_product) =>
-                available_product.ProductTitle.toLowerCase().includes(query.trim().toLowerCase())
-            );
-            setFilteredProduct(matchingProducts as SearchKey[]);
+            await fetchSearchTerms(trimmedQuery) as unknown as response;
         }
     };
 
@@ -53,10 +50,16 @@ const SearchComponent: React.FC = () => {
         }
     };
 
-    const fetchProcducts = async () => {
+    const fetchSearchTerms = async (query: string) => {
         let data: response | null = null;
         try {
-            const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/home/searchproducts`);
+            const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/home/searchterms`,
+                {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ query: query })
+                }
+            );
             data = await response.json();
             console.log("Data : ", data);
             if (data?.status === 500) {
@@ -68,7 +71,7 @@ const SearchComponent: React.FC = () => {
                 console.log("Erorr in if 503 : ", data?.message)
             }
             else {
-                setAvailableProducts(data?.available_products);
+                setFilteredProduct(data?.suggestions as suggestion[]);
             }
         }
         catch (error) {
@@ -76,12 +79,6 @@ const SearchComponent: React.FC = () => {
             console.log("Error in catch ", message)
         }
     }
-
-    const handleOnFocus: React.ChangeEventHandler<HTMLInputElement> = (e) => {
-        if (availableProducts === undefined) {
-            fetchProcducts();
-        }
-    };
 
     if (message) {
         return (
@@ -97,7 +94,8 @@ const SearchComponent: React.FC = () => {
                         placeholder="Search Products..."
                         value={searchInput}
                         onChange={handleOnChange}
-                        onFocus={handleOnFocus}
+                        onFocus={() => setShowDropdown(true)}
+                        onBlur={() => setTimeout(() => setShowDropdown(false), 300)}
                         className="flex-grow p-2 rounded-l focus:outline-none text-black"
                     />
                     <button onClick={handleSearch} className="p-2 bg-white rounded-r border-gray-300">
@@ -106,25 +104,27 @@ const SearchComponent: React.FC = () => {
                         </svg>
                     </button>
                     {/* Display matching names */}
-                    <div className='absolute top-full max-h-40 w-64 overflow-y-auto bg-white text-black z-10'> {/* Set a height here */}
-                        {searchInput !== '' &&
-                            <ul className="">
-                                {filteredProduct?.map((product) => (
-                                    <li key={product.ProductID} className="p-2 border-b border-gray-200">
-                                        {/* TODO: change link to productdetails page */}
-                                        <Link href={`/filter?search=${product.ProductTitle}`}>
-                                            <div>
-                                                {product.ProductTitle}
-                                            </div>
+                    {showDropdown &&
+                        <div className='absolute top-full max-h-40 w-64 overflow-y-auto bg-white text-black z-10'> {/* Set a height here */}
+                            {searchInput !== '' &&
+                                <ul className="">
+                                    {filteredProduct?.map((suggestion, id) => (
+                                        <Link href={`/filter?search=${suggestion.ProductTitle}`}>
+                                            <li key={id} className="p-2 border-b border-gray-200">
+                                                {/* TODO: change link to productdetails page */}
+                                                <div>
+                                                    {suggestion.ProductTitle}
+                                                </div>
+                                            </li>
                                         </Link>
-                                    </li>
-                                ))}
-                                {filteredProduct?.length === 0 && searchInput.trim() !== '' && (
-                                    <li className="p-2 text-black">No matches found</li>
-                                )}
-                            </ul>
-                        }
-                    </div>
+                                    ))}
+                                    {filteredProduct?.length === 0 && searchInput.trim() !== '' && (
+                                        <li className="p-2 text-black">No matches found</li>
+                                    )}
+                                </ul>
+                            }
+                        </div>
+                    }
                 </div>
             </>
         );

@@ -1,27 +1,29 @@
 import { PoolConnection, RowDataPacket } from "mysql2/promise";
 import { pool } from "../../dbconnect";
 
-interface SearchKey {
-    ProductID: number;
-    ProductTitle: string;
+interface suggestion {
+    ProductTitle : string[]
 }
+
 interface response {
     status: number;
     message?: string;
-    available_products: SearchKey[];
+    suggestions : suggestion[];
 }
 
-export async function GET(req: any) {
+export async function POST(req: any) {
+    
     let conn: PoolConnection | null = null;
     try {
+        const {query} = await req.json();
         conn = await pool.getConnection();
-        const available_products_query = `SELECT ProductID, ProductTitle FROM BaseProduct`;
-        const [available_products_result] = await conn.execute<RowDataPacket[]>(available_products_query);
+        const available_products_query = `SELECT ProductTitle FROM BaseProduct WHERE ProductTitle LIKE ? UNION SELECT search_term as ProductTitle FROM SearchKey WHERE search_term LIKE ?`;
+        const [available_products_result] = await conn.execute<RowDataPacket[]>(available_products_query, [`%${query}%`, `%${query}%`]);
         // TODO : handle when available_products_result is empty
         const data: response = {
             status: 200,
             message: "success",
-            available_products: available_products_result as SearchKey[],
+            suggestions: available_products_result as suggestion[],
         }
 
         const myHeader = new Headers();
