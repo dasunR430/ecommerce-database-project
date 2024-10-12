@@ -1,4 +1,3 @@
- // Start of Selection
 'use client';
 
 import { useState, useEffect } from 'react';
@@ -29,9 +28,11 @@ export default function Register() {
                 window.location.href = '/';
             } else {
                 console.log('Failed to add user');
+                setError('Please enter a different email');
             }
         } catch (error) {
             console.log('Error adding user:', error);
+            setError('Email already in use');
         } finally {
             setLoading(false);
             setName('');
