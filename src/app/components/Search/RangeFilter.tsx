@@ -20,8 +20,8 @@ const RangeFilter: React.FC<RangeFilterProps> = ({ min, max, onApply }) => {
 
             {/* Displaying the selected range */}
             <div className="flex justify-between mb-4">
-                <div>Min: ${values[0]}</div>
-                <div>Max: ${values[1]}</div>
+                <div>Min: Rs.{values[0]}</div>
+                <div>Max: Rs.{values[1]}</div>
             </div>
 
             {/* The Range Slider */}
