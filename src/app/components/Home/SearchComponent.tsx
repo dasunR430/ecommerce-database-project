@@ -95,23 +95,22 @@ const SearchComponent: React.FC = () => {
                         value={searchInput}
                         onChange={handleOnChange}
                         onFocus={() => setShowDropdown(true)}
-                        onBlur={() => setTimeout(() => setShowDropdown(false), 300)}
-                        className="flex-grow p-2 rounded-l focus:outline-none text-black"
+                        onBlur={() => setTimeout(() => setShowDropdown(false), 100)}
+                        className="flex-grow p-2 rounded-l focus:outline-none focus:bg-gray-300 text-black"
                     />
-                    <button onClick={handleSearch} className="p-2 bg-white rounded-r border-gray-300">
+                    <button onClick={handleSearch} className="p-2 bg-gray-300 rounded-r border-gray-300">
                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="black" className="w-6 h-6">
                             <path strokeLinecap="round" strokeLinejoin="round" d="m21 21-5.197-5.197m0 0A7.5 7.5 0 1 0 5.196 5.196a7.5 7.5 0 0 0 10.607 10.607Z" />
                         </svg>
                     </button>
                     {/* Display matching names */}
                     {showDropdown &&
-                        <div className='absolute top-full max-h-40 w-64 overflow-y-auto bg-white text-black z-10'> {/* Set a height here */}
+                        <div className='absolute top-full max-h-40 w-full overflow-y-auto bg-gray-200 rounded rounded-b-lg text-black z-10'> {/* Set a height here */}
                             {searchInput !== '' &&
-                                <ul className="">
+                                <ul className="border-black">
                                     {filteredProduct?.map((suggestion, id) => (
                                         <Link href={`/filter?search=${suggestion.ProductTitle}`}>
-                                            <li key={id} className="p-2 border-b border-gray-200">
-                                                {/* TODO: change link to productdetails page */}
+                                            <li key={id} className="p-2 border-b border-gray-200 hover:bg-gray-400">
                                                 <div>
                                                     {suggestion.ProductTitle}
                                                 </div>
