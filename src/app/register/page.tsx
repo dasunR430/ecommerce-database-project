@@ -56,15 +56,29 @@ export default function Register() {
         e.preventDefault();
         setLoading(true);
         setError('');
-
+    
+        // If address2 is empty, set it to null
+        const processedAddress2 = address2 === '' ? null : address2;
+    
         try {
             const response = await fetch('/api/auth/addUser', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
                 },
-                body: JSON.stringify({ email, password, name, address1, address2, city, district, postalCode, phoneNumber }),
+                body: JSON.stringify({ 
+                    email, 
+                    password, 
+                    name, 
+                    address1, 
+                    address2: processedAddress2, // Use processedAddress2 here
+                    city, 
+                    district, 
+                    postalCode, 
+                    phoneNumber 
+                }),
             });
+    
             if (response.ok) {
                 console.log('User added successfully');
                 window.location.href = '/';
@@ -74,7 +88,7 @@ export default function Register() {
             }
         } catch (error) {
             console.log('Error adding user:', error);
-            setError('Email already in use');
+            setError('An error occurred. Please try again.');
         } finally {
             setLoading(false);
             setName('');

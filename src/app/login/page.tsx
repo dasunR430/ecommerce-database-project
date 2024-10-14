@@ -44,6 +44,8 @@ const Login: React.FC = () => {
     } finally {
       setLoading(false);
     }
+    setPassword("");
+    setEmail("");
   };
 
   // return (
