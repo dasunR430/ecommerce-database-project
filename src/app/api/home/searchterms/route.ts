@@ -17,9 +17,11 @@ export async function POST(req: any) {
     try {
         const {query} = await req.json();
         conn = await pool.getConnection();
-        const available_products_query = `SELECT ProductTitle FROM BaseProduct WHERE ProductTitle LIKE ? UNION SELECT search_term as ProductTitle FROM SearchKey WHERE search_term LIKE ?`;
-        const [available_products_result] = await conn.execute<RowDataPacket[]>(available_products_query, [`%${query}%`, `%${query}%`]);
+        // const available_products_query = `SELECT ProductTitle FROM BaseProduct WHERE ProductTitle LIKE ? UNION SELECT search_term as ProductTitle FROM SearchKey WHERE search_term LIKE ?`;
+        const available_products_FULL_TEXT_INDEX_query = `SELECT ProductTitle FROM BaseProduct WHERE MATCH(ProductTitle, Description) AGAINST(?) UNION SELECT search_term as ProductTitle FROM SearchKey WHERE search_term LIKE ?`;
+        const [available_products_result] = await conn.execute<RowDataPacket[]>(available_products_FULL_TEXT_INDEX_query, [`${query}`, `${query}%`]);
         // TODO : handle when available_products_result is empty
+        console.log(available_products_result)
         const data: response = {
             status: 200,
             message: "success",

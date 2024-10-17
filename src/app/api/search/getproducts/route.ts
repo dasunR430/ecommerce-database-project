@@ -28,17 +28,17 @@ export async function POST(req: any) {
         }
         else if ((search === '' ||  search === undefined) && subCategories.length != 0) {
             matching_products_query = `SELECT SQL_CALC_FOUND_ROWS DISTINCT b.ProductID, ProductTitle, BasePrice, PrimaryImage FROM BaseProduct b JOIN ProductSubcategory s ON b.ProductID = s.ProductID WHERE s.subCategoryID IN (${subCategories.map(() => '?').join(', ')}) AND b.BasePrice BETWEEN ? AND ? LIMIT ? OFFSET ?`;
-            [matching_products_result] = await conn.execute<RowDataPacket[]>(matching_products_query, [`%${search}%`, ...subCategories, min, max, `${limit}`, `${(page-1)*limit}`]);
+            [matching_products_result] = await conn.execute<RowDataPacket[]>(matching_products_query, [...subCategories, min, max, `${limit}`, `${(page-1)*limit}`]);
         }
         else if (search != '' && subCategories.length == 0) {
-            matching_products_query = `SELECT SQL_CALC_FOUND_ROWS DISTINCT ProductID, ProductTitle, BasePrice, PrimaryImage FROM BaseProduct WHERE ProductTitle LIKE ? AND BasePrice BETWEEN ? AND ? LIMIT ? OFFSET ?`;
+            matching_products_query = `SELECT SQL_CALC_FOUND_ROWS DISTINCT ProductID, ProductTitle, BasePrice, PrimaryImage FROM BaseProduct WHERE MATCH(ProductTitle, Description) AGAINST(?) AND BasePrice BETWEEN ? AND ? LIMIT ? OFFSET ?`;
             console.log(matching_products_query);
-            console.log([`%${search}%`, min, max, `${limit}`, `${(page-1)*limit}`]);
-            [matching_products_result] = await conn.execute<RowDataPacket[]>(matching_products_query, [`%${search}%`, min, max, `${limit}`, `${(page-1)*limit}`]);
+            console.log([`${search}`, min, max, `${limit}`, `${(page-1)*limit}`]);
+            [matching_products_result] = await conn.execute<RowDataPacket[]>(matching_products_query, [`${search}`, min, max, `${limit}`, `${(page-1)*limit}`]);
         }
         else {
-            matching_products_query = `SELECT SQL_CALC_FOUND_ROWS DISTINCT b.ProductID, ProductTitle, BasePrice, PrimaryImage FROM BaseProduct b JOIN ProductSubcategory s ON b.ProductID = s.ProductID WHERE b.ProductTitle LIKE ? AND s.subCategoryID IN (${subCategories.map(() => '?').join(', ')}) AND b.BasePrice BETWEEN ? AND ? LIMIT ? OFFSET ?`;
-            [matching_products_result] = await conn.execute<RowDataPacket[]>(matching_products_query, [`%${search}%`, ...subCategories, min, max, `${limit}`, `${(page-1)*limit}`]);
+            matching_products_query = `SELECT SQL_CALC_FOUND_ROWS DISTINCT b.ProductID, ProductTitle, BasePrice, PrimaryImage FROM BaseProduct b JOIN ProductSubcategory s ON b.ProductID = s.ProductID WHERE MATCH(b.ProductTitle, b.Description) AGAINST(?) AND s.subCategoryID IN (${subCategories.map(() => '?').join(', ')}) AND b.BasePrice BETWEEN ? AND ? LIMIT ? OFFSET ?`;
+            [matching_products_result] = await conn.execute<RowDataPacket[]>(matching_products_query, [`${search}`, ...subCategories, min, max, `${limit}`, `${(page-1)*limit}`]);
         }
 
         console.log("matching_products_query :", matching_products_query);
