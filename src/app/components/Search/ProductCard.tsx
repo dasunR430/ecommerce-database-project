@@ -42,12 +42,12 @@ const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
         </h3>
         {/* Price */}
         <p className="text-gray-600 text-md font-medium mb-4">
-          ${product.BasePrice}
+          {formatPrice(product.BasePrice)}
         </p>
         {/* CTA Button */}
-        <button 
+        <button
           className="bg-white text-red-800 border border-red-800 py-2 px-4 rounded w-full justify-between items-center hover:bg-red-800 hover:text-white transition-colors duration-300"
-          onClick={()=> {handleOnClick(product.ProductID)}}  
+          onClick={() => { handleOnClick(product.ProductID) }}
         >
           View Product
         </button>
@@ -57,3 +57,11 @@ const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
 };
 
 export default ProductCard;
+
+function formatPrice(amount : number, currency : string = 'LKR') {
+  return new Intl.NumberFormat('en-US', {
+      style: 'currency',
+      currency: currency,
+      minimumFractionDigits: 2
+  }).format(amount);
+}
