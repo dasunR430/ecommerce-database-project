@@ -1,5 +1,5 @@
 import { PoolConnection, RowDataPacket } from "mysql2/promise";
-import { pool } from "../../dbconnect";
+import { pool } from "../../../../sharedCode/dbconnect";
 
 interface suggestion {
     ProductTitle : string[]
