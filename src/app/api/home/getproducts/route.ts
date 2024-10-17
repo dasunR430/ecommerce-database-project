@@ -1,6 +1,6 @@
 import { RowDataPacket } from "mysql2/promise";
-import { pool } from "../../dbconnect";
-// TODO : Write correct logic for get recommened_products
+import { pool } from "../../../../sharedCode/dbconnect";
+// TODO : Write correct logic for get recommened_products and trending_products
 interface Product {
     ProductID: number;
     ProductTitle: string;
