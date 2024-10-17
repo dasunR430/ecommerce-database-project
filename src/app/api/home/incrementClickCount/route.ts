@@ -10,7 +10,7 @@ export async function POST(req: any) {
     const conn = await pool.getConnection();
     try {
         const {productID} = await req.json();
-        const incrementing_query = `INSERT INTO ClickCount (ProductID, ClickDate) VALUES (?, CONCAT(CURDATE(), ' 01:00:00')) ON DUPLICATE KEY UPDATE ClickDate = VALUES(ClickDate),  Count = Count + 1;`;
+        const incrementing_query = `INSERT INTO ClickCount (ProductID) VALUES (?) ON DUPLICATE KEY UPDATE ClickDate = VALUES(ClickDate),  Count = Count + 1;`;
         const [incrementing_query_result] = await conn.execute<RowDataPacket[]>(incrementing_query, [productID]);
         const data: response = {
             status: 200,
