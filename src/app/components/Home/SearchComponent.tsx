@@ -46,7 +46,7 @@ const SearchComponent: React.FC = () => {
             // do nothing
         } else {
             router.push(`/filter?search=${searchInput}`);
-            setSearchInput('');
+            setSearchInput(searchInput);
         }
     };
 
