@@ -9,7 +9,9 @@ interface User {
   Password: string;
 }
 
+
 export const authOptions: NextAuthOptions = {
+  secret: process.env.SECRET,
   pages: {
     signIn: "/Login",  // Custom sign-in page
   },
@@ -69,5 +71,4 @@ export const authOptions: NextAuthOptions = {
       },
     }),
   ],
-  // session and callbacks remain unchanged
 };
