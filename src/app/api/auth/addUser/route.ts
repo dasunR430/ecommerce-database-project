@@ -12,7 +12,7 @@ interface Customer {
 export async function POST(req: NextRequest) {
     try {
         // Parse request body
-        const { email, password, name, address1, address2, city, district, postalCode, phoneNumber } =await req.json();
+        const { email, password, name, phoneNumber } =await req.json();
 
         // Validate input
         if (!email || !password) {
@@ -38,9 +38,9 @@ export async function POST(req: NextRequest) {
                 headers: { 'Content-Type': 'application/json' },
             });
         } else {
-            const insertQuery = 'CALL addNewCustomer(?, ?, ?, ?, ?, ?, ?, ?, ?)';
+            const insertQuery = 'CALL addNewCustomer(?, ?, ?, ?)';
             const hashPassword = await bcrypt.hash(password, 10);
-            await connection.execute(insertQuery, [name, email, hashPassword, address1, address2, city, district, postalCode, phoneNumber]);
+            await connection.execute(insertQuery, [name, email, hashPassword,phoneNumber]);
             return new Response(JSON.stringify({ message: 'User added successfully' }), {
                 status: 200,
                 headers: { 'Content-Type': 'application/json' },
