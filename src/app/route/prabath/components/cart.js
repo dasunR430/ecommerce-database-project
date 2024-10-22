@@ -1,3 +1,4 @@
+'use client';
 import styles from "./cart.module.css";
 import utils from "./utils.module.css";
 import { CartContext } from "./cartProvider";
