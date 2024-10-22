@@ -29,5 +29,6 @@ export default function ProfilePage() {
     return <div>Loading...</div>;
   }
 
+  console.log(email);
   return <Profile email={email || ""}/>;
 }

@@ -1,8 +1,10 @@
 // src/components/Header.tsx
+'use client'
 import React from 'react';
 import SearchComponent from './Home/SearchComponent';
 import CategoryFilter from './Home/CategoryFilter';
 import Link from 'next/link';
+import { signOut } from 'next-auth/react';
 
 interface SearchKey {
     ProductID: number;
@@ -13,8 +15,15 @@ interface HeaderProps {
 }
 
 const Header: React.FC<HeaderProps> = ({ isLoggedIn }) => {
+    const handleSignOut = async () => {
+        await signOut({ redirect: false });
+        // Manually handle the redirect
+        window.location.href = "/";
+      };
+      
     return (
         <header className="flex sticky top-0 z-50 items-center bg-black text-white p-2">
+            <button onClick={()=> handleSignOut()}>Sign Out</button>;
             <Link href={'/home'}>
                 <div className="flex items-center">
                     <div className="w-full max-w-[200px]">
