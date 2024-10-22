@@ -1,5 +1,6 @@
 'use client'
-import React, { useState } from 'react';
+import { useState, useCallback } from 'react';
+import debounce from 'lodash.debounce';
 import { Range, getTrackBackground } from 'react-range';
 
 interface RangeFilterProps {
@@ -9,7 +10,21 @@ interface RangeFilterProps {
 }
 
 const RangeFilter: React.FC<RangeFilterProps> = ({ min, max, onApply }) => {
-    const [values, setValues] = useState([min, max]);
+    const [values, setValues] = useState<number[]>([min, max]);
+    const [displayValues, setDisplayValues] = useState<number[]>(values);
+
+    // Debounce value update
+    const debouncedSetValues = useCallback(
+        debounce((newValues : number[]) => {
+            setDisplayValues(newValues);
+        }, 200),
+        []
+    );
+
+    const handleChange = (newValues: number[]) => {
+        setValues(newValues);
+        debouncedSetValues(newValues); // Update display values with debounce
+    };
 
     const handleApply = () => {
         onApply(values[0], values[1]);
@@ -19,10 +34,22 @@ const RangeFilter: React.FC<RangeFilterProps> = ({ min, max, onApply }) => {
         <div className="p-2 bg-white rounded-lg">
 
             {/* Displaying the selected range */}
-            <div className="flex justify-between mb-4">
-                <div>Min: Rs.{values[0]}</div>
-                <div>Max: Rs.{values[1]}</div>
+            <div className="w-full mb-4 grid grid-cols-2">
+                <div className="text-left">
+                    <span>Min:</span>
+                </div>
+                <div className="text-right">
+                    <span>{formatPrice(displayValues[0])}</span>
+                </div>
+
+                <div className="text-left">
+                    <span>Max:</span>
+                </div>
+                <div className="text-right">
+                    <span>{formatPrice(displayValues[1])}</span>
+                </div>
             </div>
+
 
             {/* The Range Slider */}
             <Range
@@ -30,7 +57,7 @@ const RangeFilter: React.FC<RangeFilterProps> = ({ min, max, onApply }) => {
                 min={min}
                 max={max}
                 values={values}
-                onChange={(newValues) => setValues(newValues)}
+                onChange={((newValues) => handleChange(newValues))}
                 renderTrack={({ props, children }) => (
                     <div
                         {...props}
@@ -81,3 +108,11 @@ const RangeFilter: React.FC<RangeFilterProps> = ({ min, max, onApply }) => {
 };
 
 export default RangeFilter;
+
+function formatPrice(amount: number, currency: string = 'LKR') {
+    return new Intl.NumberFormat('en-US', {
+        style: 'currency',
+        currency: currency,
+        minimumFractionDigits: 2
+    }).format(amount);
+}
