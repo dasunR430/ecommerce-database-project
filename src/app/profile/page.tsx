@@ -7,29 +7,27 @@ import React from "react";
 
 export default function ProfilePage() {
   const router = useRouter(); // Initializing the router
-  // const [loading, setLoading] = useState(true); // State to manage loading
-  // const [email, setEmail] = useState<string | null>(null); // State to store user email
+  const [loading, setLoading] = useState(true); // State to manage loading
+  const [email, setEmail] = useState<string | null>(null); // State to store user email
 
-  // useEffect(() => {
-  //   const checkSession = async () => {
-  //     const session = await getSession(); // Getting the session
-  //     if (!session) {
-  //       router.push("/login"); // Redirecting to sign-in if no session
-  //     } else {
-  //       setEmail(session.user?.email || null); // Set email if session exists
-  //       setLoading(false); // Set loading to false if session exists
-  //     }
-  //   };
+  useEffect(() => {
+    const checkSession = async () => {
+      const session = await getSession(); // Getting the session
+      if (!session) {
+        router.push("/login"); // Redirecting to sign-in if no session
+      } else {
+        setEmail(session.user?.email || null); // Set email if session exists
+        setLoading(false); // Set loading to false if session exists
+      }
+    };
 
-  //   checkSession(); // Calling the session check
-  // }, [router]);
+    checkSession(); // Calling the session check
+  }, [router]);
 
-  // // Show loading indicator while checking session
-  // if (loading) {
-  //   return <div>Loading...</div>;
-  // }
+  // Show loading indicator while checking session
+  if (loading) {
+    return <div>Loading...</div>;
+  }
 
-  return (
-    <Profile/>
-  );
-};
+  return <Profile email={email || ""}/>;
+}

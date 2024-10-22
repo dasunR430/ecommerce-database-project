@@ -2,31 +2,14 @@
 import React, { useState, useEffect } from 'react';
 import { Input } from '../../ui/input';
 import { Button } from '../../ui/button';
-import { useRouter } from "next/navigation"; // Importing useRouter for routing
-import { getSession } from 'next-auth/react';
 
-function ContactDetails() {
+function ContactDetails({ email }: { email: string }) {
     const [address1, setAddress1] = useState('');
     const [address2, setAddress2] = useState('');
     const [city, setCity] = useState('');
     const [district, setDistrict] = useState('');
     const [postalCode, setPostalCode] = useState('');
-    const [email, setEmail] = useState<string | null>(null); // State to store user email
-
-    const router = useRouter(); // Initializing the router
-
-    useEffect(() => {
-        const checkSession = async () => {
-            const session = await getSession();
-            if (!session) {
-                router.push('/login');
-            } else {
-                setEmail(session.user?.email || null);
-            }
-        };
-        checkSession();
-    }, [router]);
-
+    
     const handleAddress1Change = (e: React.ChangeEvent<HTMLInputElement>) => {
         setAddress1(e.target.value);
     };
