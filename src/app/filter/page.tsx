@@ -23,7 +23,7 @@ interface response {
   totalProducts: number;
 }
 
-const fetchProcducts = async (min: number = 0, max: number = 1000, page: number = 1, productperpage: number = 2, search?: string, subCategories?: number[]) => {
+const fetchProcducts = async (min: number, max: number, page: number = 1, productperpage: number = 2, search?: string, subCategories?: number[]) => {
   try {
     const response = await fetch(
       `${process.env.NEXT_PUBLIC_API_URL}/search/getproducts`,
@@ -46,8 +46,7 @@ const fetchProcducts = async (min: number = 0, max: number = 1000, page: number 
 }
 
 export default async function FilterPage(props: { searchParams: { search?: string, subcategory?: number[], min: number, max: number, page: number, productperpage: number } }) {
-  const { search, subcategory, min, max, page, productperpage } = props.searchParams;
-
+  const { search, subcategory, min = 0, max = 500_000, page, productperpage } = props.searchParams;
   // Initialize subCategoryIds as an empty array
   let subCategoryIds: number[] = [];
 
@@ -61,7 +60,7 @@ export default async function FilterPage(props: { searchParams: { search?: strin
       subCategoryIds = [Number(subcategory)];
     }
   }
-  const data: response = search ? await fetchProcducts(min, max, page, productperpage, search, subCategoryIds) : {};
+  const data: response = await fetchProcducts(min, max, page, productperpage, search, subCategoryIds);
 
   if (!data) console.log("data not recived")
   return (
@@ -69,7 +68,7 @@ export default async function FilterPage(props: { searchParams: { search?: strin
       <Nav />
       <div className="flex flex-col md:flex-row h-screen"> {/* Stack on mobile and row on medium and larger screens */}
         <div className="flex flex-col border-r border-gray-300 w-full md:w-1/4"> {/* Full width on mobile, quarter on larger screens */}
-          <PriceRangeFilter globalMin={undefined} globalMax={undefined} />
+          <PriceRangeFilter globalMin={0} globalMax={500_000} />
           <FilterSideBar selectedSubCategoryIds={subCategoryIds} />
           <AttributeFilter selectedSubCategoryIds={subCategoryIds} />
         </div>
@@ -77,9 +76,17 @@ export default async function FilterPage(props: { searchParams: { search?: strin
           data.totalProducts > 0 ? (
             <div className="flex-grow w-full md:w-full h-full bg-gray-100 p-4"> {/* Full width on mobile, three-quarters on larger screens */}
               <div className="flex flex-col space-y-4"> {/* Stack product cards vertically */}
-                <h3 className="text-2xl font-bold text-gray-800 mb-4">
-                  {data.totalProducts} Matching Products for <span className="text-red-600"> "{search}"</span>
-                </h3>
+                {search ? 
+                  (
+                    <h3 className="text-2xl font-bold text-gray-800 mb-4">
+                      {data.totalProducts} Matching Products for <span className="text-red-600"> "{search}"</span>
+                    </h3>
+                  ) : (
+                    <h3 className="text-2xl font-bold text-gray-800 mb-4">
+                      {data.totalProducts} Matching Products found
+                    </h3>
+                  )
+                }
                 {data?.matching_products?.map((product: Product) => {
                   return (
                     <div key={product.ProductID} className="w-full md:w-full mx-auto"> {/* Full width on mobile */}

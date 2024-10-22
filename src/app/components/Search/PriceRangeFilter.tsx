@@ -3,19 +3,12 @@ import React from 'react';
 import RangeFilter from './RangeFilter';
 import { useRouter } from 'next/navigation';
 
-interface RangeFilterProps {
-    min: number;
-    max: number;
-    onApply: (min: number, max: number) => void;
-}
 interface PriceRangeFilterProps {
     globalMin: number;
     globalMax: number;
 }
 
-
-
-const PriceRangeFilter: React.FC<PriceRangeFilterProps> = ({globalMin = 0, globalMax = 1000}) => {
+const PriceRangeFilter: React.FC<PriceRangeFilterProps> = ({globalMin = 0, globalMax = 500_000}) => {
     const router = useRouter();
     const handlePriceFilter = (min: number, max: number) => {
         // console.log(`Filtering products from ${min} to ${max}`);

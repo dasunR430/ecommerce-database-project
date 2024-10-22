@@ -12,15 +12,26 @@ interface response {
     message?: string;
     matching_products: Product[];
     totalProducts: number;
-  }
+}
+
+interface body {
+    search : string;
+    subCategories : number[];
+    min : number;
+    max : number;
+    page : number;
+    productperpage : number;
+}
 
 export async function POST(req: any) {
     const conn = await pool.getConnection();
     try {
-        const { search, subCategories, min, max , page, productperpage} = await req.json();
+        const { search, subCategories, min, max , page, productperpage} : body = await req.json();
         let limit :number = productperpage; // products per page 
         let matching_products_query: string;
         let matching_products_result: RowDataPacket[];
+
+        console.log(search?.length);
 
         if ((search === '' ||  search === undefined) && subCategories.length === 0) {
             matching_products_query = `SELECT SQL_CALC_FOUND_ROWS DISTINCT ProductID, ProductTitle, BasePrice, PrimaryImage FROM BaseProduct WHERE BasePrice BETWEEN ? AND ? LIMIT ? OFFSET ?`;
@@ -29,6 +40,10 @@ export async function POST(req: any) {
         else if ((search === '' ||  search === undefined) && subCategories.length != 0) {
             matching_products_query = `SELECT SQL_CALC_FOUND_ROWS DISTINCT b.ProductID, ProductTitle, BasePrice, PrimaryImage FROM BaseProduct b JOIN ProductSubcategory s ON b.ProductID = s.ProductID WHERE s.subCategoryID IN (${subCategories.map(() => '?').join(', ')}) AND b.BasePrice BETWEEN ? AND ? LIMIT ? OFFSET ?`;
             [matching_products_result] = await conn.execute<RowDataPacket[]>(matching_products_query, [...subCategories, min, max, `${limit}`, `${(page-1)*limit}`]);
+        }
+        else if (search.length <= 2 && subCategories.length == 0) {
+            matching_products_query = `SELECT SQL_CALC_FOUND_ROWS DISTINCT ProductID, ProductTitle, BasePrice, PrimaryImage FROM BaseProduct WHERE ProductTitle LIKE ? AND BasePrice BETWEEN ? AND ? LIMIT ? OFFSET ?`;
+            [matching_products_result] = await conn.execute<RowDataPacket[]>(matching_products_query, [`${search}%`, min, max, `${limit}`, `${(page-1)*limit}`]);
         }
         else if (search != '' && subCategories.length == 0) {
             matching_products_query = `SELECT SQL_CALC_FOUND_ROWS DISTINCT ProductID, ProductTitle, BasePrice, PrimaryImage FROM BaseProduct WHERE MATCH(ProductTitle, Description) AGAINST(?) AND BasePrice BETWEEN ? AND ? LIMIT ? OFFSET ?`;
