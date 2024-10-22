@@ -14,7 +14,7 @@
 }
 
 .cartItemCount {
-  background-color: hsl(var(--clr-orange-400));
+  background-color: red;
   color: hsl(var(--clr-neutral-100));
   position: absolute;
   top: -6px;
@@ -106,12 +106,12 @@
   cursor: pointer;
   width: 100%;
   padding: 0.8em;
-  background-color: hsl(var(--clr-orange-400));
+  background-color: hsl(0, 100%, 50%, 1);
   border-radius: 8px;
   margin-top: 1.5rem;
   transition: all 200ms ease-in-out;
 }
 
 .btnCheckout:hover {
-  background-color: hsl(var(--clr-orange-400) / 0.6);
+  background-color: hsl(0, 100%, 50%, 0.6);
 }

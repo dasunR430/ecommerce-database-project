@@ -72,6 +72,7 @@ body {
   min-height: 100vh;
   text-rendering: optimizeSpeed;
   line-height: 1.5;
+  font-family: Verdana, Geneva, Tahoma, sans-serif;
   font-size: var(--fs-400);
   font-weight: var(--fw-400);
   color: hsl(var(--clr-neutral-400));

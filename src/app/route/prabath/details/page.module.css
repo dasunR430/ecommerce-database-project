@@ -13,6 +13,7 @@
 
 .productDetail > .companyName {
   letter-spacing: 1px;
+  color: red;
 }
 
 .productDetail > h1 {
@@ -34,8 +35,9 @@
   line-height: 1;
   margin-left: 1rem;
   padding: 0.25em 0.5em;
-  background-color: hsl(var(--clr-orange-300));
+  background-color: hsl(0, 100%, 50%, 0.2);
   border-radius: 5px;
+  color: red;
 }
 
 @media (max-width: 1050px) {
