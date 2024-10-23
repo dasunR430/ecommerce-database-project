@@ -21,12 +21,6 @@ const SideNavigationBar: React.FC<SideNavigationBarProps> = ({ email }) => {
             onClick={() => setSelectedItem("Profile")}
           />
           <NavItem
-            title="Cart"
-            icon="🛒"
-            // isActive={selectedItem === "Cart"}
-            onClick={() => setSelectedItem("Cart")}
-          />
-          <NavItem
             title="Orders"
             icon="📦"
             // isActive={selectedItem === "Orders"}

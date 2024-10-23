@@ -2,6 +2,7 @@
 import React, { useEffect, useState } from "react";
 import { getSession } from "next-auth/react";
 import ContactDetails from "./contents/contactDetails";
+import Orders from "./contents/orders";
 
 interface ContentProps {
   selectedItem: string;
@@ -15,10 +16,8 @@ const Content: React.FC<ContentProps> = ({ selectedItem ,email}) => {
     switch (selectedItem) {
       case "Profile":
         return <div>This is the Profile section</div>;
-      case "Cart":
-        return <div>This is the Cart section</div>;
       case "Orders":
-        return <div>This is the Orders section</div>;
+        return <Orders/>;
       case "Contact details":
         return <ContactDetails email={email}/>;
       default:
