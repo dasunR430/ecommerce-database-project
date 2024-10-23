@@ -4,32 +4,31 @@ import mysql from 'mysql2/promise';
 import { pool } from '@/sharedCode/dbconnect';
 
 
-interface Purchase{
-    OrderID: number;
-    orderDate: string;
-    ProductName: string;
-    Price: number;
+interface Customer{
+    CustomerName: string;
+    PhoneNumber: string;
 }
 
 export async function POST(req: NextRequest) {
     // const token = await getToken({ req });
+
     const requestBody = await req.json();
 
-    const id = requestBody.id;
+    const email = requestBody.email;
 
     try {
         const connection = await pool.getConnection();
 
-        const retriveQuery = 'CALL GetCustomerPurchases(?)';
-        const [rows] = await connection.execute<mysql.RowDataPacket[]>(retriveQuery, [id]);
+        const retriveQuery = 'SELECT CustomerName, PhoneNumber FROM customer WHERE Email = ?';
+        const [rows] = await connection.execute<mysql.RowDataPacket[]>(retriveQuery, [email]);
 
-        const purchases: Purchase[] = rows as Purchase[];
+        const customer: Customer = rows[0] as Customer;
 
         connection.release();
 
         // console.log(purchases);
 
-        return new Response(JSON.stringify(purchases), {
+        return new Response(JSON.stringify(customer), {
             status: 200,
             headers: { 'Content-Type': 'application/json' },
         });
