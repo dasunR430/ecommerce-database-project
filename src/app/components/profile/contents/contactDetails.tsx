@@ -11,6 +11,16 @@ import {
     TableHeader,
     TableRow,
   } from "@/components/ui/table"
+import { getSession } from 'next-auth/react';
+import router from 'next/router';
+
+interface ContactDetails {
+    AddressLine1: string;
+    AddressLine2: string;
+    City: string;
+    District: string;
+    PostalCode: string;
+}
 
 function ContactDetails({ email }: { email: string }) {
     const [address1, setAddress1] = useState('');
@@ -18,7 +28,22 @@ function ContactDetails({ email }: { email: string }) {
     const [city, setCity] = useState('');
     const [district, setDistrict] = useState('');
     const [postalCode, setPostalCode] = useState('');
-    
+
+    const [id, setId] = useState('');
+    const [contacts, setContacts] = useState<ContactDetails[]>([]);
+
+    useEffect(() => {
+        const checkSession = async () => {
+            const session = await getSession(); // Getting the session
+            if (!session) {
+                router.push("/login"); // Redirecting to sign-in if no session
+            } else {
+                setId(session.user?.id || ''); // Set email if session exists
+            }
+        };
+        checkSession(); // Calling the session check
+    }, [router]);
+
     const handleAddress1Change = (e: React.ChangeEvent<HTMLInputElement>) => {
         setAddress1(e.target.value);
     };
@@ -63,41 +88,62 @@ function ContactDetails({ email }: { email: string }) {
         }
     };
 
+    useEffect(() => {
+        const fetchPurchases = async () => {
+            try {
+                const response = await fetch(`http://localhost:3000/api/profile/getContactDetails`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({ id })
+                });
+                const contacts = await response.json();
+                setContacts(contacts);
+            } catch (e) {
+                console.log(e);
+            }
+        };
+
+        if (id) {
+            fetchPurchases();
+        }
+    }, [id]);
+
     return (
         <div>
             <h2>Contact Details</h2>
             <Table>
-            <TableCaption>A list of your recent invoices.</TableCaption>
-
-            <TableHeader>
-                <TableRow>
-                <TableHead className="w-[100px]">City</TableHead>
-                <TableHead>District</TableHead>
-                <TableHead>Postal Code</TableHead>
-                <TableHead>Phone Number</TableHead>
-                <TableHead>Address 1</TableHead>
-                <TableHead className="text-right">Address 2</TableHead>
-                </TableRow>
-            </TableHeader>
-            <TableBody>
-                <TableRow>
-                <TableCell className="font-medium">Narammala</TableCell>
-                <TableCell>Kurunegala</TableCell>
-                <TableCell>90321</TableCell>
-                <TableCell className="text-right">555-0983</TableCell>
-                <TableCell>123 Main St</TableCell>
-                <TableCell className="text-right">Apt 2</TableCell>
-                </TableRow>
-            </TableBody>
+                <TableCaption>A list of your recent invoices.</TableCaption>
+                <TableHeader>
+                    <TableRow>
+                        <TableHead className="w-[100px]">City</TableHead>
+                        <TableHead>District</TableHead>
+                        <TableHead>Postal Code</TableHead>
+                        <TableHead>Address 1</TableHead>
+                        <TableHead className="text-right">Address 2</TableHead>
+                    </TableRow>
+                </TableHeader>
+                <TableBody>
+                    {contacts.map((contact, index) => (
+                        <TableRow key={index}>
+                            <TableCell>{contact.City}</TableCell>
+                            <TableCell>{contact.District}</TableCell>
+                            <TableCell>{contact.PostalCode}</TableCell>
+                            <TableCell>{contact.AddressLine1}</TableCell>
+                            <TableCell>{contact.AddressLine2}</TableCell>
+                        </TableRow>
+                    ))}
+                </TableBody>
             </Table>
             <hr />
             <form onSubmit={handleSave}>
-            <Input label="Address 1" type="text" placeholder="Address 1" value={address1} onChange={handleAddress1Change} />
-            <Input label="Address 2" type="text" placeholder="Address 2" value={address2} onChange={handleAddress2Change} />
-            <Input label="City" type="text" placeholder="City" value={city} onChange={handleCityChange} />
-            <Input label="District" type="text" placeholder="District" value={district} onChange={handleDistrictChange} />
-            <Input label="Postal Code" type="text" placeholder="Postal Code" value={postalCode} onChange={handlePostalCodeChange} />
-            <Button label="Save" />
+                <Input label="Address 1" type="text" placeholder="Address 1" value={address1} onChange={handleAddress1Change} />
+                <Input label="Address 2" type="text" placeholder="Address 2" value={address2} onChange={handleAddress2Change} />
+                <Input label="City" type="text" placeholder="City" value={city} onChange={handleCityChange} />
+                <Input label="District" type="text" placeholder="District" value={district} onChange={handleDistrictChange} />
+                <Input label="Postal Code" type="text" placeholder="Postal Code" value={postalCode} onChange={handlePostalCodeChange} />
+                <Button label="Save" />
             </form>
         </div>
     );
