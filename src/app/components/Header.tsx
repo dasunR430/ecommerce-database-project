@@ -1,29 +1,40 @@
-// src/components/Header.tsx
 'use client'
-import React from 'react';
+import React, { useEffect } from 'react';
+import { useState } from 'react';
 import SearchComponent from './Home/SearchComponent';
 import CategoryFilter from './Home/CategoryFilter';
 import Link from 'next/link';
-import { signOut } from 'next-auth/react';
+import { getSession, signOut } from 'next-auth/react';
+import { useRouter } from "next/navigation";
 
 interface SearchKey {
     ProductID: number;
     ProductTitle: string;
 }
-interface HeaderProps {
-    isLoggedIn: boolean; // Determine if the user is logged in 
-}
 
-const Header: React.FC<HeaderProps> = ({ isLoggedIn }) => {
+const Header: React.FC = () => {
+    const router = useRouter();
+    const [isLoggedIn, setIsLoggedIn] = useState(false);
+    const [isOpen, setIsOpen] = useState(false); // for dropdown in user profile icon
+
+    useEffect(() => {
+        const checkSession = async () => {
+            const session = await getSession();
+            if (session) {
+                setIsLoggedIn(true); // to show profile and signout
+            }
+        };
+        checkSession();
+    }, [router]);
+
     const handleSignOut = async () => {
+        setIsLoggedIn(false);
         await signOut({ redirect: false });
-        // Manually handle the redirect
-        window.location.href = "/";
-      };
-      
+        window.location.href = "/login";
+    };
+
     return (
         <header className="flex sticky top-0 z-50 items-center bg-black text-white p-2">
-            <button onClick={()=> handleSignOut()}>Sign Out</button>;
             <Link href={'/home'}>
                 <div className="flex items-center">
                     <div className="w-full max-w-[200px]">
@@ -51,15 +62,34 @@ const Header: React.FC<HeaderProps> = ({ isLoggedIn }) => {
                     </svg>
                     <span className="absolute -top-1 -right-1 bg-red-500 text-white rounded-full px-1 text-xs">0</span>
                 </a>
-                {true ? (
-                    <a href="/profile">
-                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="size-6">
-                            <path strokeLinecap="round" strokeLinejoin="round" d="M17.982 18.725A7.488 7.488 0 0 0 12 15.75a7.488 7.488 0 0 0-5.982 2.975m11.963 0a9 9 0 1 0-11.963 0m11.963 0A8.966 8.966 0 0 1 12 21a8.966 8.966 0 0 1-5.982-2.275M15 9.75a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z" />
-                        </svg>
-                    </a>
-                ) : (
-                    <a href="/login" className="hover:underline">Login</a>
-                )}
+                <div className="relative" onBlur={() => setTimeout(() => setIsOpen(false), 300)}>
+                    {isLoggedIn ? (
+                        <div className="relative">
+                            <button onClick={() => setIsOpen(!isOpen)} className="flex items-center focus:outline-none">
+                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="size-6">
+                                    <path strokeLinecap="round" strokeLinejoin="round" d="M17.982 18.725A7.488 7.488 0 0 0 12 15.75a7.488 7.488 0 0 0-5.982 2.975m11.963 0a9 9 0 1 0-11.963 0m11.963 0A8.966 8.966 0 0 1 12 21a8.966 8.966 0 0 1-5.982-2.275M15 9.75a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z" />
+                                </svg>
+                            </button>
+                            {isOpen && (
+                                <ul className="absolute right-0 mt-2 w-48 bg-white border text-black border-gray-200 rounded-md shadow-lg">
+                                    <li>
+                                        <button onClick={() => window.location.href = '/profile'} className="w-full text-left px-4 py-2 hover:bg-gray-100">
+                                            Profile
+                                        </button>
+                                    </li>
+                                    <li>
+                                        <button onClick={handleSignOut} className="w-full text-left px-4 py-2 hover:bg-gray-100">
+                                            Signout
+                                        </button>
+                                    </li>
+                                </ul>
+                            )}
+
+                        </div>
+                    ) : (
+                        <a href="/login" className="bg-white text-black px-4 py-2 border border-gray-300 rounded hover:bg-gray-100">Login</a>
+                    )}
+                </div>
             </div>
         </header>
     );
