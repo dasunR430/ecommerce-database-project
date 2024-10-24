@@ -40,3 +40,12 @@
     font-weight: bold;
     color: black;
 }
+.discount{
+    display: flex;
+    justify-content: space-between;
+    padding: 10px;
+    font-size: 15px;
+    color: rgb(124, 124, 124);
+    border-top: 1px solid rgb(124, 124, 124);
+    border-bottom: 1px solid rgb(124, 124, 124);
+}
