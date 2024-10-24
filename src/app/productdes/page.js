@@ -22,7 +22,7 @@ export default function RootPage() {
         <h1 className={`${utils.textNeutral700} ${utils.fs800}`}>
           {product.title}
         </h1>
-        <p>{product.description}</p>
+        <p1>{product.description}</p1>
         <div className={`${styles.productPrice} ${utils.flex}`}>
           <div className={`${styles.newPrice} ${utils.flex} ${utils.fw700}`}>
             <span className={`${utils.textNeutral700} ${utils.fs500}`}>
