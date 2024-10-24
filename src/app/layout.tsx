@@ -30,7 +30,7 @@ export default function RootLayout({
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
-        <Header isLoggedIn={false} />
+        <Header />
         {children}
         <Footer />
       </body>
