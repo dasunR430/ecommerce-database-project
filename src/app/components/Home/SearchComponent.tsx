@@ -1,7 +1,7 @@
 'use client'
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
-import React, { ReactEventHandler, useState } from 'react';
+import React, { useState } from 'react';
 
 interface suggestion {
     ProductTitle: string[]
@@ -24,7 +24,6 @@ const SearchComponent: React.FC = () => {
 
     // Handle input change
     const handleOnChange: React.ChangeEventHandler<HTMLInputElement> = async (e) => {
-
         const query = e.target.value;
         setSearchInput(query);
 
