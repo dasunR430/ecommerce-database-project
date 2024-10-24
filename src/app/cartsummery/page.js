@@ -9,9 +9,8 @@ import Additional from "./components/additional.js";
 export default function CartSummery(){
     return(
         <div className={styles.summerybody}>
-            <div className={styles.sumbodyright}>
-                <CartSum />
-                
+            <div className={styles.sumbodyright}>               
+                <Address />
                 <ShipingDetails />
             </div>
 
@@ -19,7 +18,8 @@ export default function CartSummery(){
         <div className={styles.sumbodyleft}>
             <div className={styles.sumbodyleftupper}>
                 <div className={styles.sumbodyleftupperjr}>
-                <Address />
+                
+                <CartSum />
                 </div>
                 <div className={styles.sumbodyleftupperjr}>
                     <AddressInfo />

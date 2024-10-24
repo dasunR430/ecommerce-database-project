@@ -1,3 +1,4 @@
+import "./globalproductdes.css";
 import styles from "./page.module.css";
 import utils from "./components/utils.module.css";
 import ProductGallery from "./components/productGallery";
