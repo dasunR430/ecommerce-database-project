@@ -4,26 +4,26 @@ import { pool } from '@/sharedCode/dbconnect';
 import { getSession } from 'next-auth/react';
 import { useState } from 'react';
 
-interface customer
-{
-    CustomerID: number;
-}
+
 
 export async function POST(req: NextRequest) {
+    const requestBody = await req.json();
 
-    try{
-        const { email,address1, address2, city, district, postalCode, phoneNumber } = await req.json();
-        
+    const id = requestBody.id;
+    const address1 = requestBody.address1;
+    const address2 = requestBody.address2;
+    const city = requestBody.city;
+    const district = requestBody.district;
+    const postalCode = requestBody.postalCode;
+    
+    console.log(id);
+
+    try{        
         const connection = await pool.getConnection();
 
-        const retriveQuery = 'SELECT CustomerID FROM customer WHERE Email = ?';
-        const insertQuery = 'CALL addNewContactDetails(?, ?, ?, ?, ?, ?)';
+        const insertQuery = 'INSERT INTO ContactDetails(CustomerID, AddressLine1, AddressLine2, City, District, PostalCode) VALUES (?, ?, ?, ?, ?, ?)';
 
-        const [rows] = await connection.execute<mysql.RowDataPacket[]>(retriveQuery, [email]);
-
-        const customer: customer = rows[0] as customer;
-
-        await connection.execute(insertQuery, [customer.CustomerID, address1, address2, city, district, postalCode]);
+        await connection.execute(insertQuery, [id, address1, address2, city, district, postalCode]);
 
         connection.release();
     }catch(error){

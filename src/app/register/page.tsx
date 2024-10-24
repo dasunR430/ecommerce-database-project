@@ -1,14 +1,23 @@
 'use client';
 
-import { Input } from '../components/ui/input';
+import { Input } from '../components/basicUi/input';
 import { useState, useEffect } from 'react';
-import { Button } from '../components/ui/button';
-import { Card } from '../components/ui/card';
+// import { Button } from '../components/basicUi/button';
+import { Button } from '@/components/ui/button';
 import React from 'react';
+import {
+    Card,
+    CardContent,
+    CardDescription,
+    CardFooter,
+    CardHeader,
+    CardTitle,
+  } from "@/components/ui/card"
 
 export default function Register() {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
+    const [checkPassword, setCheckPassword] = useState('');
     const [name, setName] = useState('');
 
     const [phoneNumber, setPhoneNumber] = useState('');
@@ -23,6 +32,9 @@ export default function Register() {
     const handlePasswordChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         setPassword(e.target.value);
     };
+    const handleCheckPasswordChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+        setCheckPassword(e.target.value);
+    }
     const handleNameChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         setName(e.target.value);
     };
@@ -35,7 +47,12 @@ export default function Register() {
         setLoading(true);
         setError('');
     
-    
+        if (password !== checkPassword) {
+            setError('Passwords do not match');
+            setLoading(false);
+            setCheckPassword('');
+            return;
+        }
         try {
             const response = await fetch('/api/auth/addUser', {
                 method: 'POST',
@@ -66,20 +83,48 @@ export default function Register() {
             setEmail('');
             setPassword('');
             setPhoneNumber('');
+            setCheckPassword('');
         }
     };
     
+    // return(
+    //     <div>
+    //         <form onSubmit={handleSubmit}>
+    //             <Card>
+    //                 <Input label="Email" type="email" placeholder="Email" value={email} onChange={handleEmailChange}/>
+    //                 <Input label="Password" type="password" placeholder="Password" value={password} onChange={handlePasswordChange}/>
+    //                 <Input label="Confirm Password" type="password" placeholder="Confirm Password" value={checkPassword} onChange={handleCheckPasswordChange}/>
+    //                 <Input label="Name" type="text" placeholder="Name" value={name} onChange={handleNameChange}/>
+    //                 <Input label='Phone Number' type='text' placeholder='Phone Number' value={phoneNumber} onChange={handlePhoneNumberChange}/>
+    //                 <Button label='Submit'/>
+    //                 {error && <p style={{ color: 'red' }}>{error}</p>}
+    //                 <br/>
+    //             <a href="/login" className="text-blue-500 underline">Already registered?</a>
+    //             </Card>
+    //         </form>
+    //     </div>
+    // );
     return(
-        <div>
-            <form onSubmit={handleSubmit}>
-                <Card>
-                    <Input label="Email" type="email" placeholder="Email" value={email} onChange={handleEmailChange}/>
-                    <Input label="Password" type="password" placeholder="Password" value={password} onChange={handlePasswordChange}/>
-                    <Input label="Name" type="text" placeholder="Name" value={name} onChange={handleNameChange}/>
-                    <Input label='Phone Number' type='text' placeholder='Phone Number' value={phoneNumber} onChange={handlePhoneNumberChange}/>
-                    <Button label='Submit'/>
-                </Card>
-            </form>
-        </div>
+    <div className="flex justify-center items-center min-h-screen">
+        <Card className="w-2/5">
+        <CardHeader>
+        <CardTitle>Register</CardTitle>
+        </CardHeader>
+        <CardContent>
+        <form onSubmit={handleSubmit}>
+        <Input label="Email" type="email" placeholder="Email" value={email} onChange={handleEmailChange}/>
+        <Input label="Password" type="password" placeholder="Password" value={password} onChange={handlePasswordChange}/>
+        <Input label="Confirm Password" type="password" placeholder="Confirm Password" value={checkPassword} onChange={handleCheckPasswordChange}/>
+        <Input label="Name" type="text" placeholder="Name" value={name} onChange={handleNameChange}/>
+        <Input label='Phone Number' type='text' placeholder='Phone Number' value={phoneNumber} onChange={handlePhoneNumberChange}/>
+        <br/>
+        <Button type='submit'>Submit</Button>
+        {error && <p style={{ color: 'red' }}>{error}</p>}
+        <br/>
+        <a href="/login" className="text-blue-500 underline">Already registered?</a>
+        </form>
+        </CardContent>
+        </Card>
+    </div>
     );
 };
