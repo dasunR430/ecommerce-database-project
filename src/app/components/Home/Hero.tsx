@@ -1,10 +1,9 @@
-// src/components/Hero.tsx
 import React from 'react';
 
 const Hero: React.FC = () => {
   return (
     <div className="relative bg-blue-600 text-white py-20">
-      <div className="absolute inset-0 bg-cover bg-center" style={{ backgroundImage: "url('/hero-bg.jpg')" }}>
+      <div className="absolute inset-0 bg-cover bg-center">
         <div className="absolute inset-0 bg-black opacity-50"></div>
       </div>
       <div className="relative container mx-auto px-4 text-center">
