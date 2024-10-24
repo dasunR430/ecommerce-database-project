@@ -1,7 +1,7 @@
 'use client';
 import React, { useState, useEffect } from 'react';
-import { Input } from '../../ui/input';
-import { Button } from '../../ui/button';
+import { Input } from '../../basicUi/input';
+import { Button } from '../../basicUi/button';
 import {
     Table,
     TableBody,
@@ -14,7 +14,7 @@ import {
 import { getSession } from 'next-auth/react';
 import router from 'next/router';
 
-interface ContactDetails {
+interface Contacts {
     AddressLine1: string;
     AddressLine2: string;
     City: string;
@@ -30,7 +30,7 @@ function ContactDetails({ email }: { email: string }) {
     const [postalCode, setPostalCode] = useState('');
 
     const [id, setId] = useState('');
-    const [contacts, setContacts] = useState<ContactDetails[]>([]);
+    const [contacts, setContacts] = useState<Contacts[]>([]);
 
     useEffect(() => {
         const checkSession = async () => {
@@ -62,51 +62,54 @@ function ContactDetails({ email }: { email: string }) {
 
     const handleSave = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
-
+    
         try {
-            const response = await fetch('/api/auth/addContactDetails', {
+            const response = await fetch('/api/profile/addContactDetails', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
                 },
                 body: JSON.stringify({
-                    email,
+                    id,  // Include the `id` from session
                     address1,
-                    address2: address2 === '' ? null : address2, // Set address2 to null if empty
+                    address2: address2 === '' ? null : address2,
                     city,
                     district,
                     postalCode,
                 }),
             });
+    
             if (response.ok) {
                 console.log('Contact details added successfully');
+                fetchAddresses();
             } else {
                 console.log('Failed to add contact details');
             }
         } catch (error) {
-            console.error('Failed to add contact details');
+            console.error('Failed to add contact details', error);
+        }
+    };
+    
+
+    const fetchAddresses = async () => {
+        try {
+            const response = await fetch(`http://localhost:3000/api/profile/getContactDetails`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ id })
+            });
+            const contacts = await response.json();
+            setContacts(contacts);
+        } catch (e) {
+            console.log(e);
         }
     };
 
     useEffect(() => {
-        const fetchPurchases = async () => {
-            try {
-                const response = await fetch(`http://localhost:3000/api/profile/getContactDetails`, {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json'
-                    },
-                    body: JSON.stringify({ id })
-                });
-                const contacts = await response.json();
-                setContacts(contacts);
-            } catch (e) {
-                console.log(e);
-            }
-        };
-
         if (id) {
-            fetchPurchases();
+            fetchAddresses();
         }
     }, [id]);
 
