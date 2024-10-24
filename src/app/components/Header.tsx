@@ -7,7 +7,7 @@ import Link from 'next/link';
 import Cart from '../cart/page';
 import { getSession, signOut } from 'next-auth/react';
 import { useRouter } from "next/navigation";
-import Cart from '../productdes/components/cart';
+
 
 interface SearchKey {
     ProductID: number;
