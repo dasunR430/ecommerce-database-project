@@ -22,7 +22,7 @@ const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
         body: JSON.stringify({ productID: productID })
       }
     );
-    router.push(`/products/${productID}`)
+    router.push(`/product/${productID}`)
   }
 
   return (
