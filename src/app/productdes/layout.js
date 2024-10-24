@@ -1,5 +1,5 @@
 
-import "./globals.css";
+import "./globalproductdes.css";
 import { Kumbh_Sans } from "next/font/google";
 import Cart from "./components/cart";
 
