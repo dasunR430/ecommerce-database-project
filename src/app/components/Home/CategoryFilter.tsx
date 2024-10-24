@@ -53,15 +53,15 @@ const CategoryFilter: React.FC = () => {
                 categories
 
                 {isHovered && (
-                    <div className="p-5 absolute top-full left-0 bg-white text-black z-10 shadow-lg rounded-lg w-64 overflow-auto">
+                    <div className="p-5 absolute top-full left-0 bg-white text-black z-10 shadow-lg rounded-lg w-64 max-h-[50vh] overflow-y-auto">
                         <div className="grid grid-cols-1 gap-4">
                             {categories?.map((category) => (
                                 <div key={category.id} className="">
                                     <h3 className="text-xl font-semibold">{category.name}</h3>
                                     <ul className="mt-2">
                                         {category.subCategories.map((subCategory) => (
-                                            <Link href={`/filter?subcategory=${subCategory.SubCategoryID}`}>
-                                                <li key={subCategory.SubCategoryID} className="text-gray-700 hover:text-blue-600 cursor-pointer">
+                                            <Link href={`/filter?subcategory=${subCategory.SubCategoryID}`} key={subCategory.SubCategoryID}>
+                                                <li className="text-gray-700 hover:text-blue-600 cursor-pointer">
                                                     {subCategory.SubCategoryName}
                                                 </li>
                                             </Link>
@@ -71,6 +71,7 @@ const CategoryFilter: React.FC = () => {
                             ))}
                         </div>
                     </div>
+
                 )
                 }
             </div>
