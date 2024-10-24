@@ -5,11 +5,13 @@ import { pool } from '@/sharedCode/dbconnect';
 
 
 interface ContactDetails {
+    AddressID: number;
     AddressLine1: string;
     AddressLine2: string;
     City: string;
     District: string;
     PostalCode: string;
+    PhoneNumber: string;
 }
 
 export async function POST(req: NextRequest) {
@@ -22,7 +24,7 @@ export async function POST(req: NextRequest) {
     try {
         const connection = await pool.getConnection();
 
-        const retriveQuery = 'SELECT AddressLine1,AddressLine2,City,District,PostalCode from contactdetails WHERE CustomerID = ?';
+        const retriveQuery = 'SELECT AddressID,AddressLine1,AddressLine2,City,District,PostalCode,PhoneNumber from contactdetails WHERE CustomerID = ?';
         const [rows] = await connection.execute<mysql.RowDataPacket[]>(retriveQuery, [id]);
 
         const contacts: ContactDetails[] = rows as ContactDetails[];

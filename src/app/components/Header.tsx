@@ -7,6 +7,7 @@ import Link from 'next/link';
 import Cart from '../cart/page';
 import { getSession, signOut } from 'next-auth/react';
 import { useRouter } from "next/navigation";
+import Cart from '../productdes/components/cart';
 
 interface SearchKey {
     ProductID: number;
@@ -16,6 +17,7 @@ interface SearchKey {
 const Header: React.FC = () => {
     const router = useRouter();
     const [isLoggedIn, setIsLoggedIn] = useState(false);
+    const [userID, setUserID] = useState<number>(-1);
     const [isOpen, setIsOpen] = useState(false); // for dropdown in user profile icon
 
     const [isclicked, setIsclicked] = useState(false);
@@ -24,6 +26,7 @@ const Header: React.FC = () => {
         const checkSession = async () => {
             const session = await getSession();
             if (session) {
+                setUserID(Number(session.user.id))
                 setIsLoggedIn(true); // to show profile and signout
             }
         };
