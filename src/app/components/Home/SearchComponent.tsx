@@ -94,7 +94,7 @@ const SearchComponent: React.FC = () => {
                         value={searchInput}
                         onChange={handleOnChange}
                         onFocus={() => setShowDropdown(true)}
-                        onBlur={() => setTimeout(() => setShowDropdown(false), 100)}
+                        onBlur={() => setTimeout(() => setShowDropdown(false), 200)}
                         className="flex-grow p-2 rounded-l focus:outline-none focus:bg-gray-300 text-black"
                     />
                     <button onClick={handleSearch} className="p-2 bg-gray-300 rounded-r border-gray-300">
