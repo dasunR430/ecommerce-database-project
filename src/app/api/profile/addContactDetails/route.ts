@@ -15,15 +15,16 @@ export async function POST(req: NextRequest) {
     const city = requestBody.city;
     const district = requestBody.district;
     const postalCode = requestBody.postalCode;
-    
-    console.log(id);
+    const phoneNumber = requestBody.phoneNumber;
+
+    // console.log(id);
 
     try{        
         const connection = await pool.getConnection();
 
-        const insertQuery = 'INSERT INTO ContactDetails(CustomerID, AddressLine1, AddressLine2, City, District, PostalCode) VALUES (?, ?, ?, ?, ?, ?)';
+        const insertQuery = 'INSERT INTO ContactDetails(CustomerID, AddressLine1, AddressLine2, City, District, PostalCode,PhoneNumber) VALUES (?, ?, ?, ?, ?, ?,?)';
 
-        await connection.execute(insertQuery, [id, address1, address2, city, district, postalCode]);
+        await connection.execute(insertQuery, [id, address1, address2, city, district, postalCode, phoneNumber]);
 
         connection.release();
     }catch(error){
