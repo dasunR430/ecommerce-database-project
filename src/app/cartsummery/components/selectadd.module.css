@@ -1,0 +1,26 @@
+.selectadddiv{
+    background-color: rgb(255, 252, 252);
+    border-radius: 10px;
+    width: 100%;
+    padding: 20px;
+}
+
+.head{
+    color: black;
+    font-size: 17px;
+    font-weight: bold;
+}
+
+.pickadd{
+    display: block;
+    width: 100%;
+    padding: 10px;
+    font-size: 16px;
+    color: #333;
+    background-color: #fff;
+    border: 1px solid rgb(175, 175, 175);
+    border-radius: 5px;
+    margin-top: 10px;
+    transition: border-color 0.3s, box-shadow 0.3s;
+}
+

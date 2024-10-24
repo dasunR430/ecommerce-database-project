@@ -33,7 +33,7 @@ export default function RootLayout({
       >
         <CartProvider>
         <Header />
-        {/* <Cart/> */}
+        <Cart />
         {children}
         </CartProvider>
         <Footer />
