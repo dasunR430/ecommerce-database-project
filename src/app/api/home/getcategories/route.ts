@@ -30,11 +30,14 @@ export async function GET(req: any) {
     let conn : PoolConnection | null = null;
     try {
         conn = await pool.getConnection();
+        console.log("No error so far")
         const main_category_query = `SELECT * FROM MainCategory`;
+        
         const sub_category_query = `SELECT * FROM SubCategory`;
         const [main_category_result] = await conn.execute<RowDataPacket[]>(main_category_query);
+        console.log(main_category_result)
         const [sub_category_result] = await conn.execute<RowDataPacket[]>(sub_category_query);
-
+        console.log(sub_category_result)
         let formated_categories: Category[] = [];
         const main_categories = main_category_result as MainCategory[];
         const sub_categories = sub_category_result as SubCategory[];

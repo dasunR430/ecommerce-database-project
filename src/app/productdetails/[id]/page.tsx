@@ -1,5 +1,5 @@
 "use client";
-import { useRouter, useSearchParams } from 'next/navigation';
+import { useParams, useRouter, useSearchParams } from 'next/navigation';
 import { useState, useEffect } from 'react';
 
 interface ProductDetails {
@@ -14,9 +14,9 @@ interface ProductDetails {
 }
 
 export default function ProductDetailsPage() {
-    const router = useRouter();
-    const searchParams = useSearchParams();
-    const id = searchParams.get('id');
+    //const router = useRouter();
+    const { id } = useParams();
+    console.log(id);
 
     const [product, setProduct] = useState<ProductDetails | null>(null);
     const [count, setCount] = useState(0);
@@ -75,10 +75,7 @@ export default function ProductDetailsPage() {
                                 <span className="font-bold text-gray-800">Price:</span>
                                 <span className="text-gray-600 ml-2">${product.BasePrice}</span>
                             </div>
-                            <div>
-                                <span className="font-bold text-gray-800">Availability:</span>
-                                <span className="text-gray-600 ml-2">{product.Availability}</span>
-                            </div>
+                            
                         </div>
                         {/* Add color, size, and description sections as needed */}
                     </div>
