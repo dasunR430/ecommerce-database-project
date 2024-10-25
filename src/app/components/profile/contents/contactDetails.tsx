@@ -70,6 +70,10 @@ function ContactDetails({ email }: { email: string }) {
     const handleSave = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
 
+        if(address1 === '' || city === '' || district === '' || postalCode === '' || phoneNumber === '') {
+            return;
+        }
+
         if (editingContactId !== null) {
             // Update existing contact
             await handleUpdate(editingContactId);
@@ -238,7 +242,7 @@ function ContactDetails({ email }: { email: string }) {
             <hr />
             <form onSubmit={handleSave}>
                 <Input label="City" type="text" placeholder="City" value={city} onChange={handleCityChange} />
-                <Input label="District" type="text" placeholder="District" value={district} onChange={handleDistrictChange} />
+                <Input label="District" type="text" placeholder="District" value={district} onChange={handleDistrictChange}/>
                 <Input label="Postal Code" type="text" placeholder="Postal Code" value={postalCode} onChange={handlePostalCodeChange} />
                 <Input label="Address 1" type="text" placeholder="Address 1" value={address1} onChange={handleAddress1Change} />
                 <Input label="Address 2" type="text" placeholder="Address 2" value={address2} onChange={handleAddress2Change} />
