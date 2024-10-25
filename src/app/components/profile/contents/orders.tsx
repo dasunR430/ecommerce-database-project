@@ -7,7 +7,7 @@ interface Purchase{
   OrderID: number;
   orderedDate: string;
   ProductName: string;
-  price: number;
+  Price: number;
 }
 
 const Orders = () => {
@@ -30,17 +30,16 @@ const Orders = () => {
   }, [router]);
 
     useEffect(() => {
-        const fetchPurchases = async () => {
-            try {
-                const response = await fetch(`http://localhost:3000/api/profile/getCustomerPurchases`, {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json'
-                    },
-                    body: JSON.stringify({ id })
-                });
+      const fetchPurchases = async () => {
+        try {
+          const response = await fetch(`http://localhost:3000/api/profile/getCustomerPurchases`, {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ id })
+          });
                 const purchs = await response.json();
-                // console.log(purchs);
                 setPurchases(purchs[0]);
                 // console.log(prch);
             } catch (e) {
@@ -53,7 +52,7 @@ const Orders = () => {
         }
     }, [id]);
 
-    console.log(purchases);
+    // console.log(purchases);
 
   
     return (
@@ -68,7 +67,7 @@ const Orders = () => {
     </thead>
     <tbody>
         {purchases.map((purchase, index) => (
-          <Raw key={index} raw={[purchase.orderedDate, purchase.ProductName, `$${purchase.price}`]} />
+          <Raw key={index} raw={[purchase.orderedDate, purchase.ProductName, `$${purchase.Price}`]} />
         ))}
     </tbody>
   </table>

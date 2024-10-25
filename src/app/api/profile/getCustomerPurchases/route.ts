@@ -6,7 +6,7 @@ import { pool } from '@/sharedCode/dbconnect';
 
 interface Purchase{
     OrderID: number;
-    orderDate: string;
+    orderedDate: string;
     ProductName: string;
     Price: number;
 }
@@ -24,6 +24,8 @@ export async function POST(req: NextRequest) {
         const [rows] = await connection.execute<mysql.RowDataPacket[]>(retriveQuery, [id]);
 
         const purchases: Purchase[] = rows as Purchase[];
+
+        // console.log(purchases);
 
         connection.release();
 
