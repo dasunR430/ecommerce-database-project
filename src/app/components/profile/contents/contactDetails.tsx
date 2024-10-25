@@ -228,7 +228,7 @@ function ContactDetails({ email }: { email: string }) {
                             <TableCell>{contact.AddressLine2}</TableCell>
                             <TableCell>{contact.PhoneNumber}</TableCell>
                             <TableCell>
-                                <Button onClick={() => handleEdit(contact)}>Edit</Button>
+                                <Button onClick={() => handleEdit(contact)} style={{ marginRight: '8px' }}>Edit</Button>
                                 <Button onClick={() => handleDelete(contact.AddressID)}>Delete</Button>
                             </TableCell>
                         </TableRow>
@@ -243,7 +243,9 @@ function ContactDetails({ email }: { email: string }) {
                 <Input label="Address 1" type="text" placeholder="Address 1" value={address1} onChange={handleAddress1Change} />
                 <Input label="Address 2" type="text" placeholder="Address 2" value={address2} onChange={handleAddress2Change} />
                 <Input label="Phone Number" type="text" placeholder="Phone Number" value={phoneNumber} onChange={handlePhoneNumberChange} />
-                <Button type="submit">{editingContactId !== null ? 'Save Changes' : 'Save'}</Button>
+                <div style={{ marginTop: '16px' }}>
+                    <Button type="submit">{editingContactId !== null ? 'Save Changes' : 'Save'}</Button>
+                </div>
             </form>
         </div>
     );

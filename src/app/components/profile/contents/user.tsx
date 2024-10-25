@@ -42,11 +42,20 @@ export default function User() {
             fetchUser();
         }
     }, [email]);
-    return(
-        <div>
-            <h1>{CustomerName}</h1>
-            <h2>{email}</h2>
-            <h3>{PhoneNumber}</h3>
+    return (
+        <div className="flex flex-col items-center gap-4 p-6 bg-gray-50 shadow-lg rounded-lg max-w-md mx-auto">
+          <div className="flex items-center gap-2 w-full">
+            <h3 className="text-lg font-semibold text-gray-800">Name:</h3>
+            <p className="text-lg text-gray-600">{CustomerName || "Not available"}</p>
+          </div>
+          <div className="flex items-center gap-2 w-full">
+            <h3 className="text-lg font-semibold text-gray-800">Email:</h3>
+            <p className="text-lg text-gray-600">{email || "Not available"}</p>
+          </div>
+          <div className="flex items-center gap-2 w-full">
+            <h3 className="text-lg font-semibold text-gray-800">Phone:</h3>
+            <p className="text-lg text-gray-600">{PhoneNumber || "Not available"}</p>
+          </div>
         </div>
     );
 }

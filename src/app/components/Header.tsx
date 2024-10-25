@@ -69,7 +69,7 @@ const Header: React.FC = () => {
                     </svg>
                     <span className="absolute -top-1 -right-1 bg-red-500 text-white rounded-full px-1 text-xs">0</span>
                 </a>  */}
-                <Cart />
+                {/* <Cart /> */}
                 <div className="relative" onBlur={() => setTimeout(() => setIsOpen(false), 300)}>
                     {isLoggedIn ? (
                         <div className="relative">
