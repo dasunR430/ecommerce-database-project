@@ -11,10 +11,12 @@ interface ProductDetails {
 
 export async function GET(req: NextRequest) {
     try {
+        const { SKU } = await req.json();
+
         const connection = await pool.getConnection();
 
-        const retrieveQuery = 'SELECT ProductName, Price, AvailableStock, PrimaryImage FROM product WHERE ProductID = 14';
-        const [rows] = await connection.execute<mysql.RowDataPacket[]>(retrieveQuery);
+        const retrieveQuery = 'SELECT ProductName, Price, AvailableStock, PrimaryImage FROM product WHERE SKU = ?';
+        const [rows] = await connection.execute<mysql.RowDataPacket[]>(retrieveQuery, [SKU]);
 
         const product: ProductDetails = rows[0] as ProductDetails;
 

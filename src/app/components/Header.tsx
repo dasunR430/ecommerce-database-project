@@ -1,26 +1,18 @@
 'use client'
-import React, { useEffect } from 'react';
-import { useState } from 'react';
+import React, { createContext, useState, useContext,useEffect } from 'react';
 import SearchComponent from './Home/SearchComponent';
 import CategoryFilter from './Home/CategoryFilter';
 import Link from 'next/link';
-import Cart from '../cart/page';
+// import Cart from '../cart/page'; // Make sure this is the correct import for your cart component
 import { getSession, signOut } from 'next-auth/react';
 import { useRouter } from "next/navigation";
-
-
-interface SearchKey {
-    ProductID: number;
-    ProductTitle: string;
-}
 
 const Header: React.FC = () => {
     const router = useRouter();
     const [isLoggedIn, setIsLoggedIn] = useState(false);
     const [userID, setUserID] = useState<number>(-1);
     const [isOpen, setIsOpen] = useState(false); // for dropdown in user profile icon
-
-    const [isclicked, setIsclicked] = useState(false);
+    const [showCart, setShowCart] = useState(false); // for showing cart dropdown
 
     useEffect(() => {
         const checkSession = async () => {
@@ -41,7 +33,7 @@ const Header: React.FC = () => {
 
     return (
         <>
-        <header className="flex  sticky  top-0 z-50 items-center bg-black text-white p-2">
+        <header className="flex sticky top-0 z-50 items-center bg-black text-white p-2">
             <Link href={'/home'}>
                 <div className="flex items-center">
                     <div className="w-full max-w-[200px]">
@@ -63,13 +55,26 @@ const Header: React.FC = () => {
             </div>
 
             <div className="flex items-center space-x-4">
-                {/* <a href="/cart" className="relative">
-                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="size-6">
-                        <path strokeLinecap="round" strokeLinejoin="round" d="M2.25 3h1.386c.51 0 .955.343 1.087.835l.383 1.437M7.5 14.25a3 3 0 0 0-3 3h15.75m-12.75-3h11.218c1.121-2.3 2.1-4.684 2.924-7.138a60.114 60.114 0 0 0-16.536-1.84M7.5 14.25 5.106 5.272M6 20.25a.75.75 0 1 1-1.5 0 .75.75 0 0 1 1.5 0Zm12.75 0a.75.75 0 1 1-1.5 0 .75.75 0 0 1 1.5 0Z" />
-                    </svg>
-                    <span className="absolute -top-1 -right-1 bg-red-500 text-white rounded-full px-1 text-xs">0</span>
-                </a>  */}
-                {/* <Cart /> */}
+                {/* Cart Icon */}
+                <div 
+                    className="relative" 
+                    onMouseEnter={() => setShowCart(true)} 
+                    onMouseLeave={() => setShowCart(false)}
+                >
+                    <button className="flex items-center focus:outline-none">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="size-6">
+                            <path strokeLinecap="round" strokeLinejoin="round" d="M2.25 3h1.386c.51 0 .955.343 1.087.835l.383 1.437M7.5 14.25a3 3 0 0 0-3 3h15.75m-12.75-3h11.218c1.121-2.3 2.1-4.684 2.924-7.138a60.114 60.114 0 0 0-16.536-1.84M7.5 14.25 5.106 5.272M6 20.25a.75.75 0 1 1-1.5 0 .75.75 0 0 1 1.5 0Zm12.75 0a.75.75 0 1 1-1.5 0 .75.75 0 0 1 1.5 0Z" />
+                        </svg>
+                        <span className="absolute -top-1 -right-1 bg-red-500 text-white rounded-full px-1 text-xs">0</span>
+                    </button>
+                    {showCart && (
+                        <div className="absolute right-0 mt-2 w-48 bg-white border text-black border-gray-200 rounded-md shadow-lg">
+                            {/* Replace this with your Cart component */}
+                            {/* <Cart /> */}
+                        </div>
+                    )}
+                </div>
+
                 <div className="relative" onBlur={() => setTimeout(() => setIsOpen(false), 300)}>
                     {isLoggedIn ? (
                         <div className="relative">
@@ -92,7 +97,6 @@ const Header: React.FC = () => {
                                     </li>
                                 </ul>
                             )}
-
                         </div>
                     ) : (
                         <a href="/login" className="bg-white text-black px-4 py-2 border border-gray-300 rounded hover:bg-gray-100">Login</a>
@@ -100,11 +104,38 @@ const Header: React.FC = () => {
                 </div>
             </div>
         </header>
-        <main>
-            {isclicked && <Cart />}
-        </main>
         </>
     );
 };
 
 export default Header;
+
+
+// Define the context and type
+interface CartContextType {
+    cartItems: any[];
+    addItemToCart: (item: any) => void;
+}
+const CartContext = createContext<CartContextType | undefined>(undefined);
+
+// Provide context to the entire app
+export const CartProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
+    const [cartItems, setCartItems] = useState<any[]>([]);
+
+    const addItemToCart = (item: any) => setCartItems((prevItems) => [...prevItems, item]);
+
+    return (
+        <CartContext.Provider value={{ cartItems, addItemToCart }}>
+            {children}
+        </CartContext.Provider>
+    );
+};
+
+// Custom hook for accessing the cart context
+export const useCart = () => {
+    const context = useContext(CartContext);
+    if (!context) {
+        throw new Error('useCart must be used within a CartProvider');
+    }
+    return context;
+};
