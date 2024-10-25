@@ -7,17 +7,18 @@
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
     height: 60%;
     width: 20%;
-    position: absolute;
+    position: fixed;
     top: 10%;
     left: 80%;
     z-index: 1;
+    color: black;
 }
 
 .cartdiv::before{
     content: '';
     position: absolute;
-    top: -9px;
-    left: 65%;
+    top: -8px;
+    left: 80%;
     transform: translateX(-50%) rotate(180deg);
     border-width: 10px 10px 0;
     border-style: solid;
