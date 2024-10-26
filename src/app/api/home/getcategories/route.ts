@@ -35,9 +35,9 @@ export async function GET(req: any) {
         
         const sub_category_query = `SELECT * FROM SubCategory`;
         const [main_category_result] = await conn.execute<RowDataPacket[]>(main_category_query);
-        console.log(main_category_result)
+        // console.log(main_category_result)
         const [sub_category_result] = await conn.execute<RowDataPacket[]>(sub_category_query);
-        console.log(sub_category_result)
+        // console.log(sub_category_result)
         let formated_categories: Category[] = [];
         const main_categories = main_category_result as MainCategory[];
         const sub_categories = sub_category_result as SubCategory[];

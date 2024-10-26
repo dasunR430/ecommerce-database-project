@@ -1,5 +1,5 @@
 'use client'
-import React from 'react';
+import React, { useState } from 'react';
 import RangeFilter from './RangeFilter';
 import { useRouter } from 'next/navigation';
 
@@ -10,7 +10,7 @@ interface PriceRangeFilterProps {
 
 const PriceRangeFilter: React.FC<PriceRangeFilterProps> = ({globalMin = 0, globalMax = 500_000}) => {
     const router = useRouter();
-    const handlePriceFilter = (min: number, max: number) => {
+    const handlePriceFilter = (min: number, max: number, isAscending: boolean) => {
         // console.log(`Filtering products from ${min} to ${max}`);
         const currentUrl = new URL(window.location.href);
         currentUrl.searchParams.delete('min');
@@ -21,7 +21,9 @@ const PriceRangeFilter: React.FC<PriceRangeFilterProps> = ({globalMin = 0, globa
         // to avoid bug when changing filter
         currentUrl.searchParams.delete('page');
         currentUrl.searchParams.append('page', `${1}`)
-        router.push(currentUrl.toString());
+
+        currentUrl.searchParams.delete('ascending');
+        currentUrl.searchParams.append('ascending', isAscending ? '1' : '0');
         
         router.push(currentUrl.toString());
     };

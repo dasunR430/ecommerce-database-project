@@ -6,16 +6,21 @@ import { Range, getTrackBackground } from 'react-range';
 interface RangeFilterProps {
     min: number;
     max: number;
-    onApply: (min: number, max: number) => void;
+    onApply: (min: number, max: number, isAscending : boolean) => void;
 }
 
 const RangeFilter: React.FC<RangeFilterProps> = ({ min, max, onApply }) => {
     const [values, setValues] = useState<number[]>([min, max]);
     const [displayValues, setDisplayValues] = useState<number[]>(values);
+    const [isAscending, setIsAscending] = useState(true);
+
+    const toggleSortOrder = () => {
+        setIsAscending((prev) => !prev);
+    };
 
     // Debounce value update
     const debouncedSetValues = useCallback(
-        debounce((newValues : number[]) => {
+        debounce((newValues: number[]) => {
             setDisplayValues(newValues);
         }, 200),
         []
@@ -27,7 +32,7 @@ const RangeFilter: React.FC<RangeFilterProps> = ({ min, max, onApply }) => {
     };
 
     const handleApply = () => {
-        onApply(values[0], values[1]);
+        onApply(values[0], values[1], isAscending);
     };
 
     return (
@@ -95,6 +100,13 @@ const RangeFilter: React.FC<RangeFilterProps> = ({ min, max, onApply }) => {
                     />
                 )}
             />
+
+            <button
+                onClick={toggleSortOrder}
+                className="mt-4 w-full bg-red-800 text-white justify-center px-4 py-2 rounded-md hover:bg-red-900 transition"
+            >
+                {isAscending ? 'Sort: Price Ascending' : 'Sort: Price Descending'}
+            </button>
 
             {/* Apply Button */}
             <button

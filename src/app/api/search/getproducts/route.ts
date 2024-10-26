@@ -12,6 +12,7 @@ interface response {
     message?: string;
     matching_products: Product[];
     totalProducts: number;
+    maxPrice : number;
 }
 
 interface body {
@@ -21,38 +22,47 @@ interface body {
     max : number;
     page : number;
     productperpage : number;
+    isAscending : boolean;
 }
 
 export async function POST(req: any) {
     const conn = await pool.getConnection();
+    console.log("reached search/getproducts api")
     try {
-        const { search, subCategories, min, max , page, productperpage} : body = await req.json();
+        const { search, subCategories, min, max , page, productperpage, isAscending} : body = await req.json();
+        console.log("route max", typeof max);
         let limit :number = productperpage; // products per page 
         let matching_products_query: string;
         let matching_products_result: RowDataPacket[];
+        let orderby = isAscending ? 'ASC' : 'DESC';
 
         console.log(search?.length);
 
         if ((search === '' ||  search === undefined) && subCategories.length === 0) {
-            matching_products_query = `SELECT SQL_CALC_FOUND_ROWS DISTINCT ProductID, ProductTitle, BasePrice, PrimaryImage FROM BaseProduct WHERE BasePrice BETWEEN ? AND ? LIMIT ? OFFSET ?`;
+            matching_products_query = `SELECT SQL_CALC_FOUND_ROWS DISTINCT b.ProductID, b.ProductTitle, b.BasePrice, b.PrimaryImage FROM BaseProduct b WHERE BasePrice BETWEEN ? AND ? ORDER BY b.BasePrice ${orderby} LIMIT ? OFFSET ?`;
             [matching_products_result] = await conn.execute<RowDataPacket[]>(matching_products_query, [min,max, `${limit}`, `${(page-1)*limit}`]);
+            console.log(matching_products_query);
         }
         else if ((search === '' ||  search === undefined) && subCategories.length != 0) {
-            matching_products_query = `SELECT SQL_CALC_FOUND_ROWS DISTINCT b.ProductID, ProductTitle, BasePrice, PrimaryImage FROM BaseProduct b JOIN ProductSubcategory s ON b.ProductID = s.ProductID WHERE s.subCategoryID IN (${subCategories.map(() => '?').join(', ')}) AND b.BasePrice BETWEEN ? AND ? LIMIT ? OFFSET ?`;
+            matching_products_query = `SELECT SQL_CALC_FOUND_ROWS DISTINCT b.ProductID, b.ProductTitle, b.BasePrice, b.PrimaryImage FROM BaseProduct b JOIN ProductSubcategory s ON b.ProductID = s.ProductID WHERE s.subCategoryID IN (${subCategories.map(() => '?').join(', ')}) AND b.BasePrice BETWEEN ? AND ? ORDER BY b.BasePrice ${orderby} LIMIT ? OFFSET ? `;
             [matching_products_result] = await conn.execute<RowDataPacket[]>(matching_products_query, [...subCategories, min, max, `${limit}`, `${(page-1)*limit}`]);
         }
         else if (search.length <= 2 && subCategories.length == 0) {
-            matching_products_query = `SELECT SQL_CALC_FOUND_ROWS DISTINCT ProductID, ProductTitle, BasePrice, PrimaryImage FROM BaseProduct WHERE ProductTitle LIKE ? AND BasePrice BETWEEN ? AND ? LIMIT ? OFFSET ?`;
+            matching_products_query = `SELECT SQL_CALC_FOUND_ROWS DISTINCT b.ProductID, b.ProductTitle, b.BasePrice, b.PrimaryImage FROM BaseProduct b WHERE ProductTitle LIKE ? AND BasePrice BETWEEN ? AND ? ORDER BY b.BasePrice ${orderby} LIMIT ? OFFSET ?`;
             [matching_products_result] = await conn.execute<RowDataPacket[]>(matching_products_query, [`${search}%`, min, max, `${limit}`, `${(page-1)*limit}`]);
         }
+        else if (search.length <= 2 && subCategories.length != 0) {
+            matching_products_query = `SELECT SQL_CALC_FOUND_ROWS DISTINCT b.ProductID, b.ProductTitle, b.BasePrice, b.PrimaryImage FROM BaseProduct b JOIN ProductSubcategory s ON b.ProductID = s.ProductID WHERE b.ProductTitle LIKE ? AND s.subCategoryID IN (${subCategories.map(() => '?').join(', ')}) AND b.BasePrice BETWEEN ? AND ? ORDER BY b.BasePrice ${orderby} LIMIT ? OFFSET ?`;
+            [matching_products_result] = await conn.execute<RowDataPacket[]>(matching_products_query, [`${search}%`, ...subCategories, min, max, `${limit}`, `${(page-1)*limit}`]);
+        }
         else if (search != '' && subCategories.length == 0) {
-            matching_products_query = `SELECT SQL_CALC_FOUND_ROWS DISTINCT ProductID, ProductTitle, BasePrice, PrimaryImage FROM BaseProduct WHERE MATCH(ProductTitle, Description) AGAINST(?) AND BasePrice BETWEEN ? AND ? LIMIT ? OFFSET ?`;
+            matching_products_query = `SELECT SQL_CALC_FOUND_ROWS DISTINCT b.ProductID, b.ProductTitle, b.BasePrice, b.PrimaryImage FROM BaseProduct b WHERE MATCH(ProductTitle, Description) AGAINST(?) AND BasePrice BETWEEN ? AND ? ORDER BY b.BasePrice ${orderby} LIMIT ? OFFSET ?`;
             console.log(matching_products_query);
             console.log([`${search}`, min, max, `${limit}`, `${(page-1)*limit}`]);
             [matching_products_result] = await conn.execute<RowDataPacket[]>(matching_products_query, [`${search}`, min, max, `${limit}`, `${(page-1)*limit}`]);
         }
         else {
-            matching_products_query = `SELECT SQL_CALC_FOUND_ROWS DISTINCT b.ProductID, ProductTitle, BasePrice, PrimaryImage FROM BaseProduct b JOIN ProductSubcategory s ON b.ProductID = s.ProductID WHERE MATCH(b.ProductTitle, b.Description) AGAINST(?) AND s.subCategoryID IN (${subCategories.map(() => '?').join(', ')}) AND b.BasePrice BETWEEN ? AND ? LIMIT ? OFFSET ?`;
+            matching_products_query = `SELECT SQL_CALC_FOUND_ROWS DISTINCT b.ProductID, b.ProductTitle, b.BasePrice, b.PrimaryImage FROM BaseProduct b JOIN ProductSubcategory s ON b.ProductID = s.ProductID WHERE MATCH(b.ProductTitle, b.Description) AGAINST(?) AND s.subCategoryID IN (${subCategories.map(() => '?').join(', ')}) AND b.BasePrice BETWEEN ? AND ? ORDER BY b.BasePrice ${orderby} LIMIT ? OFFSET ?`;
             [matching_products_result] = await conn.execute<RowDataPacket[]>(matching_products_query, [`${search}`, ...subCategories, min, max, `${limit}`, `${(page-1)*limit}`]);
         }
 
@@ -67,6 +77,7 @@ export async function POST(req: any) {
             message: "success",
             matching_products: matching_products_result as Product[],
             totalProducts : totalProducts,
+            maxPrice : 500_000
         }
 
         const myHeader = new Headers();
