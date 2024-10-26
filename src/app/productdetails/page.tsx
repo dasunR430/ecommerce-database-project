@@ -23,7 +23,6 @@ export default function ProductDetailsPage() {
   return (
     <div>
       <h1>Product ID: {id}</h1>
-      
     </div>
   );
 }
