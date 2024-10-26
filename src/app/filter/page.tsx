@@ -121,7 +121,7 @@ export default async function FilterPage(props: { searchParams: { search?: strin
           <div className="flex flex-col border-r border-gray-300 w-full md:w-1/4">
             <PriceRangeFilter globalMin={0} globalMax={500_000} />
             <FilterSideBar selectedSubCategoryIds={subCategoryIds} />
-            <AttributeFilter selectedSubCategoryIds={subCategoryIds} />
+            {/* <AttributeFilter selectedSubCategoryIds={subCategoryIds} /> */}
           </div>
 
           {/* Main product display */}
@@ -162,14 +162,6 @@ export default async function FilterPage(props: { searchParams: { search?: strin
             )
           }
         </div>
-
-        {/* Footer */}
-        <footer className="bg-black text-white py-8">
-          <div className="container mx-auto px-4">
-            {/* Footer content */}
-            <p className="text-center">© 2024 C Retailers. All rights reserved.</p>
-          </div>
-        </footer>
       </div>
     </>
 

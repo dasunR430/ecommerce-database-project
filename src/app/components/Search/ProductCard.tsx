@@ -34,8 +34,8 @@ const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
             src={product.PrimaryImage}
             alt={product.ProductTitle}
             width={200}
-            height={100}
-            className="object-cover w-full h-auto" // Ensure the image takes full height
+            height={300}
+            className="object-contain h-[150px] w-[150px]" // Ensure the image takes full height
           />
         </div>
         <div className="p-4 text-right flex-1"> {/* Added flex-1 to take remaining space */}
