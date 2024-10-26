@@ -1,0 +1,11 @@
+.featuresdiv{
+    display: grid;
+    gap: 5px;
+    margin: 10px 0;
+    padding: 10px;
+    background-color: #fff;
+    width: 29rem;
+    max-width: 100%;
+    overflow-y: auto;
+    overflow-x: hidden;
+}
