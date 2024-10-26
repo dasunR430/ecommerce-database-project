@@ -1,30 +1,39 @@
-import styles from './featurecard.module.css';
-import Attribute from './attribute';
+// FeatureVariants.tsx
+import AttributeGroup from './attribute';
 
-
-interface FeatureCardProps {
-
-    feature: {
-
-        Price: string; // Assuming Price is a string
-
-        attributes: Array<{ AttributeID: number; AttributeValue: string }>;
-
-    };
-
-    setPrice: (price: number) => void; // Function type for setting price
-
+interface Attribute {
+    AttributeID: number;
+    AttributeValue: string;
 }
 
+interface Feature {
+    SKU: string;
+    attributes: Attribute[];
+    Price: string;
+}
 
-export default function FeatureCard({ feature, setPrice }: FeatureCardProps) {
+interface FeatureVariantsProps {
+    features: Feature[];
+    selectedFeature: Feature | null;
+    onSelect: (feature: Feature) => void;
+}
+
+export default function FeatureVariants({ 
+    features, 
+    selectedFeature, 
+    onSelect 
+}: FeatureVariantsProps) {
     return (
-        <div className={styles.featuresdiv} onClick={() => setPrice(Number(feature.Price))}>
-            <div>
-                {feature.attributes.map((attribute) => (
-                    <Attribute key={attribute.AttributeID} attribute={attribute.AttributeValue} />
-                ))}
-            </div>
+        <div className="space-y-2">
+            <h3 className="text-lg font-semibold mb-3">Available Options:</h3>
+            {features.map((feature) => (
+                <AttributeGroup
+                    key={feature.SKU}
+                    feature={feature}
+                    isSelected={selectedFeature?.SKU === feature.SKU}
+                    onSelect={() => onSelect(feature)}
+                />
+            ))}
         </div>
     );
 }
