@@ -5,7 +5,7 @@ import styles from "./shipingdetails.module.css";
 
 export default function ShippingDetails() {
     const [estimatedDate, setEstimatedDate] = useState("");
-    const [amount, setAmount] = useState(0);
+   
 
     useEffect(() => {
         async function fetchShippingDetails() {
@@ -39,17 +39,13 @@ export default function ShippingDetails() {
         <div className={styles.sdetails}>
             <h2 className={styles.head}>Shipping Details</h2>
             
-            {/* Display Estimated Delivery Date */}
             <div className={styles.inputdiv}>
                 <label>Estimated Delivery Date:</label><br />
                 <p className={styles.displayText}>{estimatedDate}</p>
             </div>
 
-            {/* Display Amount */}
-            <div className={styles.inputdiv}>
-                <label>Amount:</label><br />
-                <p className={styles.displayText}> Rs. {amount}</p>
-            </div>
+           
+           
         </div>
     );
 }
