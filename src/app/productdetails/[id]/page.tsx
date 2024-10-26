@@ -17,18 +17,17 @@ interface ProductDetails {
 
 interface Feature {
     SKU: string; 
-    attributes: Array<{ AttributeID: number; AttributeValue: string }>; // Defining the structure of attributes
-    Price: string; // Price is a string based on your example
+    attributes: Array<{ AttributeID: number; AttributeValue: string }>; 
+    Price: string;
 }
 
 export default function ProductDetailsPage() {
     const { id } = useParams();
-    console.log(id);
-
     const [product, setProduct] = useState<ProductDetails | null>(null);
     const [count, setCount] = useState(0);
     const [features, setFeatures] = useState<Feature[]>([]);
     const [price, setPrice] = useState(0);
+    const [selectedSKU, setSelectedSKU] = useState<string | null>(null);
 
     const increment = () => setCount(count + 1);
     const decrement = () => setCount(count > 0 ? count - 1 : 0);
@@ -44,7 +43,7 @@ export default function ProductDetailsPage() {
         try {
             const res = await fetch(`/api/home/getproducts/${id}`);
             const data = await res.json();
-            setProduct(data.result[0]); // Adjust based on your API response structure
+            setProduct(data.result[0]);
             setPrice(data.result[0].BasePrice);
         } catch (error) {
             console.error("Error fetching product details:", error);
@@ -55,12 +54,25 @@ export default function ProductDetailsPage() {
         try {
             const res = await fetch(`/api/testing/${id}`);
             const data = await res.json();
-            console.log("Fetched features:", data);
-            setFeatures(data.result || []); // Use an empty array if data.result is undefined
-            setPrice(data.result[0]?.Price || 0); 
+    
+            // Extract attributes from each SKU and set them as features
+            const featureList = Object.keys(data).map(sku => ({
+                SKU: sku,
+                attributes: data[sku].attributes,
+                Price: data[sku].Price,
+            }));
+    
+            setFeatures(featureList);
+            setPrice(featureList[0]?.Price || 0); // Set the price from the first SKU as default
         } catch (error) {
             console.error("Error fetching features:", error);
         }
+    };
+    
+
+    const handleFeatureSelect = (feature: Feature) => {
+        setSelectedSKU(feature.SKU);
+        setPrice(Number(feature.Price)); // Update price based on selected feature
     };
 
     if (!product) return <p>Loading...</p>;
@@ -88,7 +100,12 @@ export default function ProductDetailsPage() {
                         <div className={styles.featuresdiv}>
                             {features.length > 0 ? (
                                 features.map((feature, index) => (
-                                    <Features key={index} feature={feature} setPrice={setPrice} />
+                                    <Features 
+                                        key={index} 
+                                        feature={feature} 
+                                        isSelected={selectedSKU === feature.SKU}
+                                        onSelect={() => handleFeatureSelect(feature)} 
+                                    />
                                 ))
                             ) : (
                                 <p>No features available</p>
