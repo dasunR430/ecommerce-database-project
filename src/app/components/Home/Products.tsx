@@ -33,13 +33,13 @@ const Products: React.FC<ProductsProps> = ({ products, heading }) => {
       <h2 className="text-2xl font-bold mb-4">{heading}</h2>
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4"> {/* Use grid layout */}
         {products.map((product) => (
-          <div key={product.ProductID} className="max-w-[300px] border rounded-lg p-4 bg-white shadow-md flex flex-col">
+          <div key={product.ProductID} className="max-w-[300px] border rounded-lg p-4 bg-white shadow-md flex flex-col justify-center items-center">
             <Image
               src={product.PrimaryImage}
               alt={product.ProductTitle}
               width={200}
               height={300}
-              className="w-full h-auto object-cover" // Make sure image covers the space
+              className="object-contain h-[150px] w-[150px]" // Make sure image covers the space
             />
             <h3 className="text-xl font-semibold mt-2">{product.ProductTitle}</h3>
             <p className="text-lg text-gray-700">{formatPrice(product.BasePrice)}</p>
