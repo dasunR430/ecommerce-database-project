@@ -162,17 +162,6 @@ export default async function FilterPage(props: { searchParams: { search?: strin
             )
           }
         </div>
-<<<<<<< HEAD
-
-        {/* Footer */}
-        <footer className="bg-black text-white py-8">
-          <div className="container mx-auto px-4">
-            {/* Footer content */}
-            <p className="text-center">© 2024 C Retailers. All rights reserved.</p>
-          </div>
-        </footer>
-=======
->>>>>>> dev
       </div>
     </>
 
