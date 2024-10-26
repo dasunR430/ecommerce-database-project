@@ -112,6 +112,10 @@ const FilterSideBar: React.FC<FilterSideBarProps> = (props) => {
 
         currentUrl.searchParams.delete('subcategory');
         selectedSubCategoryIds.forEach((id) => currentUrl.searchParams.append('subcategory', `${id}`));
+
+        // to avoid bug when changing filter
+        currentUrl.searchParams.delete('page');
+        currentUrl.searchParams.append('page', `${1}`)
         router.push(currentUrl.toString());
     };
 

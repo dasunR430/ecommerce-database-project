@@ -17,6 +17,12 @@ const PriceRangeFilter: React.FC<PriceRangeFilterProps> = ({globalMin = 0, globa
         currentUrl.searchParams.delete('max');
         currentUrl.searchParams.append('min', `${min}`)
         currentUrl.searchParams.append('max', `${max}`)
+
+        // to avoid bug when changing filter
+        currentUrl.searchParams.delete('page');
+        currentUrl.searchParams.append('page', `${1}`)
+        router.push(currentUrl.toString());
+        
         router.push(currentUrl.toString());
     };
 
