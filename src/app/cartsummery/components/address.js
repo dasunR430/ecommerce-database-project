@@ -4,17 +4,17 @@ export default function Address() {
         <div className={styles.addressdiv}>
             <h2 className={styles.head}>Address</h2>
             <div className={styles.inputdiv}>
-                <label for="addresstitle">Address title*</label><br />
+                <label for="addresstitle">Name*</label><br />
                 <input type="text" id="addresstitle" name="address" className={styles.inputtakes} />
             </div>
 
             <div className={styles.twoinputtakes}>
                 <div className={styles.inputdiv}>
-                    <label for="name">Name*</label><br />
+                    <label for="name">Address Line 1*</label><br />
                     <input type="text" id="name" name="name" className={styles.inputtakes}  />
                 </div>
                 <div className={styles.inputdiv}>
-                    <label for="surname">Surname*</label><br />
+                    <label for="surname">Address Line 2*</label><br />
                     <input type="text" id="surname" name="surname" className={styles.inputtakes} />
                 </div>
             </div>
@@ -26,18 +26,21 @@ export default function Address() {
 
             <div className={styles.twoinputtakes}>
                 <div className={styles.inputdiv}>
-                    <label for="country">Country*</label><br />
-                    <input type="text" id="country" name="country" className={styles.inputtakes} />
+                    <label for="city">Main City*</label><br />
+                    <input type="text" id="city" name="city" className={styles.inputtakes} />
                 </div>
                 <div className={styles.inputdiv}>
-                    <label for="city">City*</label><br />
-                    <input type="text" id="city" name="city" className={styles.inputtakes} />
+                    <label for="surname">District*</label><br />
+                    <input type="text" id="surname" name="surname" className={styles.inputtakes} />
                 </div>
             </div>
 
             <div className={styles.inputdiv}>
-                <label for="address">Address*</label><br />
-                <input type="text" id="address" name="address" className={styles.inputtakes} />
+                <div className={styles.inputdiv}>
+                    <label for="name">Postal Code*</label><br />
+                    <input type="text" id="name" name="name" className={styles.inputtakes}  />
+                </div>
+                
             </div>
             <button className={styles.addaddressbtn}>Add Address</button>
         </div>

@@ -15,11 +15,12 @@ export default function cartSummary() {
                 <h2>Rs. 100</h2>
             </div>
 
-            <div className={style.total}>
-                <h2>Total</h2>
-                <h2>Rs. 1000</h2>
-            </div>
-            <button className={style.paymentbtn}>Payment Transcation</button>
+            
+            
+                <div className={style.total}>
+                    <h2>Total Rs. 1000</h2>
+                </div>
+          
         </div>
     );
 }
