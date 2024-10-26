@@ -19,14 +19,11 @@ export default function CartSummery(){
 
         <div className={styles.sumbodyleft}>
             <div className={styles.sumbodyleftupper}>
-                <div className={styles.sumbodyleftupperjr}>
+                
                 
                 <CartSum />
-                </div>
-                <div className={styles.sumbodyleftupperjr}>
-                    <AddressInfo />
-                    <Additional />
-                </div>
+               
+                
             </div>
 
             <div className={styles.sumbodyleftupper}>

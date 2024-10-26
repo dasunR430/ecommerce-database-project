@@ -10,4 +10,14 @@
     color: black;
     font-size: 17px;
     font-weight: bold;
+    margin-bottom: 10px;
+}
+
+.displaydiv {
+    margin-bottom: 10px;
+}
+
+.datadisplay {
+    font-size: 16px;
+    color: #333;
 }

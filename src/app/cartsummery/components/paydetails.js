@@ -1,31 +1,28 @@
-import styles from "./paydetails.module.css"
+import styles from "./paydetails.module.css";
+
 export default function PaymentDetail() {
     return (
         <div className={styles.paymentdiv}>
             <h2 className={styles.head}>Payment Details</h2>
+
+            {/* Delivery Method Dropdown */}
             <div className={styles.inputdiv}>
-                <label for="cardnumber">Card Number*</label><br />
-                <input type="number" id="cardnumber" name="cardnumber" className={styles.inputtakes} />
-            </div>
-            <div className={styles.inputdiv}>
-                <label for="cardname">Card Name*</label><br />
-                <input type="text" id="cardname" name="cardname" className={styles.inputtakes} />
-            </div>
-            <div className={styles.twoinputtakes}>
-                <div className={styles.inputdiv}>
-                    <label for="expdate">Expiration Date*</label><br />
-                    <input type="date" id="expdate" name="expdate" className={styles.inputtakes} />
-                </div>
-                <div className={styles.inputdiv}>
-                    <label for="cvv">CVV*</label><br />
-                    <input type="number" id="cvv" name="cvv" className={styles.inputtakes} />
-                </div>
+                <label htmlFor="deliverymethod">Delivery Method*</label><br />
+                <select id="deliverymethod" name="deliverymethod" className={styles.inputtakes}>
+                    <option value="door">Door Delivery</option>
+                    <option value="store">Store Pick</option>
+                </select>
             </div>
 
+            {/* Payment Method Dropdown */}
             <div className={styles.inputdiv}>
-                <input type="checkbox" id="saveinfo" name="saveinfo" />
-                <label for="saveinfo">Save this information for next time</label>
+                <label htmlFor="paymentmethod">Payment Method*</label><br />
+                <select id="paymentmethod" name="paymentmethod" className={styles.inputtakes}>
+                    <option value="card">Card</option>
+                    <option value="cash">Cash on Delivery</option>
+                </select>
             </div>
+
             <button className={styles.paybtn}>Confirm Order</button>
         </div>
     );
