@@ -4,7 +4,7 @@ import FilterSideBar from "../components/Search/FilterSideBar";
 import Pagination from "../components/Search/Pagination";
 import PriceRangeFilter from "../components/Search/PriceRangeFilter";
 import ProductCard from "../components/Search/ProductCard";
-
+import ProductPerPageSelector from "../components/Search/ProductPerPageSelector";
 interface Product {
   ProductID: number;
   ProductTitle: string;
@@ -46,7 +46,7 @@ const fetchProcducts = async (min: number, max: number, page: number = 1, produc
 }
 
 export default async function FilterPage(props: { searchParams: { search?: string, subcategory?: number[], min: number, max: number, page: number, productperpage: number } }) {
-  const { search, subcategory, min = 0, max = 500_000, page, productperpage } = props.searchParams;
+  const { search, subcategory, min = 0, max = 500_000, page, productperpage = 5 } = props.searchParams;
   // Initialize subCategoryIds as an empty array
   let subCategoryIds: number[] = [];
 
@@ -119,6 +119,7 @@ export default async function FilterPage(props: { searchParams: { search?: strin
         <div className="flex flex-col md:flex-row **flex-grow**">
           {/* Sidebar */}
           <div className="flex flex-col border-r border-gray-300 w-full md:w-1/4">
+            <ProductPerPageSelector productperpage = {productperpage}/>
             <PriceRangeFilter globalMin={0} globalMax={500_000} />
             <FilterSideBar selectedSubCategoryIds={subCategoryIds} />
             {/* <AttributeFilter selectedSubCategoryIds={subCategoryIds} /> */}
@@ -127,7 +128,7 @@ export default async function FilterPage(props: { searchParams: { search?: strin
           {/* Main product display */}
           {
             data.totalProducts > 0 ? (
-              <div className="**flex-grow** w-full md:w-full bg-gray-100 p-4">
+              <div className="flex-grow w-full md:w-full bg-gray-100 p-4">
                 <div className="flex flex-col space-y-4">
                   {search ?
                     (
@@ -140,11 +141,13 @@ export default async function FilterPage(props: { searchParams: { search?: strin
                       </h3>
                     )
                   }
-                  {data?.matching_products?.map((product: Product) => (
-                    <div key={product.ProductID} className="w-full md:w-full mx-auto">
-                      <ProductCard product={product} />
-                    </div>
-                  ))}
+                  <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+                    {data?.matching_products?.map((product: Product) => (
+                      <div key={product.ProductID} className="w-full md:w-full mx-auto">
+                        <ProductCard product={product} />
+                      </div>
+                      ))}
+                  </div>
                 </div>
                 {/* Pagination should sit below the product cards */}
                 <Pagination totalCount={data.totalProducts} currentPage={page | 1} limit={productperpage | 2} />
