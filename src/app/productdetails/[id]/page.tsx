@@ -1,9 +1,11 @@
 // ProductDetailsPage.tsx
 "use client";
 import { useParams } from 'next/navigation';
+import { getSession } from 'next-auth/react';
 import { useState, useEffect } from 'react';
 import FeatureVariants from '../component/featurecard';
 import { Plus, Minus, ShoppingCart } from 'lucide-react';
+import { useRouter } from 'next/navigation';
 
 interface ProductDetails {
     ProductID: number;
@@ -28,6 +30,8 @@ interface Feature {
 }
 
 export default function ProductDetailsPage() {
+    const router = useRouter();
+    const [cid, setcId] = useState('');
     const { id } = useParams();
     const [product, setProduct] = useState<ProductDetails | null>(null);
     const [count, setCount] = useState(0);
@@ -52,7 +56,17 @@ export default function ProductDetailsPage() {
         } else if (product) {
             setCurrentPrice(product.BasePrice);
         }
-    }, [selectedFeature, product]);
+        const checkSession = async () => {
+            const session = await getSession(); // Getting the session
+            if (!session) {
+              router.push("/login"); // Redirecting to sign-in if no session
+            } else {
+              setcId(session.user?.id || ''); // Set email if session exists
+            }
+          };
+      
+          checkSession();
+    }, [selectedFeature, product, router]);
 
     const fetchProductDetails = async () => {
         try {
@@ -91,13 +105,29 @@ export default function ProductDetailsPage() {
         setCurrentPrice(feature.Price);
     };
 
-    const handleAddToCart = () => {
+    const handleAddToCart = async () => {
         if (count > 0 && selectedFeature) {
-            console.log({
-                sku: selectedFeature.SKU,
-                quantity: count,
-                price: Number(currentPrice)*count
-            });
+            try{
+                const response = await fetch('/api/addtocart', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({ 
+                        id: cid,
+                        sku: selectedFeature.SKU,
+                        quantity: count
+                    }),
+                });
+                if(response.ok){
+                    alert("Product added to cart successfully");
+                }else{
+                    alert("Failed to add product to cart");
+                }
+            }catch(error){
+                console.error("Error adding product to cart:", error);
+            }
+
         } else {
             alert("Please select a product variant and quantity");
         }
