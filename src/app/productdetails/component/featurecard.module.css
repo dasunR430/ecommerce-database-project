@@ -1,0 +1,17 @@
+.featureCard {
+    display: flex;
+    gap: 0.5px;
+    align-items: center;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    cursor: pointer;
+    width: 200px;
+    height: 200px; /* Uncommented to set a fixed height */
+    transition: transform 0.3s, box-shadow 0.3s; /* Added transition for smooth hover effect */
+}
+
+.featureCard:hover {
+    transform: scale(1.05); /* Added hover effect */
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.2); /* Enhanced shadow on hover */
+}

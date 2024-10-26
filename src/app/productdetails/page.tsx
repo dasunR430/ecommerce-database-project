@@ -75,7 +75,7 @@ export default function ProductDetailsPage() {
                                 <span className="font-bold text-gray-800">Price:</span>
                                 <span className="text-gray-600 ml-2">${product.BasePrice}</span>
                             </div>
-                            <div>
+                            <div className="mr-4">
                                 <span className="font-bold text-gray-800">Availability:</span>
                                 <span className="text-gray-600 ml-2">{product.Availability}</span>
                             </div>
