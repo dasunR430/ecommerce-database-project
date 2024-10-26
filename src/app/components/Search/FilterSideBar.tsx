@@ -24,7 +24,7 @@ interface FilterSideBarProps {
 }
 
 const FilterSideBar: React.FC<FilterSideBarProps> = (props) => {
-    const [showCategoryFilter, setShowCategoryFilter] = useState(true);
+    const [showCategoryFilter, setShowCategoryFilter] = useState(false);
 
     const { selectedSubCategoryIds } = props;
     const subCategoryRecord: Record<number, boolean> = selectedSubCategoryIds.reduce((acc, id) => {
