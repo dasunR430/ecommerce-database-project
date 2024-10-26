@@ -49,8 +49,12 @@ export default async function Home() {
       <Nav />
       <Hero />
       <CategorySection />
-      <Products products={trending_products} heading={"Trending Products"} />
-      <Products products={recommened_products} heading={"Recommended For You"} />
+      <div className="flex flex-col justify-center items-center">
+        <Products products={trending_products} heading={"Trending Products"} />
+      </div>
+      <div className="flex flex-col justify-center items-center">
+        <Products products={recommened_products} heading={"Recommended For You"} />
+      </div>
     </>
   );
 }
