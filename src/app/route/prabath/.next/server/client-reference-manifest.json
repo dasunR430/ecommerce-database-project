@@ -1,0 +1,439 @@
+{
+  "ssrModuleMapping": {
+    "(app-client)/./node_modules/next/dist/client/components/error-boundary.js": {
+      "*": {
+        "id": "(sc_client)/./node_modules/next/dist/client/components/error-boundary.js",
+        "name": "*",
+        "chunks": [],
+        "async": false
+      }
+    },
+    "(app-client)/./node_modules/next/dist/client/components/app-router.js": {
+      "*": {
+        "id": "(sc_client)/./node_modules/next/dist/client/components/app-router.js",
+        "name": "*",
+        "chunks": [],
+        "async": false
+      }
+    },
+    "(app-client)/./node_modules/next/dist/client/components/layout-router.js": {
+      "*": {
+        "id": "(sc_client)/./node_modules/next/dist/client/components/layout-router.js",
+        "name": "*",
+        "chunks": [],
+        "async": false
+      }
+    },
+    "(app-client)/./node_modules/next/dist/client/components/render-from-template-context.js": {
+      "*": {
+        "id": "(sc_client)/./node_modules/next/dist/client/components/render-from-template-context.js",
+        "name": "*",
+        "chunks": [],
+        "async": false
+      }
+    },
+    "(app-client)/./node_modules/next/dist/client/components/static-generation-searchparams-bailout-provider.js": {
+      "*": {
+        "id": "(sc_client)/./node_modules/next/dist/client/components/static-generation-searchparams-bailout-provider.js",
+        "name": "*",
+        "chunks": [],
+        "async": false
+      }
+    },
+    "(app-client)/./components/nav.js": {
+      "*": {
+        "id": "(sc_client)/./components/nav.js",
+        "name": "*",
+        "chunks": [],
+        "async": false
+      }
+    },
+    "(app-client)/./components/cartProvider.js": {
+      "*": {
+        "id": "(sc_client)/./components/cartProvider.js",
+        "name": "*",
+        "chunks": [],
+        "async": false
+      }
+    },
+    "(app-client)/./public/images/image-product-1.jpg": {
+      "*": {
+        "id": "(sc_client)/./public/images/image-product-1.jpg",
+        "name": "*",
+        "chunks": [],
+        "async": false
+      }
+    },
+    "(app-client)/./public/images/image-product-2.jpg": {
+      "*": {
+        "id": "(sc_client)/./public/images/image-product-2.jpg",
+        "name": "*",
+        "chunks": [],
+        "async": false
+      }
+    },
+    "(app-client)/./public/images/image-product-3.jpg": {
+      "*": {
+        "id": "(sc_client)/./public/images/image-product-3.jpg",
+        "name": "*",
+        "chunks": [],
+        "async": false
+      }
+    },
+    "(app-client)/./public/images/image-product-4.jpg": {
+      "*": {
+        "id": "(sc_client)/./public/images/image-product-4.jpg",
+        "name": "*",
+        "chunks": [],
+        "async": false
+      }
+    },
+    "(app-client)/./public/images/image-product-3-slider.jpg": {
+      "*": {
+        "id": "(sc_client)/./public/images/image-product-3-slider.jpg",
+        "name": "*",
+        "chunks": [],
+        "async": false
+      }
+    },
+    "(app-client)/./public/images/image-product-1-slider.jpg": {
+      "*": {
+        "id": "(sc_client)/./public/images/image-product-1-slider.jpg",
+        "name": "*",
+        "chunks": [],
+        "async": false
+      }
+    },
+    "(app-client)/./public/images/image-product-2-slider.jpg": {
+      "*": {
+        "id": "(sc_client)/./public/images/image-product-2-slider.jpg",
+        "name": "*",
+        "chunks": [],
+        "async": false
+      }
+    },
+    "(app-client)/./public/images/image-product-4-slider.jpg": {
+      "*": {
+        "id": "(sc_client)/./public/images/image-product-4-slider.jpg",
+        "name": "*",
+        "chunks": [],
+        "async": false
+      }
+    },
+    "(app-client)/./public/images/image-product-1-thumbnail.jpg": {
+      "*": {
+        "id": "(sc_client)/./public/images/image-product-1-thumbnail.jpg",
+        "name": "*",
+        "chunks": [],
+        "async": false
+      }
+    },
+    "(app-client)/./public/images/image-product-2-thumbnail.jpg": {
+      "*": {
+        "id": "(sc_client)/./public/images/image-product-2-thumbnail.jpg",
+        "name": "*",
+        "chunks": [],
+        "async": false
+      }
+    },
+    "(app-client)/./public/images/image-product-3-thumbnail.jpg": {
+      "*": {
+        "id": "(sc_client)/./public/images/image-product-3-thumbnail.jpg",
+        "name": "*",
+        "chunks": [],
+        "async": false
+      }
+    },
+    "(app-client)/./public/images/image-product-4-thumbnail.jpg": {
+      "*": {
+        "id": "(sc_client)/./public/images/image-product-4-thumbnail.jpg",
+        "name": "*",
+        "chunks": [],
+        "async": false
+      }
+    },
+    "(app-client)/./components/addToCart.js": {
+      "*": {
+        "id": "(sc_client)/./components/addToCart.js",
+        "name": "*",
+        "chunks": [],
+        "async": false
+      }
+    },
+    "(app-client)/./components/productGallery.js": {
+      "*": {
+        "id": "(sc_client)/./components/productGallery.js",
+        "name": "*",
+        "chunks": [],
+        "async": false
+      }
+    },
+    "(app-client)/./components/utils.module.css": {
+      "*": {
+        "id": "(sc_client)/./components/utils.module.css",
+        "name": "*",
+        "chunks": [],
+        "async": false
+      }
+    }
+  },
+  "edgeSSRModuleMapping": {},
+  "clientModules": {
+    "D:\\Progamming Works\\AthalWada\\NEW\\ProductDetailsandCart\\fm-ecommerce-product-page\\node_modules\\next\\dist\\client\\components\\error-boundary.js": {
+      "id": "(app-client)/./node_modules/next/dist/client/components/error-boundary.js",
+      "name": "*",
+      "chunks": [
+        "app-client-internals:static/chunks/app-client-internals.js"
+      ],
+      "async": false
+    },
+    "D:\\Progamming Works\\AthalWada\\NEW\\ProductDetailsandCart\\fm-ecommerce-product-page\\node_modules\\next\\dist\\esm\\client\\components\\error-boundary.js": {
+      "id": "(app-client)/./node_modules/next/dist/client/components/error-boundary.js",
+      "name": "*",
+      "chunks": [
+        "app-client-internals:static/chunks/app-client-internals.js"
+      ],
+      "async": false
+    },
+    "D:\\Progamming Works\\AthalWada\\NEW\\ProductDetailsandCart\\fm-ecommerce-product-page\\node_modules\\next\\dist\\client\\components\\app-router.js": {
+      "id": "(app-client)/./node_modules/next/dist/client/components/app-router.js",
+      "name": "*",
+      "chunks": [
+        "app-client-internals:static/chunks/app-client-internals.js"
+      ],
+      "async": false
+    },
+    "D:\\Progamming Works\\AthalWada\\NEW\\ProductDetailsandCart\\fm-ecommerce-product-page\\node_modules\\next\\dist\\esm\\client\\components\\app-router.js": {
+      "id": "(app-client)/./node_modules/next/dist/client/components/app-router.js",
+      "name": "*",
+      "chunks": [
+        "app-client-internals:static/chunks/app-client-internals.js"
+      ],
+      "async": false
+    },
+    "D:\\Progamming Works\\AthalWada\\NEW\\ProductDetailsandCart\\fm-ecommerce-product-page\\node_modules\\next\\dist\\client\\components\\layout-router.js": {
+      "id": "(app-client)/./node_modules/next/dist/client/components/layout-router.js",
+      "name": "*",
+      "chunks": [
+        "app-client-internals:static/chunks/app-client-internals.js"
+      ],
+      "async": false
+    },
+    "D:\\Progamming Works\\AthalWada\\NEW\\ProductDetailsandCart\\fm-ecommerce-product-page\\node_modules\\next\\dist\\esm\\client\\components\\layout-router.js": {
+      "id": "(app-client)/./node_modules/next/dist/client/components/layout-router.js",
+      "name": "*",
+      "chunks": [
+        "app-client-internals:static/chunks/app-client-internals.js"
+      ],
+      "async": false
+    },
+    "D:\\Progamming Works\\AthalWada\\NEW\\ProductDetailsandCart\\fm-ecommerce-product-page\\node_modules\\next\\dist\\client\\components\\render-from-template-context.js": {
+      "id": "(app-client)/./node_modules/next/dist/client/components/render-from-template-context.js",
+      "name": "*",
+      "chunks": [
+        "app-client-internals:static/chunks/app-client-internals.js"
+      ],
+      "async": false
+    },
+    "D:\\Progamming Works\\AthalWada\\NEW\\ProductDetailsandCart\\fm-ecommerce-product-page\\node_modules\\next\\dist\\esm\\client\\components\\render-from-template-context.js": {
+      "id": "(app-client)/./node_modules/next/dist/client/components/render-from-template-context.js",
+      "name": "*",
+      "chunks": [
+        "app-client-internals:static/chunks/app-client-internals.js"
+      ],
+      "async": false
+    },
+    "D:\\Progamming Works\\AthalWada\\NEW\\ProductDetailsandCart\\fm-ecommerce-product-page\\node_modules\\next\\dist\\client\\components\\static-generation-searchparams-bailout-provider.js": {
+      "id": "(app-client)/./node_modules/next/dist/client/components/static-generation-searchparams-bailout-provider.js",
+      "name": "*",
+      "chunks": [
+        "app-client-internals:static/chunks/app-client-internals.js"
+      ],
+      "async": false
+    },
+    "D:\\Progamming Works\\AthalWada\\NEW\\ProductDetailsandCart\\fm-ecommerce-product-page\\node_modules\\next\\dist\\esm\\client\\components\\static-generation-searchparams-bailout-provider.js": {
+      "id": "(app-client)/./node_modules/next/dist/client/components/static-generation-searchparams-bailout-provider.js",
+      "name": "*",
+      "chunks": [
+        "app-client-internals:static/chunks/app-client-internals.js"
+      ],
+      "async": false
+    },
+    "D:\\Progamming Works\\AthalWada\\NEW\\ProductDetailsandCart\\fm-ecommerce-product-page\\node_modules\\next\\font\\google\\target.css?{\"path\":\"app\\\\layout.js\",\"import\":\"Kumbh_Sans\",\"arguments\":[{\"subsets\":[\"latin\"]}],\"variableName\":\"kumbhSans\"}": {
+      "id": "(app-client)/./node_modules/next/font/google/target.css?{\"path\":\"app\\\\layout.js\",\"import\":\"Kumbh_Sans\",\"arguments\":[{\"subsets\":[\"latin\"]}],\"variableName\":\"kumbhSans\"}",
+      "name": "*",
+      "chunks": [
+        "app/layout:static/chunks/app/layout.js"
+      ],
+      "async": false
+    },
+    "D:\\Progamming Works\\AthalWada\\NEW\\ProductDetailsandCart\\fm-ecommerce-product-page\\app\\globals.css": {
+      "id": "(app-client)/./app/globals.css",
+      "name": "*",
+      "chunks": [
+        "app/layout:static/chunks/app/layout.js"
+      ],
+      "async": false
+    },
+    "D:\\Progamming Works\\AthalWada\\NEW\\ProductDetailsandCart\\fm-ecommerce-product-page\\components\\nav.js": {
+      "id": "(app-client)/./components/nav.js",
+      "name": "*",
+      "chunks": [
+        "app/layout:static/chunks/app/layout.js"
+      ],
+      "async": false
+    },
+    "D:\\Progamming Works\\AthalWada\\NEW\\ProductDetailsandCart\\fm-ecommerce-product-page\\components\\cartProvider.js": {
+      "id": "(app-client)/./components/cartProvider.js",
+      "name": "*",
+      "chunks": [
+        "app/layout:static/chunks/app/layout.js"
+      ],
+      "async": false
+    },
+    "D:\\Progamming Works\\AthalWada\\NEW\\ProductDetailsandCart\\fm-ecommerce-product-page\\components\\footer.module.css": {
+      "id": "(app-client)/./components/footer.module.css",
+      "name": "*",
+      "chunks": [
+        "app/layout:static/chunks/app/layout.js"
+      ],
+      "async": false
+    },
+    "D:\\Progamming Works\\AthalWada\\NEW\\ProductDetailsandCart\\fm-ecommerce-product-page\\public\\images\\image-product-1.jpg": {
+      "id": "(app-client)/./public/images/image-product-1.jpg",
+      "name": "*",
+      "chunks": [
+        "app/page:static/chunks/app/page.js"
+      ],
+      "async": false
+    },
+    "D:\\Progamming Works\\AthalWada\\NEW\\ProductDetailsandCart\\fm-ecommerce-product-page\\public\\images\\image-product-2.jpg": {
+      "id": "(app-client)/./public/images/image-product-2.jpg",
+      "name": "*",
+      "chunks": [
+        "app/page:static/chunks/app/page.js"
+      ],
+      "async": false
+    },
+    "D:\\Progamming Works\\AthalWada\\NEW\\ProductDetailsandCart\\fm-ecommerce-product-page\\public\\images\\image-product-3.jpg": {
+      "id": "(app-client)/./public/images/image-product-3.jpg",
+      "name": "*",
+      "chunks": [
+        "app/page:static/chunks/app/page.js"
+      ],
+      "async": false
+    },
+    "D:\\Progamming Works\\AthalWada\\NEW\\ProductDetailsandCart\\fm-ecommerce-product-page\\public\\images\\image-product-4.jpg": {
+      "id": "(app-client)/./public/images/image-product-4.jpg",
+      "name": "*",
+      "chunks": [
+        "app/page:static/chunks/app/page.js"
+      ],
+      "async": false
+    },
+    "D:\\Progamming Works\\AthalWada\\NEW\\ProductDetailsandCart\\fm-ecommerce-product-page\\public\\images\\image-product-3-slider.jpg": {
+      "id": "(app-client)/./public/images/image-product-3-slider.jpg",
+      "name": "*",
+      "chunks": [
+        "app/page:static/chunks/app/page.js"
+      ],
+      "async": false
+    },
+    "D:\\Progamming Works\\AthalWada\\NEW\\ProductDetailsandCart\\fm-ecommerce-product-page\\public\\images\\image-product-1-slider.jpg": {
+      "id": "(app-client)/./public/images/image-product-1-slider.jpg",
+      "name": "*",
+      "chunks": [
+        "app/page:static/chunks/app/page.js"
+      ],
+      "async": false
+    },
+    "D:\\Progamming Works\\AthalWada\\NEW\\ProductDetailsandCart\\fm-ecommerce-product-page\\public\\images\\image-product-2-slider.jpg": {
+      "id": "(app-client)/./public/images/image-product-2-slider.jpg",
+      "name": "*",
+      "chunks": [
+        "app/page:static/chunks/app/page.js"
+      ],
+      "async": false
+    },
+    "D:\\Progamming Works\\AthalWada\\NEW\\ProductDetailsandCart\\fm-ecommerce-product-page\\public\\images\\image-product-4-slider.jpg": {
+      "id": "(app-client)/./public/images/image-product-4-slider.jpg",
+      "name": "*",
+      "chunks": [
+        "app/page:static/chunks/app/page.js"
+      ],
+      "async": false
+    },
+    "D:\\Progamming Works\\AthalWada\\NEW\\ProductDetailsandCart\\fm-ecommerce-product-page\\public\\images\\image-product-1-thumbnail.jpg": {
+      "id": "(app-client)/./public/images/image-product-1-thumbnail.jpg",
+      "name": "*",
+      "chunks": [
+        "app/page:static/chunks/app/page.js"
+      ],
+      "async": false
+    },
+    "D:\\Progamming Works\\AthalWada\\NEW\\ProductDetailsandCart\\fm-ecommerce-product-page\\public\\images\\image-product-2-thumbnail.jpg": {
+      "id": "(app-client)/./public/images/image-product-2-thumbnail.jpg",
+      "name": "*",
+      "chunks": [
+        "app/page:static/chunks/app/page.js"
+      ],
+      "async": false
+    },
+    "D:\\Progamming Works\\AthalWada\\NEW\\ProductDetailsandCart\\fm-ecommerce-product-page\\public\\images\\image-product-3-thumbnail.jpg": {
+      "id": "(app-client)/./public/images/image-product-3-thumbnail.jpg",
+      "name": "*",
+      "chunks": [
+        "app/page:static/chunks/app/page.js"
+      ],
+      "async": false
+    },
+    "D:\\Progamming Works\\AthalWada\\NEW\\ProductDetailsandCart\\fm-ecommerce-product-page\\public\\images\\image-product-4-thumbnail.jpg": {
+      "id": "(app-client)/./public/images/image-product-4-thumbnail.jpg",
+      "name": "*",
+      "chunks": [
+        "app/page:static/chunks/app/page.js"
+      ],
+      "async": false
+    },
+    "D:\\Progamming Works\\AthalWada\\NEW\\ProductDetailsandCart\\fm-ecommerce-product-page\\app\\page.module.css": {
+      "id": "(app-client)/./app/page.module.css",
+      "name": "*",
+      "chunks": [
+        "app/page:static/chunks/app/page.js"
+      ],
+      "async": false
+    },
+    "D:\\Progamming Works\\AthalWada\\NEW\\ProductDetailsandCart\\fm-ecommerce-product-page\\components\\addToCart.js": {
+      "id": "(app-client)/./components/addToCart.js",
+      "name": "*",
+      "chunks": [
+        "app/page:static/chunks/app/page.js"
+      ],
+      "async": false
+    },
+    "D:\\Progamming Works\\AthalWada\\NEW\\ProductDetailsandCart\\fm-ecommerce-product-page\\components\\productGallery.js": {
+      "id": "(app-client)/./components/productGallery.js",
+      "name": "*",
+      "chunks": [
+        "app/page:static/chunks/app/page.js"
+      ],
+      "async": false
+    },
+    "D:\\Progamming Works\\AthalWada\\NEW\\ProductDetailsandCart\\fm-ecommerce-product-page\\components\\utils.module.css": {
+      "id": "(app-client)/./components/utils.module.css",
+      "name": "*",
+      "chunks": [
+        "app/page:static/chunks/app/page.js"
+      ],
+      "async": false
+    }
+  },
+  "entryCSSFiles": {
+    "D:\\Progamming Works\\AthalWada\\NEW\\ProductDetailsandCart\\fm-ecommerce-product-page\\app\\layout": [
+      "static/css/app/layout.css"
+    ],
+    "D:\\Progamming Works\\AthalWada\\NEW\\ProductDetailsandCart\\fm-ecommerce-product-page\\app\\page": [
+      "static/css/app/page.css"
+    ]
+  }
+}

@@ -1,6 +1,7 @@
 import { getSession } from 'next-auth/react';
 import router from 'next/router';
 import React, { useEffect,useState } from 'react';
+import {Card }from '@/components/ui/card';
 
 export default function User() {
 
@@ -42,11 +43,22 @@ export default function User() {
             fetchUser();
         }
     }, [email]);
-    return(
-        <div>
-            <h1>{CustomerName}</h1>
-            <h2>{email}</h2>
-            <h3>{PhoneNumber}</h3>
-        </div>
+    return (
+        <Card className="p-6 bg-gray-50 shadow-lg rounded-lg max-w-md mx-auto">
+            <div className="flex flex-col gap-4">
+            <div className="flex items-center gap-2">
+                <h3 className="text-lg font-semibold text-gray-800">Name:</h3>
+                <p className="text-lg text-gray-600">{CustomerName || "Not available"}</p>
+            </div>
+            <div className="flex items-center gap-2">
+                <h3 className="text-lg font-semibold text-gray-800">Email:</h3>
+                <p className="text-lg text-gray-600">{email || "Not available"}</p>
+            </div>
+            <div className="flex items-center gap-2">
+                <h3 className="text-lg font-semibold text-gray-800">Phone:</h3>
+                <p className="text-lg text-gray-600">{PhoneNumber || "Not available"}</p>
+            </div>
+            </div>
+        </Card>
     );
 }

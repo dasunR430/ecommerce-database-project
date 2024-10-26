@@ -69,7 +69,7 @@ export default function Register() {
     
             if (response.ok) {
                 console.log('User added successfully');
-                window.location.href = '/';
+                window.location.href = '/home';
             } else {
                 console.log('Failed to add user');
                 setError('Please enter a different email');
@@ -86,24 +86,7 @@ export default function Register() {
             setCheckPassword('');
         }
     };
-    
-    // return(
-    //     <div>
-    //         <form onSubmit={handleSubmit}>
-    //             <Card>
-    //                 <Input label="Email" type="email" placeholder="Email" value={email} onChange={handleEmailChange}/>
-    //                 <Input label="Password" type="password" placeholder="Password" value={password} onChange={handlePasswordChange}/>
-    //                 <Input label="Confirm Password" type="password" placeholder="Confirm Password" value={checkPassword} onChange={handleCheckPasswordChange}/>
-    //                 <Input label="Name" type="text" placeholder="Name" value={name} onChange={handleNameChange}/>
-    //                 <Input label='Phone Number' type='text' placeholder='Phone Number' value={phoneNumber} onChange={handlePhoneNumberChange}/>
-    //                 <Button label='Submit'/>
-    //                 {error && <p style={{ color: 'red' }}>{error}</p>}
-    //                 <br/>
-    //             <a href="/login" className="text-blue-500 underline">Already registered?</a>
-    //             </Card>
-    //         </form>
-    //     </div>
-    // );
+   
     return(
     <div className="flex justify-center items-center min-h-screen">
         <Card className="w-2/5">

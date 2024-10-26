@@ -37,10 +37,13 @@ const fetchProcducts = async () => {
 }
 
 export default async function Home() {
+  console.log('aaaaaa')
   const data: response = await fetchProcducts();
+
   if (!data) console.log("data not recived")
-  let trending_products: Product[] = data.trending_products;
-  let recommened_products: Product[] = data.recommened_products;
+  const trending_products: Product[] = data.trending_products;
+  
+  const recommened_products: Product[] = data.recommened_products;
   return (
     <>
       <Nav />

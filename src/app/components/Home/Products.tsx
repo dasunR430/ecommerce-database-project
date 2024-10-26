@@ -25,7 +25,7 @@ const Products: React.FC<ProductsProps> = ({ products, heading }) => {
         body: JSON.stringify({ productID: productID })
       }
     );
-    router.push(`/product/${productID}`)
+    router.push(`/productdetails/${productID}`)
   }
 
   return (
