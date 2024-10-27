@@ -42,6 +42,7 @@ export default function ProductDetailsPage() {
     const increment = () => setCount(count + 1);
     const decrement = () => setCount(count > 0 ? count - 1 : 0);
 
+
     useEffect(() => {
         if (id) {
             fetchProductDetails();

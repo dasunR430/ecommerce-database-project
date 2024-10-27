@@ -3,16 +3,16 @@
 import { useEffect, useState } from 'react';
 import style from './cartsum.module.css';
 import Card from "./cartitem"; // Assuming Card component can be reused or adjusted
-
-export default function CartSummary() {
+import CartCard from "../../cart/component/cartcard";
+export default function CartSummary({id}) {
     const [cartItems, setCartItems] = useState([]); // Initialized as an empty array
     const [totalAmount, setTotalAmount] = useState(0);
 
     useEffect(() => {
         async function fetchCartSummary() {
             try {
-                const customerID = 1; // Replace with the actual customer ID
-                const response = await fetch(`/api/cartitems?customerID=${customerID}`);
+                // const customerID = customerID; // Replace with the actual customer ID
+                const response = await fetch(`/api/cartitems?customerID=${id}`);
                 if (response.ok) {
                     const data = await response.json();
                     console.log(data);
