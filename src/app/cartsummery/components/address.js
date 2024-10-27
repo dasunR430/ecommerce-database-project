@@ -1,5 +1,5 @@
 import styles from "./address.module.css";
-export default function Address() {
+export default function Address()  {
     return (
         <div className={styles.addressdiv}>
             <h2 className={styles.head}>Address</h2>

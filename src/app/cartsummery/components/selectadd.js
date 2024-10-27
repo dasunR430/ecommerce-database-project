@@ -1,16 +1,19 @@
 'use client'
 
-
+import { getSession } from 'next-auth/react';
+import { useRouter } from 'next/navigation';
 import { useEffect, useState } from "react";
 import styles from "./selectadd.module.css";
 
-export default function SelectAdd() {
+export default function SelectAdd({id}) {
     const [addresses, setAddresses] = useState([]);
+    
+    
 
     useEffect(() => {
         async function fetchAddresses() {
             try {
-                const response = await fetch("/api/customer/getcustomeraddresses?customer_id=1"); // Replace with your API endpoint and add customer ID as needed
+                const response = await fetch(`/api/customer/getcustomeraddresses?customer_id=${id}`); // Replace with your API endpoint and add customer ID as needed
                 if (response.ok) {
                     const data = await response.json();
                     setAddresses(data); // Assuming the API returns an array of addresses
