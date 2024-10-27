@@ -15,7 +15,7 @@ export async function POST(req: NextRequest) {
         const getitemquery = 'select count(*) from cartitem where CustomerID = ?';
         const [rows] = await connection.execute<mysql.RowDataPacket[]>(getitemquery, [id]);
 
-        const result = (rows[0] as { 'count()': number })['count()'];
+        const result = (rows[0] as { 'count(*)': number })['count(*)'];
         return Response.json(result, {
             status: 200,
             headers: { 'Content-Type': 'application/json' }

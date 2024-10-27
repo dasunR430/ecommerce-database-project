@@ -42,6 +42,7 @@ export default function ProductDetailsPage() {
     const increment = () => setCount(count + 1);
     const decrement = () => setCount(count > 0 ? count - 1 : 0);
 
+
     useEffect(() => {
         if (id) {
             fetchProductDetails();
@@ -121,6 +122,7 @@ export default function ProductDetailsPage() {
                 });
                 if(response.ok){
                     alert("Product added to cart successfully");
+                    // router.push("/productdetails/"+id); //menna meka poddak balanna one
                 }else{
                     alert("Failed to add product to cart");
                 }

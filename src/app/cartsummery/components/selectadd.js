@@ -5,6 +5,7 @@ import styles from "./selectadd.module.css";
 import Address from "./Address";
 
 export default function SelectAdd({id}) {
+export default function SelectAdd({id}) {
     const [addresses, setAddresses] = useState([]);
     const [selectedAddress, setSelectedAddress] = useState(null);
 
