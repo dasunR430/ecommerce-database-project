@@ -2,15 +2,15 @@
 import styles from './page.module.css';
 import { useRouter } from 'next/navigation';
 import { getSession } from 'next-auth/react';
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useCallback } from 'react';
 import CartCard from './component/cartcard';
 
 interface CartItem {
   ProductName: string;
   Quantity: number;
   total: number;
+  SKU: string;
 }
-
 
 interface CartPageProps {
   setIsClicked: React.Dispatch<React.SetStateAction<boolean>>;
@@ -24,6 +24,30 @@ export default function CartPage({ setIsClicked, isClicked }: CartPageProps) {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
+  // Function to fetch cart items
+  const fetchCartItems = useCallback(async (userId: string) => {
+    try {
+      const response = await fetch('/api/getcartitem', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ id: userId }),
+      });
+
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
+      }
+
+      const cartItems = await response.json();
+      setData(cartItems);
+    } catch (err) {
+      setError(err instanceof Error ? err.message : 'An error occurred');
+      console.error("Error:", err);
+    }
+  }, []);
+
+  // Initialize cart
   useEffect(() => {
     const initializeCart = async () => {
       try {
@@ -40,21 +64,7 @@ export default function CartPage({ setIsClicked, isClicked }: CartPageProps) {
         }
         
         setId(userId);
-        
-        const response = await fetch('/api/getcartitem', {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify({ id: userId }),
-        });
-
-        if (!response.ok) {
-          throw new Error(`HTTP error! status: ${response.status}`);
-        }
-
-        const cartItems = await response.json();
-        setData(cartItems);
+        await fetchCartItems(userId);
       } catch (err) {
         setError(err instanceof Error ? err.message : 'An error occurred');
         console.error("Error:", err);
@@ -64,10 +74,16 @@ export default function CartPage({ setIsClicked, isClicked }: CartPageProps) {
     };
 
     initializeCart();
-  }, [router]);
+  }, [router, fetchCartItems]);
 
+  // Handler for cart item deletion
+  const handleItemDelete = useCallback(async () => {
+    if (id) {
+      await fetchCartItems(id);
+    }
+  }, [id, fetchCartItems]);
 
-  const totalCartAmount = data.reduce((sum, item) =>  Number(sum) + Number(item.total), 0);
+  const totalCartAmount = data.reduce((sum, item) => Number(sum) + Number(item.total), 0);
 
   if (loading) return <div className={styles.cartdiv}>Loading...</div>;
   if (error) return <div className={styles.cartdiv}>Error: {error}</div>;
@@ -80,8 +96,9 @@ export default function CartPage({ setIsClicked, isClicked }: CartPageProps) {
           <div className={styles.cartItems}>
             {data.map((item) => (
               <CartCard
-                key={item.ProductName}
+                key={item.SKU} // Changed from ProductName to SKU for unique key
                 {...item}
+                onDelete={handleItemDelete}
               />
             ))}
           </div>
@@ -91,14 +108,14 @@ export default function CartPage({ setIsClicked, isClicked }: CartPageProps) {
             </div>
           </div>
           <button 
-              className={styles.checkoutButton}
-              onClick={() => {
-                router.push("../cartsummery");
-                setIsClicked(!isClicked);
-              }}
-            >
-              Proceed to Checkout
-            </button>
+            className={styles.checkoutButton}
+            onClick={() => {
+              router.push("../cartsummery");
+              setIsClicked(!isClicked);
+            }}
+          >
+            Proceed to Checkout
+          </button>
         </>
       ) : (
         <p className={styles.emptyCart}>Your cart is empty</p>

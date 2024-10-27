@@ -1,19 +1,80 @@
-// components/CartCard.tsx
 'use client';
 import styles from './CartCard.module.css';
 import { Trash2 } from 'lucide-react';
+import { getSession } from 'next-auth/react';
+import React, { useEffect, useState } from 'react';
+import { useRouter } from 'next/navigation';
 
 interface CartCardProps {
   ProductName: string;
   Quantity: number;
   total: number;
+  SKU: string;
+  onDelete: () => Promise<void>;
 }
 
 export default function CartCard({
   ProductName,
   Quantity,
   total,
+  SKU,
+  onDelete,
 }: CartCardProps) {
+  const router = useRouter();
+  const [id, setId] = useState('');
+  const [isDeleting, setIsDeleting] = useState(false);
+  const [error, setError] = useState('');
+
+  useEffect(() => {
+    const checkSession = async () => {
+      const session = await getSession();
+      if (!session) {
+        router.push("/login");
+        return;
+      }
+      if (session.user?.id) {
+        setId(session.user.id);
+      }
+    };
+
+    checkSession();
+  }, [router]);
+
+  const deleteItem = async () => {
+    if (!id) {
+      setError('User ID not available');
+      return;
+    }
+
+    try {
+      setIsDeleting(true);
+      setError('');
+
+      const response = await fetch('/api/deletecartitem', {
+        method: 'DELETE',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ id, sku: SKU }),
+      });
+
+      const data = await response.json();
+
+      if (!response.ok) {
+        throw new Error(data.message || `HTTP error! status: ${response.status}`);
+      }
+
+      // Call the parent's onDelete callback to refresh the cart
+      await onDelete();
+
+    } catch (err) {
+      console.error('Failed to delete item:', err);
+      setError(err instanceof Error ? err.message : 'Failed to delete item');
+    } finally {
+      setIsDeleting(false);
+    }
+  }
+
   return (
     <div className={styles.cartCard}>
       <div className={styles.details}>
@@ -22,10 +83,12 @@ export default function CartCard({
           <span>Quantity: {Quantity}</span>
           <span className={styles.total}>Total: ${total}</span>
         </div>
+        {error && <p className={styles.error}>{error}</p>}
       </div>
       <button 
-        // onClick={() => console.log('Delete item' + ProductName)}
-        className={styles.deleteButton}
+        onClick={deleteItem}
+        className={`${styles.deleteButton} ${isDeleting ? styles.deleting : ''}`}
+        disabled={isDeleting}
         aria-label="Delete item"
       >
         <Trash2 size={18} />

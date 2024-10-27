@@ -1,13 +1,12 @@
 'use client'
 import React, { useEffect } from 'react';
-import { useState } from 'react';
+import { useState, useCallback } from 'react';
 import SearchComponent from './Home/SearchComponent';
 import CategoryFilter from './Home/CategoryFilter';
 import Link from 'next/link';
 import Cart from '../cart/page';
 import { getSession, signOut } from 'next-auth/react';
 import { useRouter } from "next/navigation";
-
 
 interface SearchKey {
     ProductID: number;
@@ -18,24 +17,78 @@ const Header: React.FC = () => {
     const router = useRouter();
     const [isLoggedIn, setIsLoggedIn] = useState(false);
     const [userID, setUserID] = useState<number>(-1);
-    const [isOpen, setIsOpen] = useState(false); // for dropdown in user profile icon
+    const [isOpen, setIsOpen] = useState(false);
     const [isClicked, setIsClicked] = useState(false);
+    const [cartCount, setCartCount] = useState(0);
+
+    const getcartcount = useCallback(async (userId: number) => {
+        try {
+            // Only fetch cart count if user is logged in
+            if (userId === -1) return;
+            
+            const response = await fetch('/api/getcartitem/getcartcount', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ id: userId }), // Use the passed userId parameter
+            });
+
+            if (!response.ok) {
+                throw new Error('Failed to fetch cart count');
+            }
+
+            const data = await response.json();
+            setCartCount(data || 0);
+        } catch (error) {
+            console.error('Error fetching cart count:', error);
+            setCartCount(0);
+        }
+    }, []); // Remove userID from dependencies since we're using the parameter
 
     useEffect(() => {
         const checkSession = async () => {
-            const session = await getSession();
-            if (session) {
-                setUserID(Number(session.user.id))
-                setIsLoggedIn(true); // to show profile and signout
+            try {
+                const session = await getSession();
+                if (session?.user?.id) {
+                    const newUserId = Number(session.user.id);
+                    setUserID(newUserId);
+                    setIsLoggedIn(true);
+                    // Fetch cart count after we have the user ID
+                    await getcartcount(newUserId);
+                } else {
+                    setIsLoggedIn(false);
+                    setUserID(-1);
+                    setCartCount(0);
+                }
+            } catch (error) {
+                console.error('Error checking session:', error);
+                setIsLoggedIn(false);
+                setUserID(-1);
+                setCartCount(0);
             }
         };
+
         checkSession();
-    }, [router]);
+    }, [getcartcount, router]); // Add getcartcount to dependencies
+
+    // Refetch cart count whenever userID changes
+    useEffect(() => {
+        if (userID !== -1) {
+            getcartcount(userID);
+        }
+    }, [userID, getcartcount]);
 
     const handleSignOut = async () => {
-        setIsLoggedIn(false);
-        await signOut({ redirect: false });
-        window.location.href = "/login";
+        try {
+            setIsLoggedIn(false);
+            setUserID(-1);
+            setCartCount(0);
+            await signOut({ redirect: false });
+            window.location.href = "/login";
+        } catch (error) {
+            console.error('Error signing out:', error);
+        }
     };
 
     return (
@@ -66,7 +119,7 @@ const Header: React.FC = () => {
                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="size-6">
                         <path strokeLinecap="round" strokeLinejoin="round" d="M2.25 3h1.386c.51 0 .955.343 1.087.835l.383 1.437M7.5 14.25a3 3 0 0 0-3 3h15.75m-12.75-3h11.218c1.121-2.3 2.1-4.684 2.924-7.138a60.114 60.114 0 0 0-16.536-1.84M7.5 14.25 5.106 5.272M6 20.25a.75.75 0 1 1-1.5 0 .75.75 0 0 1 1.5 0Zm12.75 0a.75.75 0 1 1-1.5 0 .75.75 0 0 1 1.5 0Z" />
                     </svg>
-                    <span className="absolute -top-1 -right-1 bg-red-500 text-white rounded-full px-1 text-xs">0</span>                
+                    <span className="absolute -top-1 -right-1 bg-red-500 text-white rounded-full px-1 text-xs">{cartCount}</span>                
                 </div>
                 {isClicked && <Cart isClicked ={isClicked} setIsClicked ={setIsClicked}/>}
                 <div className="relative" onBlur={() => setTimeout(() => setIsOpen(false), 300)}>

@@ -121,6 +121,7 @@ export default function ProductDetailsPage() {
                 });
                 if(response.ok){
                     alert("Product added to cart successfully");
+                    // router.push("/productdetails/"+id); //menna meka poddak balanna one
                 }else{
                     alert("Failed to add product to cart");
                 }
