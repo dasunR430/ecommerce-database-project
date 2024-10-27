@@ -1,6 +1,6 @@
 'use client'
 import React, { useEffect } from 'react';
-import { useState, useCallback } from 'react';
+import { useState, useCallback, useCallback } from 'react';
 import SearchComponent from './Home/SearchComponent';
 import CategoryFilter from './Home/CategoryFilter';
 import Link from 'next/link';
@@ -94,7 +94,7 @@ const Header: React.FC = () => {
     return (
         <>
         <header className="flex  sticky  top-0 z-50 items-center bg-black text-white p-2">
-            <Link href={'/home'}>
+            <Link href={'/'}>
                 <div className="flex items-center">
                     <div className="w-full max-w-[200px]">
                         <svg xmlns="http://www.w3.org/2000/svg" width="50" height="50" viewBox="0 0 100 100">

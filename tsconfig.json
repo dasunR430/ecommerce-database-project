@@ -21,6 +21,6 @@
       "@/*": ["./src/*"]
     }
   },
-  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts", "src/app/components/profile/sideNavigation.tsx", "src/app/cartsummery/components/selectadd.js"],
+  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts", "src/app/components/profile/sideNavigation.tsx", "src/app/cartsummery/page.tsx", "src/app/cartsummery/components/cartsum.tsx"],
   "exclude": ["node_modules"]
 }

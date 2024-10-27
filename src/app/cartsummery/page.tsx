@@ -40,7 +40,7 @@ export default function CartSummery(){
         <div className={styles.summerybody}>
             <div className={styles.sumbodyright}>  
                 <SelectAddress id={id}/>
-                <Address />
+                
                 <ShipingDetails id={id} />
             </div>
 

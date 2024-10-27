@@ -1,5 +1,3 @@
-// src/pages/api/cart/getCartItems.js
-
 import { pool } from "../../../sharedCode/dbconnect"; // Adjust the path as necessary
 
 export async function GET(req) {
@@ -19,13 +17,14 @@ export async function GET(req) {
         // Call the stored procedure
         const [rows] = await conn.query("CALL GetCartItems(?)", [customerID]);
 
-        // Extracting results
+        // Extracting results including AvailableStock
         const responseData = rows[0].map(item => ({
             ProductName: item.ProductName,
             SKU: item.SKU,
             Quantity: item.Quantity,
             UnitPrice: item.UnitPrice,
             NetPrice: item.NetPrice,
+            AvailableStock: item.AvailableStock
         }));
 
         return new Response(JSON.stringify(responseData), {
