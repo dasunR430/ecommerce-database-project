@@ -1,6 +1,6 @@
 'use client'
 import React, { useEffect } from 'react';
-import { useState, useCallback, useCallback } from 'react';
+import { useState, useCallback } from 'react';
 import SearchComponent from './Home/SearchComponent';
 import CategoryFilter from './Home/CategoryFilter';
 import Link from 'next/link';
