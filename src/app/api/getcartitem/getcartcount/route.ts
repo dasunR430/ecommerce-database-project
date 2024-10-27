@@ -12,10 +12,11 @@ export async function POST(req: NextRequest) {
     try {        
         connection = await pool.getConnection();
 
-        const getitemquery = 'select ProductName, Quantity, Quantity*Price as total, SKU from product natural left join cartitem where CustomerID = ?';
-        const [row] = await connection.execute(getitemquery, [id]);
+        const getitemquery = 'select count(*) from cartitem where CustomerID = ?';
+        const [rows] = await connection.execute<mysql.RowDataPacket[]>(getitemquery, [id]);
 
-        return Response.json(row, {
+        const result = (rows[0] as { 'count()': number })['count()'];
+        return Response.json(result, {
             status: 200,
             headers: { 'Content-Type': 'application/json' }
         });

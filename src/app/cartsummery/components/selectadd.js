@@ -1,19 +1,20 @@
-'use client'
-
+'use client';
 
 import { useEffect, useState } from "react";
 import styles from "./selectadd.module.css";
+import Address from "./Address";
 
-export default function SelectAdd() {
+export default function SelectAdd({id}) {
     const [addresses, setAddresses] = useState([]);
+    const [selectedAddress, setSelectedAddress] = useState(null);
 
     useEffect(() => {
         async function fetchAddresses() {
             try {
-                const response = await fetch("/api/customer/getcustomeraddresses?customer_id=1"); // Replace with your API endpoint and add customer ID as needed
+                const response = await fetch(`/api/customer/getcustomeraddresses?customer_id=${id}`);    
                 if (response.ok) {
                     const data = await response.json();
-                    setAddresses(data); // Assuming the API returns an array of addresses
+                    setAddresses(data);
                 } else {
                     console.error("Failed to fetch addresses");
                 }
@@ -25,17 +26,31 @@ export default function SelectAdd() {
         fetchAddresses();
     }, []);
 
+    const handleAddressSelect = (event) => {
+        const index = event.target.value;
+        if (index) {
+            setSelectedAddress(addresses[index]);
+        } else {
+            setSelectedAddress(null);
+        }
+    };
+
     return (
+        <>
         <div className={styles.selectadddiv}>
             <h2 className={styles.head}>Select Address</h2>
-            <select id="address" className={styles.pickadd}>
+            <select id="address" className={styles.pickadd} onChange={handleAddressSelect}>
                 <option value="">Select an address</option>
                 {addresses.map((address, index) => (
-                    <option key={index} value={`address${index}`}>
+                    <option key={index} value={index}>
                         {`${address.AddressLine1}, ${address.City}, ${address.District}`}
                     </option>
                 ))}
             </select>
+           
         </div>
+         <Address selectedAddress={selectedAddress} />
+         </>
     );
-};
+
+}

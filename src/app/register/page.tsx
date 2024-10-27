@@ -69,7 +69,7 @@ export default function Register() {
     
             if (response.ok) {
                 console.log('User added successfully');
-                window.location.href = '/home';
+                window.location.href = '/';
             } else {
                 console.log('Failed to add user');
                 setError('Please enter a different email');

@@ -1,0 +1,68 @@
+.cartCard {
+  display: flex;
+  padding: 1rem;
+  background: white;
+  border: 1px solid #eee;
+  border-radius: 8px;
+  margin-bottom: 0.75rem;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  max-width: 100%; /* Ensures no overflow */
+  box-sizing: border-box; /* Includes padding in width calculation */
+}
+
+.details {
+  flex: 1;
+  width: 100%; /* Ensures details take full width */
+}
+
+.name {
+  font-size: 1rem;
+  font-weight: 500;
+  margin: 0 0 0.5rem 0;
+  color: #333;
+  width: 100%; /* Full width for the name */
+}
+
+.info {
+  display: flex;
+  gap: 1.5rem;
+  color: #666;
+  width: 100%; /* Full width for info container */
+  justify-content: flex-start; /* Aligns items to the start */
+}
+
+.total {
+  font-weight: 500;
+  margin-left: auto; /* Pushes total to the right */
+}
+
+.deliveryText {
+  display: block;
+  margin-top: 0.5rem;
+  font-size: 0.875rem;
+  color: #059669;
+  width: 100%; /* Full width for delivery text */
+}
+
+@media (max-width: 640px) {
+  .cartCard {
+    padding: 0.875rem;
+    width: 100%;
+  }
+  
+  .name {
+    font-size: 0.9375rem;
+  }
+  
+  .info {
+    font-size: 0.875rem;
+    flex-wrap: wrap; /* Allows wrapping on small screens */
+    gap: 1rem; /* Slightly reduced gap for mobile */
+  }
+  
+  .deliveryText {
+    font-size: 0.8125rem;
+  }
+}

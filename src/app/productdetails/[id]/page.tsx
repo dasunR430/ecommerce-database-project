@@ -59,7 +59,7 @@ export default function ProductDetailsPage() {
         const checkSession = async () => {
             const session = await getSession(); // Getting the session
             if (!session) {
-              router.push("/login"); // Redirecting to sign-in if no session
+            //   router.push("/login"); // Redirecting to sign-in if no session
             } else {
               setcId(session.user?.id || ''); // Set email if session exists
             }

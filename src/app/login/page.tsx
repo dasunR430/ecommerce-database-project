@@ -36,7 +36,7 @@ const Login: React.FC = () => {
       if (result?.error) {
         setError(result.error);
       } else if (result?.ok) {
-        window.location.href = '/home'; // Redirect to home or a protected page
+        window.location.href = '/'; // Redirect to home or a protected page
       }
     } catch (err) {
       console.error('Login error:', err);

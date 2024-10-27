@@ -3,6 +3,7 @@ import { pool } from "../../../../sharedCode/dbconnect";
 
 interface Address {
     CustomerID: number;
+    CustomerName: string; // New field
     AddressLine1: string;
     AddressLine2: string;
     City: string;
@@ -27,6 +28,7 @@ export async function GET(req: Request) {
         const query = `CALL GetCustomerAddresses(?)`;
         const [result] = await conn.execute<RowDataPacket[]>(query, [customerId]);
 
+        // Sending the entire result array, assuming result[0] is an array of address objects
         return new Response(JSON.stringify(result[0]), {
             status: 200,
             headers: { "Content-Type": "application/json" },

@@ -3,14 +3,14 @@
 import { useEffect, useState } from "react";
 import styles from "./shipingdetails.module.css";
 
-export default function ShippingDetails() {
+export default function ShippingDetails({id}) {
     const [estimatedDate, setEstimatedDate] = useState("");
    
 
     useEffect(() => {
         async function fetchShippingDetails() {
             try {
-                const response = await fetch("/api/shippingdetails?orderID=1"); // Replace with your API endpoint
+                const response = await fetch(`/api/shippingdetails?orderID=${id}`); // Replace with your API endpoint
                 if (response.ok) {
                     const data = await response.json();
                     // Assuming data contains fields 'MaxDeliveryDate' and 'NetTotal'
