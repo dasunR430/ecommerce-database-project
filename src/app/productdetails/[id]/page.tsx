@@ -34,13 +34,13 @@ export default function ProductDetailsPage() {
     const [cid, setcId] = useState('');
     const { id } = useParams();
     const [product, setProduct] = useState<ProductDetails | null>(null);
-    const [count, setCount] = useState(0);
+    const [count, setCount] = useState(1);
     const [features, setFeatures] = useState<Feature[]>([]);
     const [selectedFeature, setSelectedFeature] = useState<Feature | null>(null);
     const [currentPrice, setCurrentPrice] = useState<string | number>('');
 
     const increment = () => setCount(count + 1);
-    const decrement = () => setCount(count > 0 ? count - 1 : 0);
+    const decrement = () => setCount(count > 1 ? count - 1 : 1);
 
 
     useEffect(() => {

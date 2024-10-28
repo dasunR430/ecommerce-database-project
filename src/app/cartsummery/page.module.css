@@ -1,7 +1,7 @@
 .summerybody{
-    width: 90%;
+    width: 100%;
     margin: 0 auto;
-    background-color: rgb(190, 189, 189);
+    background-color: rgb(243, 243, 243);
     display: flex;
     padding: 20px;
 }

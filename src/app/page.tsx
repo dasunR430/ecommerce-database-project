@@ -38,7 +38,7 @@ const fetchProcducts = async () => {
 }
 
 export default async function Home() {
-  console.log('aaaaaa')
+
   const data: response = await fetchProcducts();
 
   if (!data) console.log("data not recived")
