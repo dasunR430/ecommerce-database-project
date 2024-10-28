@@ -1,5 +1,6 @@
 'use client';
-
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faUser } from '@fortawesome/free-solid-svg-icons';
 import { Input } from '../components/basicUi/input';
 import { useState, useEffect } from 'react';
 // import { Button } from '../components/basicUi/button';
@@ -88,26 +89,80 @@ export default function Register() {
     };
    
     return(
-    <div className="flex justify-center items-center min-h-screen">
-        <Card className="w-2/5">
-        <CardHeader>
-        <CardTitle>Register</CardTitle>
-        </CardHeader>
-        <CardContent>
-        <form onSubmit={handleSubmit}>
-        <Input label="Email" type="email" placeholder="Email" value={email} onChange={handleEmailChange}/>
-        <Input label="Password" type="password" placeholder="Password" value={password} onChange={handlePasswordChange}/>
-        <Input label="Confirm Password" type="password" placeholder="Confirm Password" value={checkPassword} onChange={handleCheckPasswordChange}/>
-        <Input label="Name" type="text" placeholder="Name" value={name} onChange={handleNameChange}/>
-        <Input label='Phone Number' type='text' placeholder='Phone Number' value={phoneNumber} onChange={handlePhoneNumberChange}/>
-        <br/>
-        <Button type='submit'>Submit</Button>
-        {error && <p style={{ color: 'red' }}>{error}</p>}
-        <br/>
-        <a href="/login" className="text-blue-500 underline">Already registered?</a>
-        </form>
-        </CardContent>
-        </Card>
+    // <div className="flex justify-center items-center min-h-screen">
+    //     <Card className="w-2/5">
+    //     <CardHeader>
+    //     <CardTitle>Register</CardTitle>
+    //     </CardHeader>
+    //     <CardContent>
+    //     <form onSubmit={handleSubmit}>
+    //     <Input label="Email" type="email" placeholder="Email" value={email} onChange={handleEmailChange}/>
+    //     <Input label="Password" type="password" placeholder="Password" value={password} onChange={handlePasswordChange}/>
+    //     <Input label="Confirm Password" type="password" placeholder="Confirm Password" value={checkPassword} onChange={handleCheckPasswordChange}/>
+    //     <Input label="Name" type="text" placeholder="Name" value={name} onChange={handleNameChange}/>
+    //     <Input label='Phone Number' type='text' placeholder='Phone Number' value={phoneNumber} onChange={handlePhoneNumberChange}/>
+    //     <br/>
+    //     <Button type='submit'>Submit</Button>
+    //     {error && <p style={{ color: 'red' }}>{error}</p>}
+    //     <br/>
+    //     <a href="/login" className="text-blue-500 underline">Already registered?</a>
+    //     </form>
+    //     </CardContent>
+    //     </Card>
+    // </div>
+    <div className="min-h-screen flex items-center justify-center bg-gray-800 p-4 overflow-hidden">
+        <div className="relative flex flex-col items-center bg-white bg-opacity-90 p-8 md:p-12 rounded-lg shadow-lg backdrop-blur-lg max-w-lg w-full">
+            <div className="bg-red-900 rounded-full p-4 mb-6">
+                <FontAwesomeIcon icon={faUser} className="h-16 w-16 text-gray-300" />
+            </div>
+            <h2 className="text-3xl font-bold text-blue-900 mb-8">Register</h2>
+            <form onSubmit={handleSubmit}>
+                <Input
+                    label="Email"
+                    type="email"
+                    placeholder="Email"
+                    value={email}
+                    onChange={handleEmailChange}
+                />
+                <Input
+                    label="Password"
+                    type="password"
+                    placeholder="Password"
+                    value={password}
+                    onChange={handlePasswordChange}
+                />
+                <Input
+                    label="Confirm Password"
+                    type="password"
+                    placeholder="Confirm Password"
+                    value={checkPassword}
+                    onChange={handleCheckPasswordChange}
+                />
+                <Input
+                    label="Name"
+                    type="text"
+                    placeholder="Name"
+                    value={name}
+                    onChange={handleNameChange}
+                />
+                <Input
+                    label="Phone Number"
+                    type="text"
+                    placeholder="Phone Number"
+                    value={phoneNumber}
+                    onChange={handlePhoneNumberChange}
+                />
+                <br />
+                <Button type="submit">Submit</Button>
+                {error && <p style={{ color: 'red' }}>{error}</p>}
+                <br />
+                <div className="text-blue-500 underline">
+                <a href="/login" className="text-blue-500 underline">
+                    Already registered?
+                </a>
+                </div>
+            </form>
+        </div>
     </div>
     );
 };

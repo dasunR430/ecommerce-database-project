@@ -61,4 +61,26 @@ export default function User() {
             </div>
         </Card>
     );
+
+    // return (
+    //     <Card className="p-6 bg-black shadow-lg rounded-lg max-w-md mx-auto">
+    //         <div className="flex flex-col gap-4">
+    //             <div className="flex items-center gap-2">
+    //                 <h3 className="text-lg font-semibold text-white">Name:</h3>
+    //                 <p className="text-lg text-gray-300">{CustomerName || "Not available"}</p>
+    //             </div>
+    //             <div className="flex items-center gap-2">
+    //                 <h3 className="text-lg font-semibold text-white">Email:</h3>
+    //                 <p className="text-lg text-gray-300">{email || "Not available"}</p>
+    //             </div>
+    //             <div className="flex items-center gap-2">
+    //                 <h3 className="text-lg font-semibold text-white">Phone:</h3>
+    //                 <p className="text-lg text-gray-300">{PhoneNumber || "Not available"}</p>
+    //             </div>
+    //         </div>
+    //     </Card>
+    // );
+    
+    
+    
 }
