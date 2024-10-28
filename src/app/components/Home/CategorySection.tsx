@@ -18,7 +18,11 @@ interface response {
     categories: Category[];
 }
 
-const CategorySection: React.FC = async () => {
+interface CategorySectionProps {
+    divId: string;
+}
+
+const CategorySection: React.FC<CategorySectionProps> = async ({divId}) => {
     
     const fetchProcducts = async () => {
         try {
@@ -37,7 +41,7 @@ const CategorySection: React.FC = async () => {
     let categories : Category[] | undefined = await fetchProcducts();
 
     return (
-        <div className="p-4">
+        <div id={divId} className="p-4">
             <h2 className="text-2xl font-bold mb-4">Categories</h2>
             <div className="">
                 <ul className="mt-2">
