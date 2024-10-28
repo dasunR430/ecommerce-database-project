@@ -2,12 +2,13 @@
 .cartCard {
     display: flex;
     padding: 1rem;
-    background: white;
+    background: rgb(232, 231, 231);
     border: 1px solid #eee;
     border-radius: 8px;
     margin-bottom: 0.75rem;
     justify-content: space-between;
     align-items: center;
+    /* box-shadow: 0 0 10px rgba(34, 34, 34, 0.778); */
   }
   
   .details {

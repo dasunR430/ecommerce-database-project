@@ -12,9 +12,37 @@ import ShipingDetails from "./components/shipingdetails";
 
 import SelectAddress from "./components/selectadd";
 
+import OrderSum from "../ordersummery/page"
+
+interface Address {
+    CustomerName: string;
+    AddressLine1: string;
+    AddressLine2: string;
+    PhoneNumber: string;
+    City: string;
+    District: string;
+    PostalCode: string;
+}
+
+interface Paymentdetails {
+    Deliverymethod: string;
+    Paymentmethod: string;
+}
+
 export default function CartSummery(){
     const router = useRouter();
     const [id, setId] = useState('');
+    const [isclicked, setIsClicked] = useState(false);
+    const [data, setData] = useState({
+        CustomerName: " ", 
+        AddressLine1: " ", 
+        AddressLine2: " ", 
+        PhoneNumber: " ", 
+        City: " ", 
+        District: " ", 
+        PostalCode: " ",
+        Deliverymethod: " ", 
+        Paymentmethod: " " });
 
     useEffect(() => {
         const checkSession = async () => {
@@ -30,7 +58,7 @@ export default function CartSummery(){
     }, [router]);
 
     useEffect(() => {
-        console.log(id);   
+        console.log(data);   
     });
     if(!id) {
         return <div>Loading...</div>;
@@ -39,8 +67,8 @@ export default function CartSummery(){
     return(        
         <div className={styles.summerybody}>
             <div className={styles.sumbodyright}>  
-                <SelectAddress id={id}/>
-                
+                <SelectAddress id={id}  />
+                setData()
                 <ShipingDetails id={id} />
             </div>
 
@@ -55,9 +83,10 @@ export default function CartSummery(){
             </div>
 
             <div className={styles.sumbodyleftupper}>
-                <Paymentdetails />
+                <Paymentdetails isClicked={isclicked} setIsClicked={setIsClicked}/>
             </div>
             </div>
+            {isclicked && <OrderSum id={id} isClicked={isclicked} setIsClicked={setIsClicked}/>}
         </div>
     );
 }

@@ -1,6 +1,6 @@
 import styles from "./paydetails.module.css";
 
-export default function PaymentDetail() {
+export default function PaymentDetail({isClicked, setIsClicked}) {
     return (
         <div className={styles.paymentdiv}>
             <h2 className={styles.head}>Payment Details</h2>
@@ -23,7 +23,7 @@ export default function PaymentDetail() {
                 </select>
             </div>
 
-            <button className={styles.paybtn}>Confirm Order</button>
+            <button className={styles.paybtn} onClick={()=>setIsClicked(!isClicked)}>Confirm Order</button>
         </div>
     );
 }

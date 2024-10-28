@@ -3,13 +3,14 @@
     padding: 2rem;
     max-width: 800px;
     margin: 0 auto;
-    background-color: #e7e7e7;
+    background-color: #f6f4f4;
     position: fixed;
     width: 25%;
     top: 10%;
-    left: 74.5%;
+    left: 74%;
     border-radius: 5px;
     z-index: 1;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.773);
   }
 
 .cartdiv::before {
