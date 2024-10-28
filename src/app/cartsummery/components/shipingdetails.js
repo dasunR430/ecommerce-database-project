@@ -1,11 +1,10 @@
 'use client'
 
-import { useEffect, useState } from "react";
+import { use, useEffect, useState } from "react";
 import styles from "./shipingdetails.module.css";
 
-export default function ShippingDetails({id}) {
+export default function ShippingDetails({id, setShippingData}) {
     const [estimatedDate, setEstimatedDate] = useState("");
-   
 
     useEffect(() => {
         async function fetchShippingDetails() {
@@ -26,6 +25,10 @@ export default function ShippingDetails({id}) {
 
         fetchShippingDetails();
     }, []);
+
+    useEffect(() => {
+        setShippingData(estimatedDate); 
+    }, [estimatedDate]);
 
     const formatDate = (dateString) => {
         const date = new Date(dateString);

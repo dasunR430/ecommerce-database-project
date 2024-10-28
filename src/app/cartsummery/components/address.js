@@ -2,7 +2,7 @@
 import { useEffect, useState } from "react";
 import styles from "./address.module.css";
 
-export default function Address({ selectedAddress }) {
+export default function Address({ selectedAddress , setAddressData}) {
     const [addressDetails, setAddressDetails] = useState({
         CustomerName: "",
         AddressLine1: "",
@@ -123,7 +123,9 @@ export default function Address({ selectedAddress }) {
                     onChange={handleChange}
                 />
             </div>
-            <button className={styles.addaddressbtn}>Add Address</button>
+            <button className={styles.addaddressbtn} onClick={() => {
+              setAddressData(addressDetails);
+            }}>Add Address</button>
         </div>
     );
 }
