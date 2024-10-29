@@ -1,6 +1,7 @@
-// AttributeGroup.tsx
+import React from 'react';
+
 interface Attribute {
-    AttributeID: number;
+    AttributeType: string;
     AttributeValue: string;
 }
 
@@ -16,27 +17,11 @@ interface AttributeGroupProps {
     onSelect: () => void;
 }
 
-const getAttributeLabel = (attributeId: number) => {
-    // Customize this based on your attribute IDs
-    switch (attributeId) {
-        case 1:
-            return "Size";
-        case 2:
-            return "Color";
-        case 3:
-            return "Material";
-        default:
-            return "Feature";
-    }
-};
-
 export default function AttributeGroup({
     feature,
     isSelected,
     onSelect
 }: AttributeGroupProps) {
-    const sortedAttributes = [...feature.attributes].sort((a, b) => a.AttributeID - b.AttributeID);
-
     return (
         <button
             onClick={onSelect}
@@ -50,10 +35,10 @@ export default function AttributeGroup({
         >
             <div className="flex items-center justify-between">
                 <div className="flex-1 flex items-center space-x-4">
-                    {sortedAttributes.map((attr) => (
-                        <div key={attr.AttributeID} className="flex items-center">
+                    {feature.attributes.map((attr, index) => (
+                        <div key={index} className="flex items-center">
                             <span className="text-sm font-medium text-gray-600">
-                                {getAttributeLabel(attr.AttributeID)}:
+                                {attr.AttributeType}:
                             </span>
                             <span className="ml-1 text-sm text-gray-900">
                                 {attr.AttributeValue}

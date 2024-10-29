@@ -13,6 +13,7 @@ import ShipingDetails from "./components/shipingdetails";
 import SelectAddress from "./components/selectadd";
 
 import OrderSum from "../ordersummery/page"
+import { Loader2 } from 'lucide-react';
 
 export default function CartSummery(){
     const router = useRouter();
@@ -50,8 +51,23 @@ export default function CartSummery(){
     }, [router]);
 
     if(!id) {
-        return <div>Loading...</div>;
+        return (
+        <div
+            style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', height: '100vh', width: '90vw', margin: '0 auto', animation: 'fadeIn 1s ease-in-out' }}
+          >
+            <Loader2 style={{ marginBottom: '1rem', animation: 'pulse 1.5s infinite ease-in-out' }} />
+            <span style={{ animation: 'blink 1.2s infinite' }}>Loading cart...</span>
+          
+            <style jsx>{`
+              @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+              @keyframes pulse { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.1); } }
+              @keyframes blink { 0%, 100% { opacity: 1; } 50% { opacity: 0.5; } }
+            `}</style>
+          </div>          
+        );
     }
+
+    
 //     if (isLoading) {
 //     return (
 //       <div className={style.loadingContainer}>

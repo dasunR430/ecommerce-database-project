@@ -7,9 +7,9 @@ export async function GET(request: NextRequest, { params }: { params: { id: stri
 
     try {
         // Call the stored procedure
-        const query = `SELECT p.SKU, pa.AttributeID, pa.AttributeValue, p.Price 
+        const query = `SELECT  p.SKU, AttributeType, pa.AttributeValue, p.Price 
                         FROM product AS p 
-                        LEFT OUTER JOIN productattribute AS pa ON p.SKU = pa.SKU 
+                        LEFT OUTER JOIN productattribute AS pa ON p.SKU = pa.SKU left outer join attribute on attribute.AttributeID = pa.AttributeID
                         WHERE p.ProductID = ? 
                         ORDER BY p.SKU`;
 
@@ -22,12 +22,12 @@ export async function GET(request: NextRequest, { params }: { params: { id: stri
         const result = rows; 
 
         interface GroupedItem {
-            attributes: { AttributeID: string; AttributeValue: string }[];
+            attributes: { AttributeType: string; AttributeValue: string }[];
             Price: number;
         }
         
         const groupedBySKU = result.reduce((acc: { [key: string]: GroupedItem }, item) => {
-            const { SKU, AttributeID, AttributeValue, Price } = item;
+            const { SKU, AttributeType, AttributeValue, Price } = item;
         
             // Check if the SKU already exists in the accumulator
             if (!acc[SKU]) {
@@ -36,7 +36,7 @@ export async function GET(request: NextRequest, { params }: { params: { id: stri
             }
         
             // Push the attribute to the attributes array
-            acc[SKU].attributes.push({ AttributeID, AttributeValue });
+            acc[SKU].attributes.push({ AttributeType, AttributeValue });
         
             return acc;
         }, {});

@@ -4,7 +4,7 @@ import { useParams } from 'next/navigation';
 import { getSession } from 'next-auth/react';
 import { useState, useEffect } from 'react';
 import FeatureVariants from '../component/featurecard';
-import { Plus, Minus, ShoppingCart } from 'lucide-react';
+import { Plus, Minus, ShoppingCart, Loader2 } from 'lucide-react';
 import { useRouter } from 'next/navigation';
 import Popup from '../../popupmsg/page';
 
@@ -20,7 +20,7 @@ interface ProductDetails {
 }
 
 interface Attribute {
-    AttributeID: number;
+    AttributeType: string;
     AttributeValue: string;
 }
 
@@ -146,7 +146,24 @@ export default function ProductDetailsPage() {
         }
     };
 
-    if (!product) return <p>Loading...</p>;
+    // if (!product) return <p>Loading...</p>;
+    if(!product) {
+        return (
+        <div
+            style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', height: '100vh', width: '90vw', margin: '0 auto', animation: 'fadeIn 1s ease-in-out' }}
+          >
+            <Loader2 style={{ marginBottom: '1rem', animation: 'pulse 1.5s infinite ease-in-out' }} />
+            <span style={{ animation: 'blink 1.2s infinite' }}>Loading...</span>
+          
+            <style jsx>{`
+              @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+              @keyframes pulse { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.1); } }
+              @keyframes blink { 0%, 100% { opacity: 1; } 50% { opacity: 0.5; } }
+            `}</style>
+          </div>
+          
+        );
+    }
 
     return (
         <div className="bg-white py-8">
@@ -172,7 +189,7 @@ export default function ProductDetailsPage() {
                             <div className="mr-4">
                                 <span className="font-bold text-gray-800">Price:</span>
                                 <span className="text-gray-600 ml-2">
-                                    Rs. {currentPrice}
+                                    Rs.{currentPrice}
                                 </span>
                             </div>
                         </div>

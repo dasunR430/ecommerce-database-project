@@ -1,24 +1,28 @@
-import { Check, Truck, MapPin, CreditCard, X } from 'lucide-react';
+import { Check, Truck, MapPin, CreditCard, X } from "lucide-react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { useRouter } from 'next/router';
-import { useEffect, useState } from 'react';
-import Popup from '../popupmsg/page';
+import { useRouter } from "next/router";
+import { useEffect, useState } from "react";
+import Popup from "../popupmsg/page";
 
-export default function OrderSummary({ id, isClicked, setIsClicked, combinedData }) {
+export default function OrderSummary({
+  id,
+  isClicked,
+  setIsClicked,
+  combinedData,
+}) {
   const formatPhoneNumber = (phone) => {
-    return phone.replace(/(\d{3})(\d{3})(\d{4})/, '($1) $2-$3');
+    return phone.replace(/(\d{3})(\d{3})(\d{4})/, "($1) $2-$3");
   };
 
   const [showPopup, setShowPopup] = useState(false);
 
   const handleConfirmOrder = () => {
-    setIsClicked(!isClicked);
-    setShowPopup(true);
     setTimeout(() => {
       setShowPopup(false);
-      window.location.href = '/';
+      window.location.href = "/";
     }, 1000);
   };
+
   return (
     <div className="fixed inset-0 bg-black/30 backdrop-blur-sm z-50 flex items-center justify-center p-4">
       <Card className="w-full max-w-2xl bg-white shadow-xl">
@@ -27,20 +31,25 @@ export default function OrderSummary({ id, isClicked, setIsClicked, combinedData
             Order Summary
           </CardTitle>
         </CardHeader>
-        
+
         <CardContent className="p-6">
           {/* Shipping Information */}
           <div className="mb-6">
             <div className="flex items-center gap-2 mb-3">
               <MapPin className="w-5 h-5 text-blue-500" />
-              <h3 className="text-lg font-semibold text-gray-700">Shipping Address</h3>
+              <h3 className="text-lg font-semibold text-gray-700">
+                Shipping Address
+              </h3>
             </div>
             <div className="bg-gray-50 p-4 rounded-lg">
-              <p className="font-medium text-gray-800">{combinedData.CustomerName}</p>
+              <p className="font-medium text-gray-800">
+                {combinedData.CustomerName}
+              </p>
               <p className="text-gray-600 mt-1">{combinedData.AddressLine1}</p>
               <p className="text-gray-600">{combinedData.AddressLine2}</p>
               <p className="text-gray-600">
-                {combinedData.City}, {combinedData.District} {combinedData.PostalCode}
+                {combinedData.City}, {combinedData.District}{" "}
+                {combinedData.PostalCode}
               </p>
               <p className="text-gray-600 mt-1">
                 Phone: {formatPhoneNumber(combinedData.PhoneNumber)}
@@ -52,7 +61,9 @@ export default function OrderSummary({ id, isClicked, setIsClicked, combinedData
           <div className="mb-6">
             <div className="flex items-center gap-2 mb-3">
               <Truck className="w-5 h-5 text-blue-500" />
-              <h3 className="text-lg font-semibold text-gray-700">Delivery Method</h3>
+              <h3 className="text-lg font-semibold text-gray-700">
+                Delivery Method
+              </h3>
             </div>
             <div className="bg-gray-50 p-4 rounded-lg">
               <p className="text-gray-600">{combinedData.deliverymethod}</p>
@@ -63,7 +74,9 @@ export default function OrderSummary({ id, isClicked, setIsClicked, combinedData
           <div className="mb-6">
             <div className="flex items-center gap-2 mb-3">
               <CreditCard className="w-5 h-5 text-blue-500" />
-              <h3 className="text-lg font-semibold text-gray-700">Payment Method</h3>
+              <h3 className="text-lg font-semibold text-gray-700">
+                Payment Method
+              </h3>
             </div>
             <div className="bg-gray-50 p-4 rounded-lg">
               <p className="text-gray-600">{combinedData.paymentmethod}</p>
@@ -80,7 +93,10 @@ export default function OrderSummary({ id, isClicked, setIsClicked, combinedData
               Cancel
             </button>
             <button
-              onClick={handleConfirmOrder}
+              onClick={() => {
+                setShowPopup(true);
+                handleConfirmOrder();
+              }}
               className="flex items-center gap-2 px-4 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600 transition-colors"
             >
               <Check className="w-4 h-4" />
