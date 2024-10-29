@@ -5,6 +5,7 @@ import { Button } from "@/components/ui/button";
 import { useState } from 'react';
 import { signIn } from 'next-auth/react';
 import { User } from "lucide-react";
+import { Input } from '../components/basicUi/input';
 
 const Login: React.FC = () => {
   const [email, setEmail] = useState('');
@@ -65,25 +66,19 @@ const Login: React.FC = () => {
         <form onSubmit={handleSubmit} className="space-y-4">
           <div className="space-y-4">
             <div>
-              <label htmlFor="email" className="block text-sm font-medium text-gray-700">Email</label>
-              <input
-                type="email"
-                id="email"
+              <Input
+                label="Email"
                 placeholder="Enter your email"
                 value={email}
-                onChange={handleEmailChange}
-                className="mt-1 block w-full px-4 py-3 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-[#94a3b8] focus:ring-opacity-50 transition duration-200 ease-in-out"
-              />
+                onChange={handleEmailChange} type={"rmail"}              />
             </div>
             <div>
-              <label htmlFor="password" className="block text-sm font-medium text-gray-700">Password</label>
-              <input
+              <Input
+                label="Password"
                 type="password"
-                id="password"
                 placeholder="Enter your password"
                 value={password}
                 onChange={handlePasswordChange}
-                className="mt-1 block w-full px-4 py-3 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-[#94a3b8] focus:ring-opacity-50 transition duration-200 ease-in-out"
               />
             </div>
           </div>
@@ -112,5 +107,7 @@ const Login: React.FC = () => {
     </div>
   );
 };
+
+
 
 export default Login;

@@ -27,7 +27,7 @@ export const Input: React.FC<InputProps> = ({ label, type, placeholder, value, o
                 onChange={onChange}
                 className={`mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm 
                             focus:outline-none 
-                            focus:ring-2 focus:ring-[#f87171] 
+                            focus:ring-2 focus:ring-[#696969] 
                             focus:ring-opacity-50
                             transition duration-200 ease-in-out`} // Changed the glow color to red
             />
