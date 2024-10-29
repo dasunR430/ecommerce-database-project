@@ -6,6 +6,7 @@ import { useState, useEffect } from 'react';
 import FeatureVariants from '../component/featurecard';
 import { Plus, Minus, ShoppingCart } from 'lucide-react';
 import { useRouter } from 'next/navigation';
+import Popup from '../../popupmsg/page';
 
 interface ProductDetails {
     ProductID: number;
@@ -38,7 +39,8 @@ export default function ProductDetailsPage() {
     const [features, setFeatures] = useState<Feature[]>([]);
     const [selectedFeature, setSelectedFeature] = useState<Feature | null>(null);
     const [currentPrice, setCurrentPrice] = useState<string | number>('');
-
+    const [showPopup, setShowPopup] = useState(false);
+    const [error, setError] = useState(false);
     const increment = () => setCount(count + 1);
     const decrement = () => setCount(count > 1 ? count - 1 : 1);
 
@@ -121,10 +123,19 @@ export default function ProductDetailsPage() {
                     }),
                 });
                 if(response.ok){
-                    alert("Product added to cart successfully");
-                    // router.push("/productdetails/"+id); //menna meka poddak balanna one
+                    console.log("Product added to cart successfully");
+                    setShowPopup(true);
+                    setTimeout(() => {
+                        setShowPopup(false);
+                    }, 2000);
                 }else{
-                    alert("Failed to add product to cart");
+                    console.log("Failed to add product to cart");
+                    setShowPopup(true);
+                    setError(true);
+                    setTimeout(() => {
+                        setShowPopup(false);
+                        setError(false);
+                    }, 2000);
                 }
             }catch(error){
                 console.error("Error adding product to cart:", error);
@@ -205,6 +216,7 @@ export default function ProductDetailsPage() {
                     </div>
                 </div>
             </div>
+            {showPopup && <Popup message={error ? "Failed to add product to cart" : "Product added to cart"} type={error ? "error" : "success"}/>}
         </div>
     );
 }

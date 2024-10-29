@@ -5,7 +5,7 @@ import { useRouter } from 'next/navigation';
 
 import styles from "./page.module.css";
 import CartSum from "./components/cartsum";
-import Address from "./components/address";
+
 
 import Paymentdetails from "./components/paydetails";
 import ShipingDetails from "./components/shipingdetails";
@@ -19,6 +19,7 @@ export default function CartSummery(){
     const [isLoading, setIsLoading] = useState(true);
     const [id, setId] = useState('');
     const [isclicked, setIsClicked] = useState(false);
+    
     const [addressData, setAddressData] = useState({
         CustomerName: " ", 
         AddressLine1: " ", 
@@ -48,11 +49,6 @@ export default function CartSummery(){
         checkSession(); // Calling the session check
     }, [router]);
 
-    useEffect(() => {
-        // console.log(addressData);  
-        // console.log(paymentData); 
-        console.log(combined);
-    });
     if(!id) {
         return <div>Loading...</div>;
     }
