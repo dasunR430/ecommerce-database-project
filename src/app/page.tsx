@@ -50,13 +50,15 @@ export default async function Home() {
       <Nav />
       <Hero />
       <CategorySection divId="category-section"/>
+      <BrandCarousel divId="brand-carousel"/>
       <div id ="trending-products" className="flex flex-col justify-center items-center">
         <Products products={trending_products} heading={"Trending Products"} />
       </div>
+      
       <div id="recommended-products" className="flex flex-col justify-center items-center">
         <Products products={recommened_products} heading={"Recommended For You"} />
       </div>
-      <BrandCarousel divId="brand-carousel"/>
+      
     </>
   );
 }

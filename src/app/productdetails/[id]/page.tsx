@@ -128,6 +128,7 @@ export default function ProductDetailsPage() {
                     setTimeout(() => {
                         setShowPopup(false);
                     }, 2000);
+                    
                 }else{
                     console.log("Failed to add product to cart");
                     setShowPopup(true);
