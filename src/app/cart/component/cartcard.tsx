@@ -81,7 +81,7 @@ export default function CartCard({
         <h3 className={styles.name}>{ProductName}</h3>
         <div className={styles.info}>
           <span>Quantity: {Quantity}</span>
-          <span className={styles.total}>Total: ${total}</span>
+          <span className={styles.total}>Total: Rs.{total}</span>
         </div>
         {error && <p className={styles.error}>{error}</p>}
       </div>

@@ -1,8 +1,8 @@
-// FeatureVariants.tsx
+import React from 'react';
 import AttributeGroup from './attribute';
 
 interface Attribute {
-    AttributeID: number;
+    AttributeType: string;
     AttributeValue: string;
 }
 
@@ -18,11 +18,11 @@ interface FeatureVariantsProps {
     onSelect: (feature: Feature) => void;
 }
 
-export default function FeatureVariants({ 
+const FeatureVariants = ({ 
     features, 
     selectedFeature, 
     onSelect 
-}: FeatureVariantsProps) {
+}: FeatureVariantsProps) => {
     return (
         <div className="space-y-2">
             <h3 className="text-lg font-semibold mb-3">Available Options:</h3>
@@ -36,4 +36,6 @@ export default function FeatureVariants({
             ))}
         </div>
     );
-}
+};
+
+export default FeatureVariants;
