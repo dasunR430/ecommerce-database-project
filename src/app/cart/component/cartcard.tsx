@@ -4,6 +4,7 @@ import { Trash2 } from 'lucide-react';
 import { getSession } from 'next-auth/react';
 import React, { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
+import Popup from '@/app/popupmsg/page';
 
 interface CartCardProps {
   ProductName: string;
@@ -24,6 +25,7 @@ export default function CartCard({
   const [id, setId] = useState('');
   const [isDeleting, setIsDeleting] = useState(false);
   const [error, setError] = useState('');
+  const [showPopup, setShowPopup] = useState(false);
 
   useEffect(() => {
     const checkSession = async () => {
@@ -49,6 +51,10 @@ export default function CartCard({
     try {
       setIsDeleting(true);
       setError('');
+      setShowPopup(true);
+      setTimeout(() => {
+        setShowPopup(false);
+      }, 1000);
 
       const response = await fetch('/api/deletecartitem', {
         method: 'DELETE',
@@ -93,6 +99,7 @@ export default function CartCard({
       >
         <Trash2 size={18} />
       </button>
+      {showPopup && <Popup message="Item deleted from cart" type='error'/>}
     </div>
   );
 }
