@@ -115,7 +115,7 @@ function ContactDetails({ email }: { email: string }) {
 
     const handleUpdate = async (contactId: number) => {
         try {
-            const response = await fetch(`/api/profile/updateContactDetails`, {
+            const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/profile/updateContactDetails`, {
                 method: 'PUT',
                 headers: {
                     'Content-Type': 'application/json',
@@ -155,7 +155,7 @@ function ContactDetails({ email }: { email: string }) {
 
     const handleDelete = async (contactId: number) => {
         try {
-            const response = await fetch(`/api/profile/deleteContactDetails`, {
+            const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/profile/deleteContactDetails`, {
             method: 'DELETE',
             headers: {
                 'Content-Type': 'application/json',
@@ -186,7 +186,7 @@ function ContactDetails({ email }: { email: string }) {
 
     const fetchAddresses = async () => {
         try {
-            const response = await fetch(`http://localhost:3000/api/profile/getContactDetails`, {
+            const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/profile/getContactDetails`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'
@@ -232,8 +232,11 @@ function ContactDetails({ email }: { email: string }) {
                             <TableCell>{contact.AddressLine2}</TableCell>
                             <TableCell>{contact.PhoneNumber}</TableCell>
                             <TableCell>
-                                <Button onClick={() => handleEdit(contact)} style={{ marginRight: '8px' }}>Edit</Button>
-                                <Button onClick={() => handleDelete(contact.AddressID)}>Delete</Button>
+                                <div className="flex space-x-2">
+                                    <Button className="bg-gray-900 text-white rounded-sm" onClick={() => handleEdit(contact)}>Edit</Button>
+                                    <Button className="bg-red-900 text-white rounded-sm" onClick={() => handleDelete(contact.AddressID)}>Delete</Button>
+                                </div>
+
                             </TableCell>
                         </TableRow>
                     ))}
