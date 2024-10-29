@@ -115,7 +115,7 @@ function ContactDetails({ email }: { email: string }) {
 
     const handleUpdate = async (contactId: number) => {
         try {
-            const response = await fetch(`/api/profile/updateContactDetails`, {
+            const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/profile/updateContactDetails`, {
                 method: 'PUT',
                 headers: {
                     'Content-Type': 'application/json',
@@ -155,7 +155,7 @@ function ContactDetails({ email }: { email: string }) {
 
     const handleDelete = async (contactId: number) => {
         try {
-            const response = await fetch(`/api/profile/deleteContactDetails`, {
+            const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/profile/deleteContactDetails`, {
             method: 'DELETE',
             headers: {
                 'Content-Type': 'application/json',
@@ -186,7 +186,7 @@ function ContactDetails({ email }: { email: string }) {
 
     const fetchAddresses = async () => {
         try {
-            const response = await fetch(`http://localhost:3000/api/profile/getContactDetails`, {
+            const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/profile/getContactDetails`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'
@@ -210,7 +210,7 @@ function ContactDetails({ email }: { email: string }) {
         <div>
             <h2>Contact Details</h2>
             <Table>
-                <TableCaption>A list of your recent invoices.</TableCaption>
+                <TableCaption>Enter your address</TableCaption>
                 <TableHeader>
                     <TableRow>
                         <TableHead className="w-[100px]">City</TableHead>
@@ -223,7 +223,7 @@ function ContactDetails({ email }: { email: string }) {
                     </TableRow>
                 </TableHeader>
                 <TableBody>
-                    {contacts.map((contact) => (
+                    {(Array.isArray(contacts) ? contacts : []).map((contact) => (
                         <TableRow key={contact.AddressID}>
                             <TableCell>{contact.City}</TableCell>
                             <TableCell>{contact.District}</TableCell>
@@ -232,8 +232,11 @@ function ContactDetails({ email }: { email: string }) {
                             <TableCell>{contact.AddressLine2}</TableCell>
                             <TableCell>{contact.PhoneNumber}</TableCell>
                             <TableCell>
-                                <Button onClick={() => handleEdit(contact)} style={{ marginRight: '8px' }}>Edit</Button>
-                                <Button onClick={() => handleDelete(contact.AddressID)}>Delete</Button>
+                                <div className="flex space-x-2">
+                                    <Button className="bg-gray-900 text-white rounded-sm" onClick={() => handleEdit(contact)}>Edit</Button>
+                                    <Button className="bg-red-900 text-white rounded-sm" onClick={() => handleDelete(contact.AddressID)}>Delete</Button>
+                                </div>
+
                             </TableCell>
                         </TableRow>
                     ))}
@@ -253,6 +256,57 @@ function ContactDetails({ email }: { email: string }) {
             </form>
         </div>
     );
+
+    // return (
+    //     <div className="p-6 bg-black text-white rounded-lg shadow-md">
+    //         <h2 className="text-2xl font-bold mb-4">Contact Details</h2>
+    //         <Table className="min-w-full bg-black rounded-lg overflow-hidden">
+    //             <TableCaption className="text-gray-400">Enter your address</TableCaption>
+    //             <TableHeader>
+    //                 <TableRow className="bg-gray-800">
+    //                     <TableHead className="text-left p-4">City</TableHead>
+    //                     <TableHead className="text-left p-4">District</TableHead>
+    //                     <TableHead className="text-left p-4">Postal Code</TableHead>
+    //                     <TableHead className="text-left p-4">Address 1</TableHead>
+    //                     <TableHead className="text-left p-4">Address 2</TableHead>
+    //                     <TableHead className="text-left p-4">Phone Number</TableHead>
+    //                     <TableHead className="text-left p-4">Actions</TableHead>
+    //                 </TableRow>
+    //             </TableHeader>
+    //             <TableBody>
+    //                 {contacts.map((contact) => (
+    //                     <TableRow key={contact.AddressID} className="border-b border-gray-700 hover:bg-gray-700">
+    //                         <TableCell className="p-4">{contact.City}</TableCell>
+    //                         <TableCell className="p-4">{contact.District}</TableCell>
+    //                         <TableCell className="p-4">{contact.PostalCode}</TableCell>
+    //                         <TableCell className="p-4">{contact.AddressLine1}</TableCell>
+    //                         <TableCell className="p-4">{contact.AddressLine2}</TableCell>
+    //                         <TableCell className="p-4">{contact.PhoneNumber}</TableCell>
+    //                         <TableCell className="p-4 flex space-x-2">
+    //                             <Button onClick={() => handleEdit(contact)}>Edit</Button>
+    //                             <Button onClick={() => handleDelete(contact.AddressID)} variant="destructive">Delete</Button>
+    //                         </TableCell>
+    //                     </TableRow>
+    //                 ))}
+    //             </TableBody>
+    //         </Table>
+    //         <hr className="my-4 border-gray-700" />
+    //         <form onSubmit={handleSave} className="space-y-4">
+    //             <Input label="City" type="text" placeholder="City" value={city} onChange={handleCityChange} />
+    //             <Input label="District" type="text" placeholder="District" value={district} onChange={handleDistrictChange} />
+    //             <Input label="Postal Code" type="text" placeholder="Postal Code" value={postalCode} onChange={handlePostalCodeChange} />
+    //             <Input label="Address 1" type="text" placeholder="Address 1" value={address1} onChange={handleAddress1Change} />
+    //             <Input label="Address 2" type="text" placeholder="Address 2" value={address2} onChange={handleAddress2Change} />
+    //             <Input label="Phone Number" type="text" placeholder="Phone Number" value={phoneNumber} onChange={handlePhoneNumberChange} />
+    //             <div>
+    //                 <Button type="submit" className="mt-4">
+    //                     {editingContactId !== null ? 'Save Changes' : 'Save'}
+    //                 </Button>
+    //             </div>
+    //         </form>
+    //     </div>
+    // );
+    
 }
 
 export default ContactDetails;

@@ -3,7 +3,6 @@
 import { useEffect, useState } from 'react';
 import style from './cartsum.module.css';
 import CartSummaryCard from "./cartcard";
-import { Loader2 } from 'lucide-react';
 
 interface CartItem {
   SKU: string;
@@ -15,13 +14,14 @@ interface CartItem {
 
 interface CartSummaryProps {
   id: string;
+  setIsLoading: (isLoading: boolean) => void;
 }
 
-export default function CartSummary({ id }: CartSummaryProps) {
+export default function CartSummary({ id , setIsLoading }: CartSummaryProps) {
   const [cartItems, setCartItems] = useState<CartItem[]>([]);
   const [totalAmount, setTotalAmount] = useState<number>(0);
   const [deliveryEstimates, setDeliveryEstimates] = useState<Record<string, string>>({});
-  const [isLoading, setIsLoading] = useState(true);
+  // const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<string>('');
 
   useEffect(() => {
@@ -93,14 +93,7 @@ export default function CartSummary({ id }: CartSummaryProps) {
     setDeliveryEstimates(estimates);
   };
 
-  if (isLoading) {
-    return (
-      <div className={style.loadingContainer}>
-        <Loader2 className={style.loadingSpinner} />
-        <span>Loading cart...</span>
-      </div>
-    );
-  }
+  
 
   if (error) {
     return (

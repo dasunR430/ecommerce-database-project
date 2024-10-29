@@ -104,7 +104,7 @@ export default function CartPage({ setIsClicked, isClicked }: CartPageProps) {
           </div>
           <div className={styles.summary}>
             <div className={styles.totalAmount}>
-              Cart Total: Rs.{totalCartAmount}
+              Cart Total: Rs.{totalCartAmount.toFixed(2)}
             </div>
           </div>
           <button 

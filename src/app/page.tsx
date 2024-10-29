@@ -2,6 +2,7 @@ import Nav from "../../src/app/components/Nav";
 import Hero from "../../src/app/components/Home/Hero";
 import Products from "../../src/app/components/Home/Products";
 import CategorySection from "../../src/app/components/Home/CategorySection";
+import BrandCarousel from "./components/Home/BrandCarousel";
 interface Product {
   ProductID: number;
   ProductTitle: string;
@@ -37,7 +38,7 @@ const fetchProcducts = async () => {
 }
 
 export default async function Home() {
-  console.log('aaaaaa')
+
   const data: response = await fetchProcducts();
 
   if (!data) console.log("data not recived")
@@ -48,13 +49,16 @@ export default async function Home() {
     <>
       <Nav />
       <Hero />
-      <CategorySection />
-      <div className="flex flex-col justify-center items-center">
+      <CategorySection divId="category-section"/>
+      <BrandCarousel divId="brand-carousel"/>
+      <div id ="trending-products" className="flex flex-col justify-center items-center">
         <Products products={trending_products} heading={"Trending Products"} />
       </div>
-      <div className="flex flex-col justify-center items-center">
+      
+      <div id="recommended-products" className="flex flex-col justify-center items-center">
         <Products products={recommened_products} heading={"Recommended For You"} />
       </div>
+      
     </>
   );
 }

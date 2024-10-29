@@ -12,25 +12,25 @@ const SideNavigationBar: React.FC<SideNavigationBarProps> = ({ email }) => {
   return (
     <div className="flex min-h-screen">
       {/* Side Navigation */}
-      <div className="w-60 p-4 bg-gray-800 text-white shadow-lg">
+      <div className="w-60 p-4 bg-black text-white shadow-lg">
         <ul className="space-y-4">
           <NavItem
-            title="Profile"
-            icon="👤"
-            // isActive={selectedItem === "Profile"}
-            onClick={() => setSelectedItem("Profile")}
+        title="Profile"
+        icon="👤"
+        // isActive={selectedItem === "Profile"}
+        onClick={() => setSelectedItem("Profile")}
           />
           <NavItem
-            title="Orders"
-            icon="📦"
-            // isActive={selectedItem === "Orders"}
-            onClick={() => setSelectedItem("Orders")}
+        title="Orders"
+        icon="📦"
+        // isActive={selectedItem === "Orders"}
+        onClick={() => setSelectedItem("Orders")}
           />
           <NavItem
-            title="Contact details"
-            icon="📞"
-            // isActive={selectedItem === "Contact details"}
-            onClick={() => setSelectedItem("Contact details")}
+        title="Contact details"
+        icon="📞"
+        // isActive={selectedItem === "Contact details"}
+        onClick={() => setSelectedItem("Contact details")}
           />
         </ul>
       </div>
@@ -41,6 +41,8 @@ const SideNavigationBar: React.FC<SideNavigationBarProps> = ({ email }) => {
       </div>
     </div>
   );
+
+
 };
 
 export default SideNavigationBar;

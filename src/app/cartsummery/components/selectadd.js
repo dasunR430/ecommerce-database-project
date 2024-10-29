@@ -2,10 +2,10 @@
 
 import { useEffect, useState } from "react";
 import styles from "./selectadd.module.css";
-import Address from "./Address";
+import Address from "./address";
 
 
-export default function SelectAdd({id}) {
+export default function SelectAdd({id, setAddressData}) {
     const [addresses, setAddresses] = useState([]);
     const [selectedAddress, setSelectedAddress] = useState(null);
 
@@ -50,7 +50,7 @@ export default function SelectAdd({id}) {
             </select>
            
         </div>
-         <Address selectedAddress={selectedAddress} />
+         <Address selectedAddress={selectedAddress} setAddressData = {setAddressData}/>
          </>
     );
 

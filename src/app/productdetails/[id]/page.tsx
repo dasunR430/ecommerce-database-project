@@ -4,8 +4,9 @@ import { useParams } from 'next/navigation';
 import { getSession } from 'next-auth/react';
 import { useState, useEffect } from 'react';
 import FeatureVariants from '../component/featurecard';
-import { Plus, Minus, ShoppingCart } from 'lucide-react';
+import { Plus, Minus, ShoppingCart, Loader2 } from 'lucide-react';
 import { useRouter } from 'next/navigation';
+import Popup from '../../popupmsg/page';
 
 interface ProductDetails {
     ProductID: number;
@@ -19,7 +20,7 @@ interface ProductDetails {
 }
 
 interface Attribute {
-    AttributeID: number;
+    AttributeType: string;
     AttributeValue: string;
 }
 
@@ -34,13 +35,14 @@ export default function ProductDetailsPage() {
     const [cid, setcId] = useState('');
     const { id } = useParams();
     const [product, setProduct] = useState<ProductDetails | null>(null);
-    const [count, setCount] = useState(0);
+    const [count, setCount] = useState(1);
     const [features, setFeatures] = useState<Feature[]>([]);
     const [selectedFeature, setSelectedFeature] = useState<Feature | null>(null);
     const [currentPrice, setCurrentPrice] = useState<string | number>('');
-
+    const [showPopup, setShowPopup] = useState(false);
+    const [error, setError] = useState(false);
     const increment = () => setCount(count + 1);
-    const decrement = () => setCount(count > 0 ? count - 1 : 0);
+    const decrement = () => setCount(count > 1 ? count - 1 : 1);
 
 
     useEffect(() => {
@@ -121,10 +123,20 @@ export default function ProductDetailsPage() {
                     }),
                 });
                 if(response.ok){
-                    alert("Product added to cart successfully");
-                    // router.push("/productdetails/"+id); //menna meka poddak balanna one
+                    console.log("Product added to cart successfully");
+                    setShowPopup(true);
+                    setTimeout(() => {
+                        setShowPopup(false);
+                    }, 2000);
+                    
                 }else{
-                    alert("Failed to add product to cart");
+                    console.log("Failed to add product to cart");
+                    setShowPopup(true);
+                    setError(true);
+                    setTimeout(() => {
+                        setShowPopup(false);
+                        setError(false);
+                    }, 2000);
                 }
             }catch(error){
                 console.error("Error adding product to cart:", error);
@@ -135,7 +147,24 @@ export default function ProductDetailsPage() {
         }
     };
 
-    if (!product) return <p>Loading...</p>;
+    // if (!product) return <p>Loading...</p>;
+    if(!product) {
+        return (
+        <div
+            style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', height: '100vh', width: '90vw', margin: '0 auto', animation: 'fadeIn 1s ease-in-out' }}
+          >
+            <Loader2 style={{ marginBottom: '1rem', animation: 'pulse 1.5s infinite ease-in-out' }} />
+            <span style={{ animation: 'blink 1.2s infinite' }}>Loading...</span>
+          
+            <style jsx>{`
+              @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+              @keyframes pulse { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.1); } }
+              @keyframes blink { 0%, 100% { opacity: 1; } 50% { opacity: 0.5; } }
+            `}</style>
+          </div>
+          
+        );
+    }
 
     return (
         <div className="bg-white py-8">
@@ -161,7 +190,7 @@ export default function ProductDetailsPage() {
                             <div className="mr-4">
                                 <span className="font-bold text-gray-800">Price:</span>
                                 <span className="text-gray-600 ml-2">
-                                    Rs. {currentPrice}
+                                    Rs.{currentPrice}
                                 </span>
                             </div>
                         </div>
@@ -205,6 +234,7 @@ export default function ProductDetailsPage() {
                     </div>
                 </div>
             </div>
+            {showPopup && <Popup message={error ? "Failed to add product to cart" : "Product added to cart"} type={error ? "error" : "success"}/>}
         </div>
     );
 }
