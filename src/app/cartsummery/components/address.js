@@ -1,6 +1,7 @@
 'use client'
 import { useEffect, useState } from "react";
 import styles from "./address.module.css";
+import Popup from "@/app/popupmsg/page";
 
 export default function Address({ selectedAddress , setAddressData}) {
     const [addressDetails, setAddressDetails] = useState({
@@ -12,6 +13,8 @@ export default function Address({ selectedAddress , setAddressData}) {
         District: "",
         PostalCode: ""
     });
+
+    const [showPopup, setShowPopup] = useState(false);
 
     useEffect(() => {
         if (selectedAddress) {
@@ -33,6 +36,7 @@ export default function Address({ selectedAddress , setAddressData}) {
             ...prevDetails,
             [name]: value
         }));
+        
     };
 
     return (
@@ -124,8 +128,13 @@ export default function Address({ selectedAddress , setAddressData}) {
                 />
             </div>
             <button className={styles.addaddressbtn} onClick={() => {
-              setAddressData(addressDetails);
+                setAddressData(addressDetails);
+                setShowPopup(true);
+                setTimeout(() => {
+                    setShowPopup(false);
+                }, 2000);
             }}>Add Address</button>
+            {showPopup && <Popup message="Address updated successfully" />}
         </div>
     );
 }

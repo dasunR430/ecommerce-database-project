@@ -1,11 +1,24 @@
 import { Check, Truck, MapPin, CreditCard, X } from 'lucide-react';
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { useRouter } from 'next/router';
+import { useEffect, useState } from 'react';
+import Popup from '../popupmsg/page';
+
 export default function OrderSummary({ id, isClicked, setIsClicked, combinedData }) {
   const formatPhoneNumber = (phone) => {
     return phone.replace(/(\d{3})(\d{3})(\d{4})/, '($1) $2-$3');
   };
 
+  const [showPopup, setShowPopup] = useState(false);
+
+  const handleConfirmOrder = () => {
+    setIsClicked(!isClicked);
+    setShowPopup(true);
+    setTimeout(() => {
+      setShowPopup(false);
+      window.location.href = '/';
+    }, 1000);
+  };
   return (
     <div className="fixed inset-0 bg-black/30 backdrop-blur-sm z-50 flex items-center justify-center p-4">
       <Card className="w-full max-w-2xl bg-white shadow-xl">
@@ -67,7 +80,7 @@ export default function OrderSummary({ id, isClicked, setIsClicked, combinedData
               Cancel
             </button>
             <button
-              onClick={() => {setIsClicked(!isClicked); window.location.href = `/`}}
+              onClick={handleConfirmOrder}
               className="flex items-center gap-2 px-4 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600 transition-colors"
             >
               <Check className="w-4 h-4" />
@@ -76,6 +89,7 @@ export default function OrderSummary({ id, isClicked, setIsClicked, combinedData
           </div>
         </CardContent>
       </Card>
+      {showPopup && <Popup message="Order placed successfully!" />}
     </div>
   );
 }
