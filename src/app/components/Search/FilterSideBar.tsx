@@ -191,7 +191,7 @@ const FilterSideBar: React.FC<FilterSideBarProps> = (props) => {
                             <div className="p-5 top-full left-0 bg-white text-black z-10 shadow-lg rounded-lg w-full">
                                 <div className="grid grid-cols-1 gap-4">
                                     {categories?.map((category) => (
-                                        <div key={category.id} className="">
+                                        category.subCategories.length != 0 && (<div key={category.id} className="">
                                             <div className="flex items-center">
                                                 <input
                                                     type="checkbox"
@@ -223,7 +223,7 @@ const FilterSideBar: React.FC<FilterSideBarProps> = (props) => {
                                                     </li>
                                                 ))}
                                             </ul>
-                                        </div>
+                                        </div>)
                                     ))}
                                 </div>
                             </div>
