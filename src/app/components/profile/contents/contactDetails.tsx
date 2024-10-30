@@ -36,6 +36,8 @@ function ContactDetails({ email }: { email: string }) {
     const [contacts, setContacts] = useState<Contacts[]>([]);
     const [editingContactId, setEditingContactId] = useState<number | null>(null);
 
+    const [error, setError] = useState('');
+
     useEffect(() => {
         const checkSession = async () => {
             const session = await getSession();
@@ -71,6 +73,7 @@ function ContactDetails({ email }: { email: string }) {
         e.preventDefault();
 
         if(address1 === '' || city === '' || district === '' || postalCode === '' || phoneNumber === '') {
+            setError('Please fill this field');
             return;
         }
 
@@ -81,6 +84,7 @@ function ContactDetails({ email }: { email: string }) {
             // Add new contact
             await handleAdd();
         }
+        setError('');
     };
 
     const handleAdd = async () => {
@@ -245,68 +249,23 @@ function ContactDetails({ email }: { email: string }) {
             <hr />
             <form onSubmit={handleSave}>
                 <Input label="City" type="text" placeholder="City" value={city} onChange={handleCityChange} />
+                {!city && city !== '0' && error &&<p className='text-red-500 text-sm'>{error}</p>}
                 <Input label="District" type="text" placeholder="District" value={district} onChange={handleDistrictChange}/>
+                {!district && district !== '0' && error && <p className='text-red-500 text-sm'>{error}</p>}
                 <Input label="Postal Code" type="text" placeholder="Postal Code" value={postalCode} onChange={handlePostalCodeChange} />
+                {!postalCode && postalCode !== '0' && error && <p className='text-red-500 text-sm'>{error}</p>}
                 <Input label="Address 1" type="text" placeholder="Address 1" value={address1} onChange={handleAddress1Change} />
+                {!address1 && address1 !== '0' && error && <p className='text-red-500 text-sm'>{error}</p>}
                 <Input label="Address 2" type="text" placeholder="Address 2" value={address2} onChange={handleAddress2Change} />
                 <Input label="Phone Number" type="text" placeholder="Phone Number" value={phoneNumber} onChange={handlePhoneNumberChange} />
+                {!phoneNumber && phoneNumber !== '0' && error && <p className='text-red-500 text-sm'>{error}</p>}
                 <div style={{ marginTop: '16px' }}>
                     <Button type="submit">{editingContactId !== null ? 'Save Changes' : 'Save'}</Button>
                 </div>
+
             </form>
         </div>
-    );
-
-    // return (
-    //     <div className="p-6 bg-black text-white rounded-lg shadow-md">
-    //         <h2 className="text-2xl font-bold mb-4">Contact Details</h2>
-    //         <Table className="min-w-full bg-black rounded-lg overflow-hidden">
-    //             <TableCaption className="text-gray-400">Enter your address</TableCaption>
-    //             <TableHeader>
-    //                 <TableRow className="bg-gray-800">
-    //                     <TableHead className="text-left p-4">City</TableHead>
-    //                     <TableHead className="text-left p-4">District</TableHead>
-    //                     <TableHead className="text-left p-4">Postal Code</TableHead>
-    //                     <TableHead className="text-left p-4">Address 1</TableHead>
-    //                     <TableHead className="text-left p-4">Address 2</TableHead>
-    //                     <TableHead className="text-left p-4">Phone Number</TableHead>
-    //                     <TableHead className="text-left p-4">Actions</TableHead>
-    //                 </TableRow>
-    //             </TableHeader>
-    //             <TableBody>
-    //                 {contacts.map((contact) => (
-    //                     <TableRow key={contact.AddressID} className="border-b border-gray-700 hover:bg-gray-700">
-    //                         <TableCell className="p-4">{contact.City}</TableCell>
-    //                         <TableCell className="p-4">{contact.District}</TableCell>
-    //                         <TableCell className="p-4">{contact.PostalCode}</TableCell>
-    //                         <TableCell className="p-4">{contact.AddressLine1}</TableCell>
-    //                         <TableCell className="p-4">{contact.AddressLine2}</TableCell>
-    //                         <TableCell className="p-4">{contact.PhoneNumber}</TableCell>
-    //                         <TableCell className="p-4 flex space-x-2">
-    //                             <Button onClick={() => handleEdit(contact)}>Edit</Button>
-    //                             <Button onClick={() => handleDelete(contact.AddressID)} variant="destructive">Delete</Button>
-    //                         </TableCell>
-    //                     </TableRow>
-    //                 ))}
-    //             </TableBody>
-    //         </Table>
-    //         <hr className="my-4 border-gray-700" />
-    //         <form onSubmit={handleSave} className="space-y-4">
-    //             <Input label="City" type="text" placeholder="City" value={city} onChange={handleCityChange} />
-    //             <Input label="District" type="text" placeholder="District" value={district} onChange={handleDistrictChange} />
-    //             <Input label="Postal Code" type="text" placeholder="Postal Code" value={postalCode} onChange={handlePostalCodeChange} />
-    //             <Input label="Address 1" type="text" placeholder="Address 1" value={address1} onChange={handleAddress1Change} />
-    //             <Input label="Address 2" type="text" placeholder="Address 2" value={address2} onChange={handleAddress2Change} />
-    //             <Input label="Phone Number" type="text" placeholder="Phone Number" value={phoneNumber} onChange={handlePhoneNumberChange} />
-    //             <div>
-    //                 <Button type="submit" className="mt-4">
-    //                     {editingContactId !== null ? 'Save Changes' : 'Save'}
-    //                 </Button>
-    //             </div>
-    //         </form>
-    //     </div>
-    // );
-    
+    );    
 }
 
 export default ContactDetails;
