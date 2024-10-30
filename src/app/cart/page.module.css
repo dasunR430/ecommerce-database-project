@@ -19,7 +19,7 @@
 .cartdiv::before {
   content: '';
   position: absolute;
-  top: -19px;
+  top: 9px;
   left: 315px;
   transform: translateX(-50%);
   border-width: 10px;

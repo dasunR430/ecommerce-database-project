@@ -36,8 +36,7 @@ export default function TestPage() {
 <div className="flex flex-col md:flex-row gap-6 p-6 bg-gray-50 rounded-lg shadow-md">
     {/* User Info Section */}
     <div className="md:w-1/4 p-4 bg-white rounded-lg shadow-md flex flex-col items-center space-y-4">
-        {/* User Icon */}
-        <FontAwesomeIcon icon={faUser} className="h-12 w-12 text-gray-500" />
+        <FontAwesomeIcon icon={faUser} className="h-20 w-20 text-gray-500 " />
         {/* User Component */}
         <User />
     </div>

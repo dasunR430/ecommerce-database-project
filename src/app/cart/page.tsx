@@ -53,7 +53,7 @@ export default function CartPage({ setIsClicked, isClicked }: CartPageProps) {
       try {
         const session = await getSession();
         if (!session) {
-          router.push("/login");
+          // router.push("/login");
           return;
         }
         

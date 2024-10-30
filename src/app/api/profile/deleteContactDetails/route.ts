@@ -6,21 +6,22 @@ export async function DELETE(req: NextRequest) {
     const requestBody = await req.json();
     const AddressID = requestBody.contactId;
 
+    
     if (!AddressID) {
         return new Response(JSON.stringify({ message: 'AddressID is required' }), {
             status: 400,
             headers: { 'Content-Type': 'application/json' },
         });
     }
-
+    
+    let connection = null;
     try {
-        const connection = await pool.getConnection();
+        connection = await pool.getConnection();
 
         const deleteQuery = 'DELETE FROM contactdetails WHERE AddressID = ?';
         await connection.execute(deleteQuery, [AddressID]);
 
-        connection.release();
-
+        
         return new Response(JSON.stringify({ message: 'Contact details deleted successfully' }), {
             status: 200,
             headers: { 'Content-Type': 'application/json' },
@@ -31,5 +32,7 @@ export async function DELETE(req: NextRequest) {
             status: 500,
             headers: { 'Content-Type': 'application/json' },
         });
+    }finally{
+        connection?.release();
     }
 }

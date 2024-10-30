@@ -16,9 +16,10 @@ export async function POST(req: NextRequest) {
     const requestBody = await req.json();
 
     const id = requestBody.id;
+    let connection =null;
 
     try {
-        const connection = await pool.getConnection();
+        connection = await pool.getConnection();
 
         const retriveQuery = 'CALL GetCustomerPurchases(?)';
         const [rows] = await connection.execute<mysql.RowDataPacket[]>(retriveQuery, [id]);
@@ -27,10 +28,9 @@ export async function POST(req: NextRequest) {
 
         // console.log(purchases);
 
-        connection.release();
-
+        
         // console.log(purchases);
-
+        
         return new Response(JSON.stringify(purchases), {
             status: 200,
             headers: { 'Content-Type': 'application/json' },
@@ -41,5 +41,7 @@ export async function POST(req: NextRequest) {
             status: 500,
             headers: { 'Content-Type': 'application/json' },
         });
+    }finally{
+        connection?.release();
     }
 }

@@ -1,6 +1,6 @@
 'use client';
 import { getSession } from 'next-auth/react';
-import React, { useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
 
 import styles from "./page.module.css";
@@ -15,11 +15,15 @@ import SelectAddress from "./components/selectadd";
 import OrderSum from "../ordersummery/page"
 import { Loader2 } from 'lucide-react';
 
+
 export default function CartSummery(){
+    
+
     const router = useRouter();
     const [isLoading, setIsLoading] = useState(true);
     const [id, setId] = useState('');
     const [isclicked, setIsClicked] = useState(false);
+    const [total, setTotal] = useState(0);
     
     const [addressData, setAddressData] = useState({
         CustomerName: " ", 
@@ -30,25 +34,102 @@ export default function CartSummery(){
         District: " ", 
         PostalCode: " "});
     const [paymentData, setPaymentData] = useState({
-        Deliverymethod: " ", 
-        Paymentmethod: " "});
+        deliverymethod: " ", 
+        paymentmethod: " "});
 
     const [ShippingData, setShippingData] = useState();
 
     const combined = { ...addressData, ...paymentData, ShippingData };
+    const [cartCount, setCartCount] = useState(0);        
 
+    // function getRandomInt(min, max) {
+    //     min = Math.ceil(min);
+    //     max = Math.floor(max);
+    //     return Math.floor(Math.random() * (max - min + 1)) + min;
+    // }
+
+    const placeOrder = async () => {
+        const req_body = {
+            id,
+            BillingAddressLine1: combined.AddressLine1,
+            BillingAddressLine2: combined.AddressLine2,
+            BillingCity: combined.City,
+            BillingDistrict: combined.District,
+            BillingPostalCode: combined.PostalCode,
+            Email: "",
+            PhoneNumber: combined.PhoneNumber,
+            DeliveryMethod: combined.deliverymethod,
+            PaymentMethod: combined.paymentmethod,
+            NetTotal: total,
+        }
+
+        if(!id) {
+            console.error('User ID not available');
+            return;
+        }
+        try {
+            const response = await fetch('/api/placeorder', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(req_body),
+            });
+            const data = await response.json();
+            if (!response.ok) {
+                throw new Error(data.message || `Failed to place order : ${response.status}`);
+            }
+            setIsClicked(false);
+
+        } catch (error) {
+            console.error('Failed to place order');
+        }
+    }
+
+    // Define getcartcount with useCallback outside useEffect
+    const getcartcount = useCallback(async (id: string) => {
+        try {
+            if (id === '') return;
+            
+            const response = await fetch('/api/getcartitem/getcartcount', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ id: id }),
+            });
+
+            if (!response.ok) {
+                throw new Error('Failed to fetch cart count');
+            }
+
+            const data = await response.json();
+            setCartCount(data || 0);
+        } catch (error) {
+            console.error('Error fetching cart count:', error);
+            setCartCount(0);
+        }
+    }, []);
+
+    // Then in useEffect
     useEffect(() => {
         const checkSession = async () => {
-        const session = await getSession(); // Getting the session
-        if (!session) {
-            router.push("/login"); // Redirecting to sign-in if no session
-        } else {
-            setId(session.user?.id || ''); // Set email if session exists
-        }
+            const session = await getSession();
+            if (!session) {
+                router.push("/login");
+            } else {
+                setId(session.user?.id || '');
+            }
         };
 
-        checkSession(); // Calling the session check
+        checkSession();
     }, [router]);
+
+    useEffect(() => {
+        if (id) {
+            getcartcount(id);
+        }
+    }, [id, getcartcount]);
 
     if(!id) {
         return (
@@ -67,15 +148,6 @@ export default function CartSummery(){
         );
     }
 
-    
-//     if (isLoading) {
-//     return (
-//       <div className={style.loadingContainer}>
-//         <Loader2 className={style.loadingSpinner} />
-//         <span>Loading cart...</span>
-//       </div>
-//     );
-//   }
     return(        
         <div className={styles.summerybody}>
             <div className={styles.sumbodyright}>  
@@ -83,24 +155,18 @@ export default function CartSummery(){
                 
                 <ShipingDetails id={id} setShippingData={setShippingData}/>
             </div>
-
-
         <div className={styles.sumbodyleft}>
-            <div className={styles.sumbodyleftupper}>
-                
-                
-                <CartSum id={id} setIsLoading={setIsLoading}/>
-               
-                
+            <div className={styles.sumbodyleftupper}> 
+                <CartSum id={id} setIsLoading={setIsLoading} setTotal={setTotal}/>
             </div>
 
             <div className={styles.sumbodyleftupper}>
                 <Paymentdetails isClicked={isclicked} setIsClicked={setIsClicked} setPaymentData={setPaymentData}/>
             </div>
             </div>
-            {isclicked && <OrderSum id={id} isClicked={isclicked} setIsClicked={setIsClicked} combinedData = {combined}/>}
 
-            {/* <button onClick={() => { console.log(addressData); }}>print</button> //debugging purpose */}
+            {isclicked && <OrderSum id={id} isClicked={isclicked} setIsClicked={setIsClicked} combinedData={combined} placeOrder={placeOrder} cartCount={cartCount}/>}
         </div>
     );
 }
+

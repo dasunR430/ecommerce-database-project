@@ -16,10 +16,12 @@ export async function POST(req: NextRequest) {
     const PaymentMethod = requestBody.PaymentMethod;
     const NetTotal = requestBody.NetTotal;
 
+    console.log('Request body:', requestBody);
     let connection;
         try {
             connection = await pool.getConnection();
             const insertQuery = 'CALL PlaceOrder(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)';
+            
             // Call the stored procedure
             await connection.execute(insertQuery, [
                 id,

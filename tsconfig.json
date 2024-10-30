@@ -21,6 +21,6 @@
       "@/*": ["./src/*"]
     }
   },
-  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts", "src/app/components/profile/sideNavigation.tsx", "src/app/cartsummery/page.tsx", "src/app/cartsummery/components/cartsum.tsx", "src/app/cartsummery/components/address.js", "src/app/ordersummery/page.js", "src/app/cartsummery/components/paydetails.js", "src/app/cartsummery/components/shipingdetails.js"],
+  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts", "src/app/components/profile/sideNavigation.tsx", "src/app/cartsummery/page.tsx", "src/app/cartsummery/components/cartsum.tsx", "src/app/cartsummery/components/address.js", "src/app/ordersummery/page.tsx", "src/app/cartsummery/components/paydetails.js", "src/app/cartsummery/components/shipingdetails.js"],
   "exclude": ["node_modules"]
 }
