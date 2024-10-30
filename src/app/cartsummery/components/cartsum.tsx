@@ -15,9 +15,10 @@ interface CartItem {
 interface CartSummaryProps {
   id: string;
   setIsLoading: (isLoading: boolean) => void;
+  setTotal: (total: number) => void;
 }
 
-export default function CartSummary({ id , setIsLoading }: CartSummaryProps) {
+export default function CartSummary({ id , setIsLoading, setTotal}: CartSummaryProps) {
   const [cartItems, setCartItems] = useState<CartItem[]>([]);
   const [totalAmount, setTotalAmount] = useState<number>(0);
   const [deliveryEstimates, setDeliveryEstimates] = useState<Record<string, string>>({});
@@ -43,6 +44,7 @@ export default function CartSummary({ id , setIsLoading }: CartSummaryProps) {
         );
         setTotalAmount(total);
         
+        setTotal(total);
         await calculateAllDeliveryDates(data);
       } catch (error) {
         setError(error instanceof Error ? error.message : 'An error occurred');
