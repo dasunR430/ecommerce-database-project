@@ -153,7 +153,7 @@ export default function CartSummery(){
             <div className={styles.sumbodyright}>  
                 <SelectAddress id={id} setAddressData = {setAddressData} />
                 
-                <ShipingDetails id={id} setShippingData={setShippingData}/>
+                {/* <ShipingDetails id={id} setShippingData={setShippingData}/> */}
             </div>
         <div className={styles.sumbodyleft}>
             <div className={styles.sumbodyleftupper}> 

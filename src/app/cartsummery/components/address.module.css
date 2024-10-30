@@ -1,7 +1,7 @@
 .addressdiv {
     display: flex;
     flex-direction: column;
-    padding: 1rem;
+    padding: 2rem;
     background: white;
     border: 1px solid #eee;
     border-radius: 8px;
@@ -9,6 +9,7 @@
     width: 100%;
     max-width: 100%;
     box-sizing: border-box;
+   
   }
   
   .head {

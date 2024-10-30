@@ -9,7 +9,7 @@ export default function ShippingDetails({id, setShippingData}) {
     useEffect(() => {
         async function fetchShippingDetails() {
             try {
-                const response = await fetch(`/api/shippingdetails?orderID=${id}`); // Replace with your API endpoint
+                const response = await fetch(`/api/shippingdetails?orderID=${id}`); 
                 if (response.ok) {
                     const data = await response.json();
                     // Assuming data contains fields 'MaxDeliveryDate' and 'NetTotal'
