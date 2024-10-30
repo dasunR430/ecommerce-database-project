@@ -9,6 +9,14 @@ interface Purchase{
   ProductName: string;
   Price: number;
 }
+function formatDate(dateString: string) {
+  const date = new Date(dateString);
+  const day = String(date.getDate()).padStart(2, '0');
+  const month = String(date.getMonth() + 1).padStart(2, '0'); // Months are zero-indexed
+  const year = date.getFullYear();
+  
+  return `${day}/${month}/${year}`;
+}
 
 const Orders = () => {
 
@@ -67,7 +75,7 @@ const Orders = () => {
     </thead>
     <tbody>
         {purchases.map((purchase, index) => (
-          <Raw key={index} raw={[purchase.orderedDate, purchase.ProductName, `$${purchase.Price}`]} />
+          <Raw key={index} raw={[formatDate(purchase.orderedDate), purchase.ProductName, `$${purchase.Price}`]} />
         ))}
     </tbody>
   </table>
