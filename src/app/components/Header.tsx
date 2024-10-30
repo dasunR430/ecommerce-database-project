@@ -44,7 +44,7 @@ const Header: React.FC = () => {
             console.error('Error fetching cart count:', error);
             setCartCount(0);
         }
-    }, []); // Remove userID from dependencies since we're using the parameter
+    }, []); 
 
     useEffect(() => {
         const checkSession = async () => {

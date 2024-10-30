@@ -1,16 +1,38 @@
+'use client';
 import { Check, Truck, MapPin, CreditCard, X } from "lucide-react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 import Popup from "../popupmsg/page";
 
+interface OrderSummaryProps {
+  id: string;
+  isClicked: boolean;
+  setIsClicked: (value: boolean) => void;
+  combinedData: {
+    CustomerName: string;
+    AddressLine1: string;
+    AddressLine2: string;
+    City: string;
+    District: string;
+    PostalCode: string;
+    PhoneNumber: string;
+    deliverymethod: string;
+    paymentmethod: string;
+  };
+  placeOrder: () => void;
+  cartCount: number;
+}
+
 export default function OrderSummary({
   id,
   isClicked,
   setIsClicked,
   combinedData,
-}) {
-  const formatPhoneNumber = (phone) => {
+  placeOrder,
+  cartCount,
+}: OrderSummaryProps) {
+  const formatPhoneNumber = (phone: string) => {
     return phone.replace(/(\d{3})(\d{3})(\d{4})/, "($1) $2-$3");
   };
 
@@ -23,6 +45,9 @@ export default function OrderSummary({
     }, 1000);
   };
 
+  useEffect(() => {
+    console.log("Combined Data", combinedData);
+  });
   return (
     <div className="fixed inset-0 bg-black/30 backdrop-blur-sm z-50 flex items-center justify-center p-4">
       <Card className="w-full max-w-2xl bg-white shadow-xl">
@@ -96,6 +121,7 @@ export default function OrderSummary({
               onClick={() => {
                 setShowPopup(true);
                 handleConfirmOrder();
+                {cartCount>0 && placeOrder()}
               }}
               className="flex items-center gap-2 px-4 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600 transition-colors"
             >
@@ -105,7 +131,15 @@ export default function OrderSummary({
           </div>
         </CardContent>
       </Card>
-      {showPopup && <Popup message="Order placed successfully!" />}
+
+      {showPopup && (
+        cartCount > 0 ? (
+          <Popup message="Order placed successfully!" />
+        ) : (
+          <Popup message="Order placed unsuccessfully!" type="error" />
+        )
+      )}
+
     </div>
   );
 }
