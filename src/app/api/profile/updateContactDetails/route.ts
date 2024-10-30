@@ -20,14 +20,15 @@ export async function PUT(req: NextRequest) { // Changed to PUT
         });
     }
 
+    let connection = null;
+
     try {
-        const connection = await pool.getConnection();
+        connection = await pool.getConnection();
 
         const updateQuery = 'UPDATE contactdetails SET AddressLine1 = ?, AddressLine2 = ?, City = ?, District = ?, PostalCode = ?,PhoneNumber = ? WHERE AddressID = ?';
         await connection.execute(updateQuery, [AddressLine1, AddressLine2, City, District, PostalCode,PhoneNumber, AddressID]);
 
-        connection.release();
-
+        
         return new Response(JSON.stringify({ message: 'Contact details updated successfully' }), {
             status: 200,
             headers: { 'Content-Type': 'application/json' },
@@ -38,5 +39,7 @@ export async function PUT(req: NextRequest) { // Changed to PUT
             status: 500,
             headers: { 'Content-Type': 'application/json' },
         });
+    }finally{
+        connection?.release();
     }
 }

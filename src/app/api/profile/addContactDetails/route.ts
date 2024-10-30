@@ -18,9 +18,10 @@ export async function POST(req: NextRequest) {
     const phoneNumber = requestBody.phoneNumber;
 
     // console.log(id);
+    let connection = null;
 
     try{        
-        const connection = await pool.getConnection();
+        connection = await pool.getConnection();
 
         const insertQuery = 'INSERT INTO ContactDetails(CustomerID, AddressLine1, AddressLine2, City, District, PostalCode,PhoneNumber) VALUES (?, ?, ?, ?, ?, ?,?)';
 
@@ -29,6 +30,8 @@ export async function POST(req: NextRequest) {
         connection.release();
     }catch(error){
         console.error('Failed to add contact details');
+    }finally{
+        connection?.release();
     }
     
     return new Response(JSON.stringify({ message: 'Contact details added successfully' }), {

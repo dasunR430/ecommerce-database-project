@@ -2,9 +2,11 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faUser } from '@fortawesome/free-solid-svg-icons';
 import { Input } from '../components/basicUi/input';
-import { useState } from 'react';
+import { useState,useEffect } from 'react';
 import { Button } from '@/components/ui/button';
 import { Card } from "@/components/ui/card";
+import { getSession } from 'next-auth/react';
+import router from 'next/router';
 
 export default function Register() {
     const [email, setEmail] = useState('');
@@ -21,6 +23,15 @@ export default function Register() {
     const handleNameChange = (e: React.ChangeEvent<HTMLInputElement>) => setName(e.target.value);
     const handlePhoneNumberChange = (e: React.ChangeEvent<HTMLInputElement>) => setPhoneNumber(e.target.value);
 
+    useEffect(() => {
+        const checkSession = async () => {
+            const session = await getSession();
+            if (session) {
+                router.push("/home");
+            } 
+        };
+        checkSession();
+    }, [router]);
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
         setLoading(true);
