@@ -37,8 +37,8 @@ export default function PaymentDetail({isClicked, setIsClicked, setPaymentData})
                     value={deliveryMethod.deliverymethod}
                     onChange={handleDeliveryMethodChange}
                 >
-                    <option value="door">Door Delivery</option>
-                    <option value="store">Store Pick</option>
+                    <option value="Door Delivery">Door Delivery</option>
+                    <option value="Store Pick">Store Pick</option>
                 </select>
             </div>
 
