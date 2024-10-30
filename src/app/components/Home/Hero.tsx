@@ -1,24 +1,58 @@
-import React from 'react';
 
-const Hero: React.FC = () => {
+'use client';
+import * as React from "react"
+import Autoplay from "embla-carousel-autoplay"
+import { Card, CardContent } from "@/components/ui/card"
+import {
+  Carousel,
+  CarouselContent,
+  CarouselItem,
+  CarouselNext,
+  CarouselPrevious,
+} from "@/components/ui/carousel"
+import { useRef } from "react"
+
+const images = [
+  '/carouselimg/img1.png',
+  '/carouselimg/img4.png',
+  '/carouselimg/img2.png',
+  '/carouselimg/img3.png',
+  '/carouselimg/img5.png',
+];
+
+export function Hero() {
+  const plugin = useRef(
+    Autoplay({ delay: 3000, stopOnInteraction: true })
+  )
+
   return (
-    <div className="relative bg-blue-600 text-white py-20">
-      <div className="absolute inset-0 bg-cover bg-center">
-        <div className="absolute inset-0 bg-black opacity-50"></div>
-      </div>
-      <div className="relative container mx-auto px-4 text-center">
-        <h1 className="text-5xl font-bold mb-4">Welcome to Our Store</h1>
-        <p className="text-lg mb-8">Discover amazing products at unbeatable prices.</p>
+    <Carousel
+      plugins={[plugin.current]}
+      className="w-full max-w-full h-[350px]"
+      onMouseEnter={plugin.current.stop}
+      onMouseLeave={plugin.current.reset}
+    >
+      <CarouselContent>
+      {images.map((image, index) => (
+        <CarouselItem key={index}>
+          <div className="h-full w-full my-2">
+            <Card className="h-full w-full">
+              <CardContent className="flex h-[350px] w-full items-center justify-center overflow-hidden rounded-2xl p-2">
+                <img
+                  src={image}
+                  alt={`Hero Image ${index + 1}`}
+                  className="object-cover h-[350px] w-full rounded-2xl"
+                />
+              </CardContent>
+            </Card>
+          </div>
+        </CarouselItem>
+      ))}
+      </CarouselContent>
+      <CarouselPrevious className="absolute left-4 top-1/2 -translate-y-1/2 z-10 cursor-pointer rounded-full bg-white/50 p-2 shadow-md hover:bg-white" />
+      <CarouselNext className="absolute right-4 top-1/2 -translate-y-1/2 z-10 cursor-pointer rounded-full bg-white/50 p-2 shadow-md hover:bg-white" />
+    </Carousel>
+  )
+}
 
-
-        {/* <button  className="bg-white text-blue-600 font-semibold py-2 px-6 rounded shadow-lg hover:bg-gray-200 transition duration-300">
-          Shop Now
-        </button> */}
-
-
-      </div>
-    </div>
-  );
-};
-
-export default Hero;
+export default Hero

@@ -17,6 +17,8 @@ import { Loader2 } from 'lucide-react';
 
 
 export default function CartSummery(){
+    
+
     const router = useRouter();
     const [isLoading, setIsLoading] = useState(true);
     const [id, setId] = useState('');
@@ -40,6 +42,12 @@ export default function CartSummery(){
     const combined = { ...addressData, ...paymentData, ShippingData };
     const [cartCount, setCartCount] = useState(0);        
 
+    // function getRandomInt(min, max) {
+    //     min = Math.ceil(min);
+    //     max = Math.floor(max);
+    //     return Math.floor(Math.random() * (max - min + 1)) + min;
+    // }
+
     const placeOrder = async () => {
         const req_body = {
             id,
@@ -54,7 +62,7 @@ export default function CartSummery(){
             PaymentMethod: combined.paymentmethod,
             NetTotal: total,
         }
-        console.log("req_body ",req_body)
+
         if(!id) {
             console.error('User ID not available');
             return;
@@ -74,9 +82,6 @@ export default function CartSummery(){
             setIsClicked(false);
 
         } catch (error) {
-            console.log({
-                
-            });
             console.error('Failed to place order');
         }
     }
@@ -84,7 +89,6 @@ export default function CartSummery(){
     // Define getcartcount with useCallback outside useEffect
     const getcartcount = useCallback(async (id: string) => {
         try {
-            // Only fetch cart count if user is logged in
             if (id === '') return;
             
             const response = await fetch('/api/getcartitem/getcartcount', {
@@ -121,7 +125,6 @@ export default function CartSummery(){
         checkSession();
     }, [router]);
 
-    // Add another useEffect to call getcartcount when id changes
     useEffect(() => {
         if (id) {
             getcartcount(id);
@@ -145,15 +148,6 @@ export default function CartSummery(){
         );
     }
 
-    
-//     if (isLoading) {
-//     return (
-//       <div className={style.loadingContainer}>
-//         <Loader2 className={style.loadingSpinner} />
-//         <span>Loading cart...</span>
-//       </div>
-//     );
-//   }
     return(        
         <div className={styles.summerybody}>
             <div className={styles.sumbodyright}>  
@@ -161,15 +155,9 @@ export default function CartSummery(){
                 
                 <ShipingDetails id={id} setShippingData={setShippingData}/>
             </div>
-
-
         <div className={styles.sumbodyleft}>
-            <div className={styles.sumbodyleftupper}>
-                
-                
+            <div className={styles.sumbodyleftupper}> 
                 <CartSum id={id} setIsLoading={setIsLoading} setTotal={setTotal}/>
-               
-                
             </div>
 
             <div className={styles.sumbodyleftupper}>
@@ -178,7 +166,6 @@ export default function CartSummery(){
             </div>
 
             {isclicked && <OrderSum id={id} isClicked={isclicked} setIsClicked={setIsClicked} combinedData={combined} placeOrder={placeOrder} cartCount={cartCount}/>}
-            {/* <button onClick={() => { console.log(addressData); }}>print</button> //debugging purpose */}
         </div>
     );
 }
