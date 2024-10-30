@@ -89,7 +89,6 @@ export default function CartSummery(){
     // Define getcartcount with useCallback outside useEffect
     const getcartcount = useCallback(async (id: string) => {
         try {
-            // Only fetch cart count if user is logged in
             if (id === '') return;
             
             const response = await fetch('/api/getcartitem/getcartcount', {
@@ -126,7 +125,6 @@ export default function CartSummery(){
         checkSession();
     }, [router]);
 
-    // Add another useEffect to call getcartcount when id changes
     useEffect(() => {
         if (id) {
             getcartcount(id);
@@ -150,15 +148,6 @@ export default function CartSummery(){
         );
     }
 
-    
-//     if (isLoading) {
-//     return (
-//       <div className={style.loadingContainer}>
-//         <Loader2 className={style.loadingSpinner} />
-//         <span>Loading cart...</span>
-//       </div>
-//     );
-//   }
     return(        
         <div className={styles.summerybody}>
             <div className={styles.sumbodyright}>  
@@ -166,15 +155,9 @@ export default function CartSummery(){
                 
                 <ShipingDetails id={id} setShippingData={setShippingData}/>
             </div>
-
-
         <div className={styles.sumbodyleft}>
-            <div className={styles.sumbodyleftupper}>
-                
-                
+            <div className={styles.sumbodyleftupper}> 
                 <CartSum id={id} setIsLoading={setIsLoading} setTotal={setTotal}/>
-               
-                
             </div>
 
             <div className={styles.sumbodyleftupper}>
@@ -183,7 +166,6 @@ export default function CartSummery(){
             </div>
 
             {isclicked && <OrderSum id={id} isClicked={isclicked} setIsClicked={setIsClicked} combinedData={combined} placeOrder={placeOrder} cartCount={cartCount}/>}
-            {/* <button onClick={() => { console.log(addressData); }}>print</button> //debugging purpose */}
         </div>
     );
 }
