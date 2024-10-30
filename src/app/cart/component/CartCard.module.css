@@ -1,0 +1,51 @@
+/* components/CartCard.module.css */
+.cartCard {
+    display: flex;
+    padding: 1rem;
+    background: rgb(232, 231, 231);
+    border: 1px solid #eee;
+    border-radius: 8px;
+    margin-bottom: 0.75rem;
+    justify-content: space-between;
+    align-items: center;
+    /* box-shadow: 0 0 10px rgba(34, 34, 34, 0.778); */
+  }
+  
+  .details {
+    flex: 1;
+  }
+  
+  .name {
+    font-size: 1rem;
+    font-weight: 500;
+    margin: 0 0 0.5rem 0;
+    color: #333;
+  }
+  
+  .info {
+    display: flex;
+    gap: 1.5rem;
+    color: #666;
+  }
+  
+  .total {
+    font-weight: 500;
+  }
+  
+  .deleteButton {
+    background: none;
+    border: none;
+    color: #ff4444;
+    cursor: pointer;
+    padding: 0.5rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 4px;
+    transition: all 0.2s;
+  }
+  
+  .deleteButton:hover {
+    background: #fff1f1;
+    transform: scale(1.1);
+  }

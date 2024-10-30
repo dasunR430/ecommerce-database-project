@@ -1,0 +1,32 @@
+.summerybody{
+    width: 100%;
+    margin: 0 auto;
+    background-color: rgb(243, 243, 243);
+    display: flex;
+    padding: 20px;
+}
+
+.sumbodyleft{
+    width: 50%; 
+    display: grid;  
+    gap: 0px;
+    padding: 10px;
+}
+
+.sumbodyright{
+    display: grid;
+    width: 50%;
+    gap: 10px;
+    padding: 20px;
+}
+.sumbodyleftupper{
+    display: flex;
+    gap: 10px;
+    padding: 10px;
+}
+
+.sumbodyleftupperjr{
+    display: grid;
+    gap: 10px;
+    width: 50%;
+}
