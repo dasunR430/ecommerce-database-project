@@ -136,7 +136,7 @@ export default function OrderSummary({
         cartCount > 0 ? (
           <Popup message="Order placed successfully!" />
         ) : (
-          <Popup message="Order placed unsuccessfully!" type="error" />
+          <Popup message="Order place unsuccessfully!" type="error" />
         )
       )}
 

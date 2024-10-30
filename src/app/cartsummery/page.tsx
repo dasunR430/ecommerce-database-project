@@ -17,6 +17,8 @@ import { Loader2 } from 'lucide-react';
 
 
 export default function CartSummery(){
+    
+
     const router = useRouter();
     const [isLoading, setIsLoading] = useState(true);
     const [id, setId] = useState('');
@@ -40,6 +42,12 @@ export default function CartSummery(){
     const combined = { ...addressData, ...paymentData, ShippingData };
     const [cartCount, setCartCount] = useState(0);        
 
+    // function getRandomInt(min, max) {
+    //     min = Math.ceil(min);
+    //     max = Math.floor(max);
+    //     return Math.floor(Math.random() * (max - min + 1)) + min;
+    // }
+
     const placeOrder = async () => {
         const req_body = {
             id,
@@ -54,7 +62,7 @@ export default function CartSummery(){
             PaymentMethod: combined.paymentmethod,
             NetTotal: total,
         }
-        console.log("req_body ",req_body)
+
         if(!id) {
             console.error('User ID not available');
             return;
@@ -74,9 +82,6 @@ export default function CartSummery(){
             setIsClicked(false);
 
         } catch (error) {
-            console.log({
-                
-            });
             console.error('Failed to place order');
         }
     }
